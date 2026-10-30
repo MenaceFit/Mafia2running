@@ -1,0 +1,126 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "badge": "Accès complet",
+        "button_label": "Rejoindre le groupe",
+        "trust_1": "Paiement sécurisé par Shopify",
+        "trust_2": "Lien d'invitation personnel envoyé après confirmation du paiement",
+        "access_page": "/pages/conditions-acces"
+      }
+    },
+    "ressources": {
+      "type": "resources",
+      "settings": {
+        "anchor": "ressources",
+        "surface": false,
+        "eyebrow": "Fournisseurs & plateformes",
+        "title": "Toutes les ressources dont tu as besoin, *réunies au même endroit.*",
+        "subtitle": "Des contacts et des plateformes sélectionnés, classés par usage, pour gagner du temps dans tes recherches."
+      },
+      "blocks": {
+        "resource-1": {
+          "type": "resource",
+          "settings": {
+            "icon": "tag",
+            "prefix": "+",
+            "number": 5,
+            "title": "Plateformes neuves",
+            "text": "Plateformes proposant des articles neufs avec étiquettes, en sportswear comme en semi-luxe."
+          }
+        },
+        "resource-2": {
+          "type": "resource",
+          "settings": {
+            "icon": "recycle",
+            "prefix": "+",
+            "number": 40,
+            "title": "Seconde main",
+            "text": "Sites sélectionnés pour trouver des articles d'occasion à prix intéressants."
+          }
+        },
+        "resource-3": {
+          "type": "resource",
+          "settings": {
+            "icon": "truck",
+            "prefix": "+",
+            "number": 15,
+            "title": "Agents de livraison",
+            "text": "Contacts et solutions logistiques, avec frais, délais et modalités comparés."
+          }
+        },
+        "resource-4": {
+          "type": "resource",
+          "settings": {
+            "icon": "running",
+            "prefix": "+",
+            "number": 6,
+            "title": "Contacts spécialisés",
+            "text": "Contacts dédiés au running authentique et au sportswear."
+          }
+        }
+      },
+      "block_order": [
+        "resource-1",
+        "resource-2",
+        "resource-3",
+        "resource-4"
+      ]
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "anchor": "faq",
+        "surface": true,
+        "eyebrow": "FAQ",
+        "title": "Questions *fréquentes*",
+        "text": "Tu ne trouves pas ta réponse ? Écris-nous avec ton numéro de commande si tu as déjà acheté.",
+        "button_label": "Nous contacter",
+        "button_link": "/pages/contact",
+        "open_first": true
+      },
+      "blocks": {
+        "question-1": {
+          "type": "question",
+          "settings": {
+            "question": "Comment accéder au groupe après mon achat ?",
+            "answer": "<p>Dès que Shopify confirme ton paiement, un <strong>lien d'invitation Telegram personnel</strong> t'est délivré : par e-mail, et/ou en envoyant ton numéro de commande à notre bot Telegram (la méthode est rappelée dans ta confirmation de commande).</p><p>Ce lien est à usage unique et expire après un délai limité : utilise-le depuis le compte Telegram avec lequel tu veux rejoindre le groupe. Si tu ne reçois rien, vérifie tes spams puis contacte-nous avec ton numéro de commande.</p>"
+          }
+        },
+        "question-3": {
+          "type": "question",
+          "settings": {
+            "question": "Que contient exactement le groupe ?",
+            "answer": "<p>Plus de 6 contacts running, plus de 5 plateformes d'articles neufs avec étiquettes, plus de 40 sites de seconde main, plus de 15 agents de livraison, l'accès au bot Vinted UK, des tutoriels et l'accompagnement de la communauté. De nouvelles ressources sont ajoutées selon les disponibilités.</p>"
+          }
+        },
+        "question-7": {
+          "type": "question",
+          "settings": {
+            "question": "Puis-je accéder au groupe depuis mon téléphone ?",
+            "answer": "<p>Oui. Le groupe est sur Telegram, application gratuite disponible sur iPhone, Android, ordinateur et navigateur web. Il suffit d'un compte Telegram.</p>"
+          }
+        },
+        "question-10": {
+          "type": "question",
+          "settings": {
+            "question": "Puis-je obtenir un remboursement ?",
+            "answer": "<p>L'accès est un contenu numérique fourni immédiatement après le paiement. Au moment de l'achat, tu demandes cet accès immédiat et tu reconnais perdre ton droit de rétractation une fois l'accès fourni (article L221-28 du Code de la consommation).</p><p>Si un problème technique t'empêche d'accéder au groupe (lien non reçu ou invalide), contacte-nous : nous t'envoyons un nouveau lien ou trouvons une solution. Les détails figurent dans notre politique de remboursement.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question-1",
+        "question-3",
+        "question-7",
+        "question-10"
+      ]
+    }
+  },
+  "order": [
+    "main",
+    "ressources",
+    "faq"
+  ]
+}

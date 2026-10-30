@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-contact",
+      "settings": {
+        "eyebrow": "Contact"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

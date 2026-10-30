@@ -1,0 +1,611 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "anchor": "accueil",
+        "badge": "Communauté privée • Achat-revente",
+        "title": "Accède aux *meilleures ressources* pour développer ton activité.",
+        "subtitle": "Running, semi-luxe, plateformes spécialisées, contacts et outils exclusifs : retrouve toutes les ressources essentielles réunies dans un seul espace privé.",
+        "button_1_label": "Découvrir le groupe",
+        "button_2_label": "Voir les avantages",
+        "meta_1": "Paiement sécurisé",
+        "meta_2": "Groupe privé Telegram",
+        "meta_3": "100 % accessible sur mobile",
+        "core_title": "Groupe privé",
+        "core_label": "Accès membres",
+        "show_scroll": true,
+        "scroll_target": "#running"
+      },
+      "blocks": {
+        "card-1": {
+          "type": "card",
+          "settings": {
+            "icon": "running",
+            "label": "Running",
+            "value": "+6 contacts spécialisés"
+          }
+        },
+        "card-2": {
+          "type": "card",
+          "settings": {
+            "icon": "diamond",
+            "label": "Semi-luxe",
+            "value": "+40 plateformes et ressources",
+            "dark": true
+          }
+        },
+        "card-3": {
+          "type": "card",
+          "settings": {
+            "icon": "bot",
+            "label": "Vinted UK",
+            "value": "Bot de surveillance des annonces"
+          }
+        },
+        "card-4": {
+          "type": "card",
+          "settings": {
+            "icon": "package",
+            "label": "Logistique",
+            "value": "+15 agents et solutions"
+          }
+        }
+      },
+      "block_order": [
+        "card-1",
+        "card-2",
+        "card-3",
+        "card-4"
+      ]
+    },
+    "stats": {
+      "type": "stats",
+      "settings": {
+        "aria_label": "Les ressources du groupe en chiffres"
+      },
+      "blocks": {
+        "stat-1": {
+          "type": "stat",
+          "settings": {
+            "prefix": "+",
+            "number": 6,
+            "label": "contacts running"
+          }
+        },
+        "stat-2": {
+          "type": "stat",
+          "settings": {
+            "prefix": "+",
+            "number": 5,
+            "label": "plateformes neuves"
+          }
+        },
+        "stat-3": {
+          "type": "stat",
+          "settings": {
+            "prefix": "+",
+            "number": 40,
+            "label": "sites de seconde main"
+          }
+        },
+        "stat-4": {
+          "type": "stat",
+          "settings": {
+            "prefix": "+",
+            "number": 15,
+            "label": "agents de livraison"
+          }
+        },
+        "stat-5": {
+          "type": "stat",
+          "settings": {
+            "prefix": "",
+            "number": 1,
+            "label": "bot Vinted UK"
+          }
+        }
+      },
+      "block_order": [
+        "stat-1",
+        "stat-2",
+        "stat-3",
+        "stat-4",
+        "stat-5"
+      ]
+    },
+    "running": {
+      "type": "running",
+      "settings": {
+        "anchor": "running",
+        "surface": true,
+        "media_left": false,
+        "eyebrow": "Univers 01",
+        "title": "L'univers *RUNNING*",
+        "subtitle": "Des ressources spécialisées pour trouver des articles sportswear et running authentiques.",
+        "tag_1": "Nike Running",
+        "tag_2": "",
+        "tag_3": ""
+      },
+      "blocks": {
+        "feature-1": {
+          "type": "feature",
+          "settings": {
+            "icon": "contact",
+            "title": "Contacts spécialisés",
+            "text": "Plus de 6 contacts orientés Nike Running et sportswear."
+          }
+        },
+        "feature-2": {
+          "type": "feature",
+          "settings": {
+            "icon": "layers",
+            "title": "Sélections de références",
+            "text": "Les modèles et pièces les plus recherchés."
+          }
+        },
+        "feature-3": {
+          "type": "feature",
+          "settings": {
+            "icon": "search",
+            "title": "Recherche d'opportunités",
+            "text": "Méthodes pour repérer les bonnes affaires."
+          }
+        },
+        "feature-4": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "title": "Conseils d'achat",
+            "text": "Vérifier un article et sa provenance avant d'acheter."
+          }
+        },
+        "feature-5": {
+          "type": "feature",
+          "settings": {
+            "icon": "handshake",
+            "title": "Accompagnement",
+            "text": "Des réponses à tes questions dans le groupe."
+          }
+        }
+      },
+      "block_order": [
+        "feature-1",
+        "feature-2",
+        "feature-3",
+        "feature-4",
+        "feature-5"
+      ]
+    },
+    "semi_luxe": {
+      "type": "editorial-grid",
+      "settings": {
+        "anchor": "semi-luxe",
+        "surface": false,
+        "eyebrow": "Univers 02",
+        "title": "Le *semi-luxe*, à portée de main.",
+        "subtitle": "Retrouve une sélection de ressources pour explorer les plateformes et les fournisseurs spécialisés dans les marques premium.",
+        "note": "Marques citées à titre d'illustration des catégories couvertes. Elles ne sont ni partenaires ni affiliées à la communauté."
+      },
+      "blocks": {
+        "tile-1": {
+          "type": "tile",
+          "settings": {
+            "brand": "Stone Island",
+            "category": "Sweats & mailles"
+          }
+        },
+        "tile-2": {
+          "type": "tile",
+          "settings": {
+            "brand": "CP Company",
+            "category": "Pulls & vestes"
+          }
+        },
+        "tile-3": {
+          "type": "tile",
+          "settings": {
+            "brand": "Ralph Lauren",
+            "category": "Ensembles"
+          }
+        },
+        "tile-4": {
+          "type": "tile",
+          "settings": {
+            "brand": "Canada Goose",
+            "category": "Doudounes"
+          }
+        },
+        "tile-5": {
+          "type": "tile",
+          "settings": {
+            "brand": "Nike",
+            "category": "Running & sportswear"
+          }
+        },
+        "tile-6": {
+          "type": "tile",
+          "settings": {
+            "brand": "Under Armour",
+            "category": "Vestes techniques"
+          }
+        }
+      },
+      "block_order": [
+        "tile-1",
+        "tile-2",
+        "tile-3",
+        "tile-4",
+        "tile-5",
+        "tile-6"
+      ]
+    },
+    "ressources": {
+      "type": "resources",
+      "settings": {
+        "anchor": "ressources",
+        "surface": true,
+        "eyebrow": "Fournisseurs & plateformes",
+        "title": "Toutes les ressources dont tu as besoin, *réunies au même endroit.*",
+        "subtitle": "Des contacts et des plateformes sélectionnés, classés par usage, pour gagner du temps dans tes recherches."
+      },
+      "blocks": {
+        "resource-1": {
+          "type": "resource",
+          "settings": {
+            "icon": "tag",
+            "prefix": "+",
+            "number": 5,
+            "title": "Plateformes neuves",
+            "text": "Plateformes proposant des articles neufs avec étiquettes, en sportswear comme en semi-luxe."
+          }
+        },
+        "resource-2": {
+          "type": "resource",
+          "settings": {
+            "icon": "recycle",
+            "prefix": "+",
+            "number": 40,
+            "title": "Seconde main",
+            "text": "Sites sélectionnés pour trouver des articles d'occasion à prix intéressants."
+          }
+        },
+        "resource-3": {
+          "type": "resource",
+          "settings": {
+            "icon": "truck",
+            "prefix": "+",
+            "number": 15,
+            "title": "Agents de livraison",
+            "text": "Contacts et solutions logistiques, avec frais, délais et modalités comparés."
+          }
+        },
+        "resource-4": {
+          "type": "resource",
+          "settings": {
+            "icon": "running",
+            "prefix": "+",
+            "number": 6,
+            "title": "Contacts spécialisés",
+            "text": "Contacts dédiés au running authentique et au sportswear."
+          }
+        }
+      },
+      "block_order": [
+        "resource-1",
+        "resource-2",
+        "resource-3",
+        "resource-4"
+      ]
+    },
+    "bot": {
+      "type": "vinted-bot",
+      "settings": {
+        "anchor": "fonctionnalites",
+        "badge": "Accès privé",
+        "title": "Le bot *Vinted UK*, en exclusivité pour les membres.",
+        "text": "Ne passe plus ton temps à actualiser les recherches. Identifie rapidement les nouvelles annonces correspondant à tes mots-clés.",
+        "button_label": "Accéder au bot",
+        "disclaimer": "Notifications affichées à titre d'exemple de démonstration. Le bot signale des annonces publiques selon tes mots-clés ; il n'achète rien à ta place. Conditions d'utilisation présentées dans le groupe.",
+        "bot_name": "Vinted UK Alerts",
+        "phone_badge": "Accès privé"
+      },
+      "blocks": {
+        "bot-block-1": {
+          "type": "feature",
+          "settings": {
+            "icon": "zap",
+            "title": "Surveillance automatisée"
+          }
+        },
+        "bot-block-2": {
+          "type": "feature",
+          "settings": {
+            "icon": "search",
+            "title": "Recherche par mots-clés"
+          }
+        },
+        "bot-block-3": {
+          "type": "feature",
+          "settings": {
+            "icon": "bell",
+            "title": "Alertes Telegram"
+          }
+        },
+        "bot-block-4": {
+          "type": "feature",
+          "settings": {
+            "icon": "link",
+            "title": "Accès rapide aux annonces"
+          }
+        },
+        "bot-block-5": {
+          "type": "feature",
+          "settings": {
+            "icon": "clock",
+            "title": "Gain de temps dans la recherche"
+          }
+        },
+        "bot-block-6": {
+          "type": "notification",
+          "settings": {
+            "title": "Nike Running Trousers",
+            "price": "13,83 GBP",
+            "time": "12:04"
+          }
+        },
+        "bot-block-7": {
+          "type": "notification",
+          "settings": {
+            "title": "Nike Running Top",
+            "price": "5,95 GBP",
+            "time": "12:06"
+          }
+        }
+      },
+      "block_order": [
+        "bot-block-1",
+        "bot-block-2",
+        "bot-block-3",
+        "bot-block-4",
+        "bot-block-5",
+        "bot-block-6",
+        "bot-block-7"
+      ]
+    },
+    "accompagnement": {
+      "type": "coaching",
+      "settings": {
+        "anchor": "accompagnement",
+        "surface": false,
+        "eyebrow": "Accompagnement",
+        "title": "Tu ne seras pas *livré à toi-même.*",
+        "subtitle": "Que tu débutes ou que tu veuilles structurer ton activité, tu peux poser tes questions et t'appuyer sur des méthodes concrètes."
+      },
+      "blocks": {
+        "row-1": {
+          "type": "row",
+          "settings": {
+            "number": "01 — Démarrer",
+            "title": "Aide à la prise en main",
+            "text": "Dès ton arrivée, tu sais où trouver chaque ressource et par quoi commencer.",
+            "points": "Présentation des espaces du groupe\nConseils pour débuter sans se disperser\nRéponses aux questions des nouveaux membres",
+            "mockup": "topics",
+            "topics": "Règlement | Les règles de la communauté | shield\nFournisseurs | Contacts sélectionnés | contact\nLiens rentables | Opportunités repérées | link\nPlateformes | Sites neufs & seconde main | tag\nAgents | Solutions de livraison | truck\nTuto Vinted UK | Guide pas à pas | cap"
+          }
+        },
+        "row-2": {
+          "type": "row",
+          "settings": {
+            "number": "02 — Trouver",
+            "title": "Méthodes de recherche & négociation",
+            "text": "Des méthodes concrètes pour repérer les bons articles et acheter au bon prix.",
+            "points": "Méthodes de recherche par plateforme\nConseils de négociation\nVérifier un article et sa provenance avant l'achat",
+            "mockup": "search",
+            "mock_keywords": "nike running trousers"
+          }
+        },
+        "row-3": {
+          "type": "row",
+          "settings": {
+            "number": "03 — Revendre",
+            "title": "Annonces, prix et développement",
+            "text": "Mieux présenter tes articles et faire évoluer ton activité à ton rythme.",
+            "points": "Optimisation des annonces et des photos\nStratégies de prix et de revente\nConseils pour développer ton activité",
+            "mockup": "listing"
+          }
+        }
+      },
+      "block_order": [
+        "row-1",
+        "row-2",
+        "row-3"
+      ]
+    },
+    "offre": {
+      "type": "offer",
+      "settings": {
+        "anchor": "offre",
+        "style": "dark",
+        "surface": true,
+        "badge": "Accès complet",
+        "title": "Accède à *toutes nos ressources.*",
+        "text": "Un accès unique pour rejoindre le groupe privé et retrouver l'ensemble des ressources.",
+        "price_note": "",
+        "button_label": "REJOINDRE LE GROUPE",
+        "trust_1": "Paiement sécurisé par Shopify",
+        "trust_2": "Lien d'invitation personnel envoyé après confirmation du paiement",
+        "trust_3": "Lien à usage unique, jamais affiché publiquement",
+        "access_page": "/pages/conditions-acces"
+      },
+      "blocks": {
+        "item-1": {
+          "type": "item",
+          "settings": {
+            "text": "Plus de 6 contacts running authentiques"
+          }
+        },
+        "item-2": {
+          "type": "item",
+          "settings": {
+            "text": "Plus de 5 plateformes neuves avec étiquettes"
+          }
+        },
+        "item-3": {
+          "type": "item",
+          "settings": {
+            "text": "Plus de 40 sites de seconde main"
+          }
+        },
+        "item-4": {
+          "type": "item",
+          "settings": {
+            "text": "Plus de 15 agents de livraison"
+          }
+        },
+        "item-5": {
+          "type": "item",
+          "settings": {
+            "text": "Accès au bot Vinted UK"
+          }
+        },
+        "item-6": {
+          "type": "item",
+          "settings": {
+            "text": "Accès au groupe privé Telegram"
+          }
+        },
+        "item-7": {
+          "type": "item",
+          "settings": {
+            "text": "Accompagnement complet"
+          }
+        },
+        "item-8": {
+          "type": "item",
+          "settings": {
+            "text": "Ajout des nouvelles ressources selon les disponibilités"
+          }
+        }
+      },
+      "block_order": [
+        "item-1",
+        "item-2",
+        "item-3",
+        "item-4",
+        "item-5",
+        "item-6",
+        "item-7",
+        "item-8"
+      ]
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "anchor": "faq",
+        "surface": false,
+        "eyebrow": "FAQ",
+        "title": "Questions *fréquentes*",
+        "text": "Tu ne trouves pas ta réponse ? Écris-nous avec ton numéro de commande si tu as déjà acheté.",
+        "button_label": "Nous contacter",
+        "button_link": "/pages/contact",
+        "open_first": true
+      },
+      "blocks": {
+        "question-1": {
+          "type": "question",
+          "settings": {
+            "question": "Comment accéder au groupe après mon achat ?",
+            "answer": "<p>Dès que Shopify confirme ton paiement, un <strong>lien d'invitation Telegram personnel</strong> t'est délivré : par e-mail, et/ou en envoyant ton numéro de commande à notre bot Telegram (la méthode est rappelée dans ta confirmation de commande).</p><p>Ce lien est à usage unique et expire après un délai limité : utilise-le depuis le compte Telegram avec lequel tu veux rejoindre le groupe. Si tu ne reçois rien, vérifie tes spams puis contacte-nous avec ton numéro de commande.</p>"
+          }
+        },
+        "question-2": {
+          "type": "question",
+          "settings": {
+            "question": "Est-ce adapté aux débutants ?",
+            "answer": "<p>Oui. Le groupe contient des ressources pour bien démarrer, un tutoriel Vinted UK et un espace pour poser tes questions. L'achat-revente demande toutefois du temps et de la rigueur : aucun résultat n'est garanti, tes résultats dépendent de ton implication et du marché.</p>"
+          }
+        },
+        "question-3": {
+          "type": "question",
+          "settings": {
+            "question": "Que contient exactement le groupe ?",
+            "answer": "<p>Plus de 6 contacts running, plus de 5 plateformes d'articles neufs avec étiquettes, plus de 40 sites de seconde main, plus de 15 agents de livraison, l'accès au bot Vinted UK, des tutoriels et l'accompagnement de la communauté. De nouvelles ressources sont ajoutées selon les disponibilités.</p>"
+          }
+        },
+        "question-4": {
+          "type": "question",
+          "settings": {
+            "question": "Les contacts sont-ils spécialisés dans le running ?",
+            "answer": "<p>Une partie des ressources est dédiée au running : plus de 6 contacts orientés Nike Running et sportswear. Le groupe couvre aussi le semi-luxe et les plateformes généralistes. Les contacts sont des ressources sélectionnées, pas des partenaires officiels des marques : vérifie toujours l'état, l'authenticité et la provenance d'un article avant de l'acheter.</p>"
+          }
+        },
+        "question-5": {
+          "type": "question",
+          "settings": {
+            "question": "Comment fonctionne le bot Vinted UK ?",
+            "answer": "<p>Le bot surveille les nouvelles annonces publiques publiées sur Vinted UK selon les mots-clés configurés, puis envoie une alerte Telegram avec le lien de l'annonce. Il n'achète rien automatiquement : c'est toi qui décides. Les conditions d'utilisation et les éventuelles limites sont présentées dans le groupe.</p>"
+          }
+        },
+        "question-6": {
+          "type": "question",
+          "settings": {
+            "question": "Est-ce que les ressources sont régulièrement actualisées ?",
+            "answer": "<p>Oui, les ressources sont revues et complétées selon les disponibilités, et les nouveautés sont annoncées dans le groupe. Certaines sources peuvent changer de conditions ou disparaître : elles sont alors retirées ou remplacées.</p>"
+          }
+        },
+        "question-7": {
+          "type": "question",
+          "settings": {
+            "question": "Puis-je accéder au groupe depuis mon téléphone ?",
+            "answer": "<p>Oui. Le groupe est sur Telegram, application gratuite disponible sur iPhone, Android, ordinateur et navigateur web. Il suffit d'un compte Telegram.</p>"
+          }
+        },
+        "question-8": {
+          "type": "question",
+          "settings": {
+            "question": "Comment fonctionne l'accompagnement ?",
+            "answer": "<p>L'accompagnement se fait dans le groupe : tutoriels, conseils pour débuter, méthodes de recherche, négociation, optimisation des annonces et des photos, stratégies de prix. Tu peux poser tes questions dans les espaces prévus ; les délais de réponse peuvent varier.</p>"
+          }
+        },
+        "question-9": {
+          "type": "question",
+          "settings": {
+            "question": "Quels sont les moyens de paiement ?",
+            "answer": "<p>Le paiement se fait sur le checkout sécurisé de Shopify. Les moyens proposés (carte bancaire, Apple Pay, Google Pay, etc.) sont affichés au moment du paiement. Nous n'avons jamais accès à tes données bancaires.</p>"
+          }
+        },
+        "question-10": {
+          "type": "question",
+          "settings": {
+            "question": "Puis-je obtenir un remboursement ?",
+            "answer": "<p>L'accès est un contenu numérique fourni immédiatement après le paiement. Au moment de l'achat, tu demandes cet accès immédiat et tu reconnais perdre ton droit de rétractation une fois l'accès fourni (article L221-28 du Code de la consommation).</p><p>Si un problème technique t'empêche d'accéder au groupe (lien non reçu ou invalide), contacte-nous : nous t'envoyons un nouveau lien ou trouvons une solution. Les détails figurent dans notre politique de remboursement.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question-1",
+        "question-2",
+        "question-3",
+        "question-4",
+        "question-5",
+        "question-6",
+        "question-7",
+        "question-8",
+        "question-9",
+        "question-10"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "stats",
+    "running",
+    "semi_luxe",
+    "ressources",
+    "bot",
+    "accompagnement",
+    "offre",
+    "faq"
+  ]
+}

@@ -1,0 +1,121 @@
+<section class="section{% if section.settings.surface %} section--surface{% endif %}" id="{{ section.settings.anchor | handle }}" aria-labelledby="Title-{{ section.id }}">
+  <div class="container">
+    <div class="section-head section-head--center">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 id="Title-{{ section.id }}" class="h2" data-reveal style="--reveal-i: 1">{% render 'highlight', text: section.settings.title %}</h2>
+      {%- if section.settings.subtitle != blank -%}<p class="lead" data-reveal style="--reveal-i: 2">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+
+    <div class="coach-rows">
+      {%- for block in section.blocks -%}
+        <article class="coach-row" {{ block.shopify_attributes }}>
+          <div class="coach-row__media" data-reveal="scale">
+            {%- if block.settings.image != blank -%}
+              {% render 'media', image: block.settings.image, sizes: '(min-width: 990px) 580px, 100vw', alt: block.settings.title %}
+            {%- elsif block.settings.mockup == 'topics' -%}
+              {% render 'mockup-topics', topics: block.settings.topics %}
+            {%- elsif block.settings.mockup == 'search' -%}
+              {% render 'mockup-search', keywords: block.settings.mock_keywords %}
+            {%- elsif block.settings.mockup == 'listing' -%}
+              {% render 'mockup-listing' %}
+            {%- else -%}
+              {% render 'media', label: block.settings.title, sublabel: block.settings.number, art: 'rings' %}
+            {%- endif -%}
+          </div>
+          <div class="coach-row__content">
+            {%- if block.settings.number != blank -%}<span class="coach-row__num" data-reveal>{{ block.settings.number }}</span>{%- endif -%}
+            <h3 class="h2 coach-row__title" data-reveal style="--reveal-i: 1">{{ block.settings.title }}</h3>
+            {%- if block.settings.text != blank -%}<p class="lead" data-reveal>{{ block.settings.text }}</p>{%- endif -%}
+            {%- if block.settings.points != blank -%}
+              <ul class="check-list" role="list">
+                {%- assign points = block.settings.points | newline_to_br | split: '<br />' -%}
+                {%- for point in points -%}
+                  {%- assign p = point | strip -%}
+                  {%- if p != blank -%}
+                    <li data-reveal style="--reveal-i: {{ forloop.index0 }}">{% render 'icon', name: 'check' %}<span>{{ p }}</span></li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Accompagnement",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancre (ID)", "default": "accompagnement" },
+    { "type": "checkbox", "id": "surface", "label": "Fond gris clair", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Accompagnement" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Tu ne seras pas *livré à toi-même.*" },
+    { "type": "textarea", "id": "subtitle", "label": "Sous-titre", "default": "Que tu débutes ou que tu veuilles structurer ton activité, tu peux poser tes questions et t'appuyer sur des méthodes concrètes." }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Bloc texte + visuel",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Numéro / sur-titre", "default": "01 — Démarrer" },
+        { "type": "text", "id": "title", "label": "Titre", "default": "Aide à la prise en main" },
+        { "type": "textarea", "id": "text", "label": "Texte" },
+        { "type": "textarea", "id": "points", "label": "Points clés (un par ligne)" },
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "Si une image est choisie, elle remplace la maquette." },
+        {
+          "type": "select", "id": "mockup", "label": "Maquette (sans image)", "default": "topics",
+          "options": [
+            { "value": "topics", "label": "Espaces du groupe" },
+            { "value": "search", "label": "Recherche par mots-clés" },
+            { "value": "listing", "label": "Checklist annonce" },
+            { "value": "none", "label": "Aucune (visuel neutre)" }
+          ]
+        },
+        { "type": "textarea", "id": "topics", "label": "Espaces du groupe (maquette)", "info": "Une ligne par espace : Nom | description | icône (optionnelle : message, contact, tag, truck, link, cap, chart, shield, bot...)." },
+        { "type": "text", "id": "mock_keywords", "label": "Mots-clés (maquette recherche)", "default": "nike running trousers" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Accompagnement",
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "number": "01 — Démarrer",
+            "title": "Aide à la prise en main",
+            "text": "Dès ton arrivée, tu sais où trouver chaque ressource et par quoi commencer.",
+            "points": "Présentation des espaces du groupe\nConseils pour débuter sans se disperser\nRéponses aux questions des nouveaux membres",
+            "mockup": "topics",
+            "topics": "Règlement | Les règles de la communauté | shield\nFournisseurs | Contacts sélectionnés | contact\nLiens rentables | Opportunités repérées | link\nPlateformes | Sites neufs & seconde main | tag\nAgents | Solutions de livraison | truck\nTuto Vinted UK | Guide pas à pas | cap"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "number": "02 — Trouver",
+            "title": "Méthodes de recherche & négociation",
+            "text": "Des méthodes concrètes pour repérer les bons articles et acheter au bon prix.",
+            "points": "Méthodes de recherche par plateforme\nConseils de négociation\nVérifier un article et sa provenance avant l'achat",
+            "mockup": "search"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "number": "03 — Revendre",
+            "title": "Annonces, prix et développement",
+            "text": "Mieux présenter tes articles et faire évoluer ton activité à ton rythme.",
+            "points": "Optimisation des annonces et des photos\nStratégies de prix et de revente\nConseils pour développer ton activité",
+            "mockup": "listing"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

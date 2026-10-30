@@ -1,0 +1,12 @@
+<section class="section">
+  <div class="container container--narrow" style="text-align:center;display:grid;gap:20px;justify-items:center">
+    <span class="eyebrow">Erreur 404</span>
+    <h1 class="h1">Cette page n'existe pas.</h1>
+    <p class="lead">Le lien est peut-être incorrect ou la page a été déplacée.</p>
+    <a class="btn btn--lg" href="{{ routes.root_url }}">Retour à l'accueil {% render 'icon', name: 'arrow', class: 'icon--arrow' %}</a>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "404", "settings": [] }
+{% endschema %}

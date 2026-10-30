@@ -1,0 +1,16 @@
+<section class="section section--tight">
+  <div class="container container--narrow">
+    <header class="page-head" style="padding-top:0">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h1 class="h1">{{ page.title }}</h1>
+    </header>
+    <div class="rte">{{ page.content }}</div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contenu de la page",
+  "settings": [ { "type": "text", "id": "eyebrow", "label": "Sur-titre" } ]
+}
+{% endschema %}

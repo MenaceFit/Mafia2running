@@ -1,0 +1,98 @@
+{%- liquid
+  assign offer_product = section.settings.product | default: settings.access_product
+  assign variant = offer_product.selected_or_first_available_variant
+  assign is_light = false
+  assign buy_btn = 'btn--lg btn--block btn--light'
+  if section.settings.style == 'light'
+    assign is_light = true
+    assign buy_btn = 'btn--lg btn--block'
+  endif
+-%}
+<section class="section offer{% if section.settings.surface %} section--surface{% endif %}" id="{{ section.settings.anchor | handle }}" aria-labelledby="Title-{{ section.id }}" data-offer>
+  <div class="container">
+    <div class="offer-card{% if is_light %} offer-card--light{% endif %}" data-reveal="scale">
+      <div class="offer-card__main">
+        {%- if section.settings.badge != blank -%}
+          <span class="badge{% unless is_light %} badge--dark{% endunless %}"><span class="badge__dot" aria-hidden="true"></span>{{ section.settings.badge }}</span>
+        {%- endif -%}
+        <h2 id="Title-{{ section.id }}" class="h2"{% unless is_light %} style="color:#fff"{% endunless %}>{% render 'highlight', text: section.settings.title %}</h2>
+        {%- if section.settings.text != blank -%}<p class="lead"{% unless is_light %} style="color: rgba(255,255,255,.7)"{% endunless %}>{{ section.settings.text }}</p>{%- endif -%}
+        <ul class="offer-list" role="list">
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>{% render 'icon', name: 'check' %}<span>{{ block.settings.text }}</span></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="offer-card__side">
+        {%- if offer_product != blank and variant != blank -%}
+          <div class="price">
+            <span class="price__amount">{{ variant.price | money }}</span>
+            {%- if variant.compare_at_price > variant.price -%}
+              <span class="price__compare"><span class="visually-hidden">Prix habituel</span>{{ variant.compare_at_price | money }}</span>
+            {%- endif -%}
+            {%- if section.settings.price_note != blank -%}<span class="price__note">{{ section.settings.price_note }}</span>{%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {% render 'buy-form', product: offer_product, label: section.settings.button_label, button_class: buy_btn, location: 'offer' %}
+
+        <ul class="offer-card__trust" role="list">
+          {%- if section.settings.trust_1 != blank -%}<li>{% render 'icon', name: 'lock' %}{{ section.settings.trust_1 }}</li>{%- endif -%}
+          {%- if section.settings.trust_2 != blank -%}<li>{% render 'icon', name: 'telegram' %}{{ section.settings.trust_2 }}</li>{%- endif -%}
+          {%- if section.settings.trust_3 != blank -%}<li>{% render 'icon', name: 'shield' %}{{ section.settings.trust_3 }}</li>{%- endif -%}
+        </ul>
+
+        <p class="offer-links">
+          {%- if section.settings.access_page != blank -%}<a href="{{ section.settings.access_page }}">Conditions d'accès</a>{%- endif -%}
+          {%- if shop.terms_of_service != blank -%}<a href="{{ shop.terms_of_service.url }}">{{ shop.terms_of_service.title }}</a>{%- endif -%}
+          {%- if shop.refund_policy != blank -%}<a href="{{ shop.refund_policy.url }}">{{ shop.refund_policy.title }}</a>{%- endif -%}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Offre / Achat",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancre (ID)", "default": "offre", "info": "Les boutons « Accéder au groupe » pointent vers #offre." },
+    { "type": "product", "id": "product", "label": "Produit", "info": "Vide = produit défini dans Paramètres du thème > Produit d'accès. Le prix affiché est celui du produit Shopify." },
+    { "type": "select", "id": "style", "label": "Style de la carte", "default": "dark", "options": [ { "value": "dark", "label": "Bleu nuit" }, { "value": "light", "label": "Blanc" } ] },
+    { "type": "checkbox", "id": "surface", "label": "Fond gris clair", "default": true },
+    { "type": "text", "id": "badge", "label": "Badge", "default": "Accès complet" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Accède à *toutes nos ressources.*" },
+    { "type": "textarea", "id": "text", "label": "Texte" },
+    { "type": "text", "id": "price_note", "label": "Note sous le prix", "info": "Ex. : Paiement unique, accès au groupe. Décris exactement ce que le client achète." },
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "REJOINDRE LE GROUPE" },
+    { "type": "text", "id": "trust_1", "label": "Réassurance 1", "default": "Paiement sécurisé par Shopify" },
+    { "type": "text", "id": "trust_2", "label": "Réassurance 2", "default": "Lien d'invitation personnel envoyé après confirmation du paiement" },
+    { "type": "text", "id": "trust_3", "label": "Réassurance 3", "default": "Lien à usage unique, jamais affiché publiquement" },
+    { "type": "url", "id": "access_page", "label": "Page « Conditions d'accès »", "info": "Crée une page avec le modèle page.conditions et lie-la ici." }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Élément inclus",
+      "settings": [ { "type": "text", "id": "text", "label": "Texte", "default": "Accès au groupe privé Telegram" } ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Offre / Achat",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Plus de 6 contacts running authentiques" } },
+        { "type": "item", "settings": { "text": "Plus de 5 plateformes neuves avec étiquettes" } },
+        { "type": "item", "settings": { "text": "Plus de 40 sites de seconde main" } },
+        { "type": "item", "settings": { "text": "Plus de 15 agents de livraison" } },
+        { "type": "item", "settings": { "text": "Accès au bot Vinted UK" } },
+        { "type": "item", "settings": { "text": "Accès au groupe privé Telegram" } },
+        { "type": "item", "settings": { "text": "Accompagnement complet" } },
+        { "type": "item", "settings": { "text": "Ajout des nouvelles ressources selon les disponibilités" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

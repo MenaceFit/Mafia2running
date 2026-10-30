@@ -1,0 +1,8 @@
+{
+  "type": "header",
+  "name": "Groupe en-tête",
+  "sections": {
+    "header": { "type": "header", "settings": {} }
+  },
+  "order": ["header"]
+}

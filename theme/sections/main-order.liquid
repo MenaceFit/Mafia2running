@@ -1,0 +1,16 @@
+<section class="section section--tight">
+  <div class="container container--narrow" style="max-width:560px;display:grid;gap:24px">
+    <h1 class="h1">Commande {{ order.name }}</h1>
+    <p class="muted">{{ order.created_at | date: "%d/%m/%Y %H:%M" }} · {{ order.financial_status_label }}</p>
+    {%- for item in order.line_items -%}
+      <div class="cart-line" style="grid-template-columns:1fr auto"><span>{{ item.title }} × {{ item.quantity }}</span><span>{{ item.final_line_price | money }}</span></div>
+    {%- endfor -%}
+    <p class="h3">Total : {{ order.total_price | money }}</p>
+    <p class="notice">Ton lien d’invitation Telegram est délivré après confirmation du paiement. Besoin d’aide ? Contacte-nous avec le numéro {{ order.name }}.</p>
+    <p><a class="link-arrow" href="{{ routes.account_url }}">Retour au compte {% render "icon", name: "arrow" %}</a></p>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Commande", "settings": [] }
+{% endschema %}

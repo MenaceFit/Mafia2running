@@ -1,0 +1,122 @@
+<section class="section section--dark bot" id="{{ section.settings.anchor | handle }}" aria-labelledby="Title-{{ section.id }}">
+  <div class="container">
+    <div class="bot__grid">
+      <div class="bot__content">
+        {%- if section.settings.badge != blank -%}
+          <span class="badge badge--dark" data-reveal><span class="badge__dot" aria-hidden="true"></span>{{ section.settings.badge }}</span>
+        {%- endif -%}
+        <h2 id="Title-{{ section.id }}" class="h2" data-reveal style="--reveal-i: 1">{% render 'highlight', text: section.settings.title %}</h2>
+        {%- if section.settings.text != blank -%}<p class="lead" data-reveal style="--reveal-i: 2">{{ section.settings.text }}</p>{%- endif -%}
+
+        <ul class="feature-list" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'feature' -%}
+              <li data-reveal style="--reveal-i: {{ forloop.index0 | modulo: 3 }}" {{ block.shopify_attributes }}>
+                <span class="feature-list__icon">{% render 'icon', name: block.settings.icon %}</span>
+                <span>{{ block.settings.title }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_link | default: '#offre' }}" class="btn btn--light btn--lg" data-reveal data-track="cta_click" data-track-label="bot_section">
+            {{ section.settings.button_label }}
+            {% render 'icon', name: 'arrow', class: 'icon--arrow' %}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.disclaimer != blank -%}
+          <p class="bot__disclaimer" data-reveal>{{ section.settings.disclaimer }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="phone-stage" data-reveal="scale" data-reveal-self>
+        <div class="phone" role="img" aria-label="Exemple de démonstration : notifications du bot Vinted UK dans Telegram">
+          <div class="phone__screen" aria-hidden="true">
+            <span class="phone__notch"></span>
+            <div class="tg-top">
+              <span class="tg-top__avatar">{% render 'icon', name: 'bot' %}</span>
+              <div>
+                <p class="tg-top__name">{{ section.settings.bot_name }}</p>
+                <p class="tg-top__status">bot</p>
+              </div>
+            </div>
+            <div class="tg-feed">
+              <span class="tg-demo">Exemple de démonstration</span>
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'notification' -%}
+                  <div class="tg-msg" {{ block.shopify_attributes }}>
+                    <p class="tg-msg__head">🆕 NOUVELLE ANNONCE</p>
+                    <p class="tg-msg__title">{{ block.settings.title }}</p>
+                    <p class="tg-msg__price">Prix : {{ block.settings.price }}</p>
+                    {%- if block.settings.meta != blank -%}<p class="tg-msg__price">{{ block.settings.meta }}</p>{%- endif -%}
+                    <span class="tg-msg__btn">Voir l'annonce</span>
+                    <p class="tg-msg__time">{{ block.settings.time }}</p>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+            <div class="tg-input"><span>Message</span>{% render 'icon', name: 'telegram' %}</div>
+          </div>
+        </div>
+        {%- if section.settings.phone_badge != blank -%}
+          <span class="phone__badge">{% render 'icon', name: 'lock' %}{{ section.settings.phone_badge }}</span>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bot Vinted UK",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancre (ID)", "default": "fonctionnalites" },
+    { "type": "text", "id": "badge", "label": "Badge", "default": "Accès privé" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Le bot *Vinted UK*, en exclusivité pour les membres." },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Ne passe plus ton temps à actualiser les recherches. Identifie rapidement les nouvelles annonces correspondant à tes mots-clés." },
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "Accéder au bot" },
+    { "type": "url", "id": "button_link", "label": "Lien du bouton", "info": "Vide = section offre (#offre)." },
+    { "type": "textarea", "id": "disclaimer", "label": "Mention", "default": "Notifications affichées à titre d'exemple de démonstration. Le bot signale des annonces publiques selon tes mots-clés ; il n'achète rien à ta place. Conditions d'utilisation présentées dans le groupe." },
+    { "type": "header", "content": "Maquette smartphone" },
+    { "type": "text", "id": "bot_name", "label": "Nom affiché du bot", "default": "Vinted UK Alerts" },
+    { "type": "text", "id": "phone_badge", "label": "Badge flottant", "default": "Accès privé" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Fonctionnalité",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icône", "default": "zap", "options": [{"value": "running", "label": "Running"}, {"value": "diamond", "label": "Diamant"}, {"value": "bot", "label": "Bot"}, {"value": "package", "label": "Colis"}, {"value": "tag", "label": "Étiquette"}, {"value": "recycle", "label": "Seconde main"}, {"value": "truck", "label": "Livraison"}, {"value": "contact", "label": "Contact"}, {"value": "users", "label": "Communauté"}, {"value": "bell", "label": "Alerte"}, {"value": "search", "label": "Recherche"}, {"value": "zap", "label": "Éclair"}, {"value": "clock", "label": "Horloge"}, {"value": "shield", "label": "Bouclier"}, {"value": "lock", "label": "Cadenas"}, {"value": "target", "label": "Cible"}, {"value": "compass", "label": "Boussole"}, {"value": "camera", "label": "Photo"}, {"value": "chart", "label": "Graphique"}, {"value": "message", "label": "Message"}, {"value": "handshake", "label": "Accompagnement"}, {"value": "cap", "label": "Formation"}, {"value": "spark", "label": "Étoile"}, {"value": "layers", "label": "Sélection"}, {"value": "link", "label": "Lien"}, {"value": "phone", "label": "Mobile"}, {"value": "card", "label": "Paiement"}, {"value": "refresh", "label": "Mise à jour"}, {"value": "telegram", "label": "Telegram"}] },
+        { "type": "text", "id": "title", "label": "Texte", "default": "Surveillance automatisée" }
+      ]
+    },
+    {
+      "type": "notification",
+      "name": "Notification (démo)",
+      "limit": 3,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Article", "default": "Nike Running Trousers" },
+        { "type": "text", "id": "price", "label": "Prix affiché", "default": "13,83 GBP" },
+        { "type": "text", "id": "meta", "label": "Ligne supplémentaire", "info": "Ex. : Taille M" },
+        { "type": "text", "id": "time", "label": "Heure", "default": "12:04" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bot Vinted UK",
+      "blocks": [
+        { "type": "feature", "settings": { "icon": "zap", "title": "Surveillance automatisée" } },
+        { "type": "feature", "settings": { "icon": "search", "title": "Recherche par mots-clés" } },
+        { "type": "feature", "settings": { "icon": "bell", "title": "Alertes Telegram" } },
+        { "type": "feature", "settings": { "icon": "link", "title": "Accès rapide aux annonces" } },
+        { "type": "feature", "settings": { "icon": "clock", "title": "Gain de temps dans la recherche" } },
+        { "type": "notification", "settings": { "title": "Nike Running Trousers", "price": "13,83 GBP", "time": "12:04" } },
+        { "type": "notification", "settings": { "title": "Nike Running Top", "price": "5,95 GBP", "time": "12:06" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

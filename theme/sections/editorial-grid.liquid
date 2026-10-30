@@ -1,0 +1,94 @@
+<section class="section{% if section.settings.surface %} section--surface{% endif %}" id="{{ section.settings.anchor | handle }}" aria-labelledby="Title-{{ section.id }}">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div style="display:grid;gap:18px">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 id="Title-{{ section.id }}" class="h2" data-reveal style="--reveal-i: 1">{% render 'highlight', text: section.settings.title %}</h2>
+      </div>
+      {%- if section.settings.subtitle != blank -%}<p class="lead" data-reveal style="--reveal-i: 2">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+
+    <ul class="editorial" role="list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign has_image = false
+          if block.settings.image != blank
+            assign has_image = true
+          endif
+          assign is_wide = false
+          assign pos = forloop.index0 | modulo: 6
+          if pos < 2
+            assign is_wide = true
+          endif
+          assign tile_dark = false
+          assign mod3 = forloop.index | modulo: 3
+          if mod3 == 2
+            assign tile_dark = true
+          endif
+        -%}
+        <li class="editorial__item{% unless has_image %} no-image{% if tile_dark %} is-dark{% endif %}{% endunless %}" data-reveal style="--reveal-i: {{ forloop.index0 | modulo: 3 }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" style="position:absolute;inset:0;z-index:2" aria-label="{{ block.settings.brand | escape }}"></a>{%- endif -%}
+          {%- if is_wide -%}
+            {%- assign tile_sizes = '(min-width: 750px) 50vw, 50vw' -%}
+          {%- else -%}
+            {%- assign tile_sizes = '(min-width: 750px) 33vw, 50vw' -%}
+          {%- endif -%}
+          {% render 'media', image: block.settings.image, sizes: tile_sizes, alt: block.settings.alt, dark: tile_dark, art: 'rings' %}
+          <div class="editorial__caption">
+            <div>
+              <p class="editorial__cat">{{ block.settings.category }}</p>
+              <p class="editorial__brand">{{ block.settings.brand }}</p>
+            </div>
+            <span class="editorial__pill" aria-hidden="true">{% render 'icon', name: 'arrow-up-right' %}</span>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if section.settings.note != blank -%}
+      <p class="editorial-note" data-reveal>{{ section.settings.note }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Grille éditoriale",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancre (ID)", "default": "semi-luxe" },
+    { "type": "checkbox", "id": "surface", "label": "Fond gris clair", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Univers 02" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Le *semi-luxe*, à portée de main." },
+    { "type": "textarea", "id": "subtitle", "label": "Sous-titre", "default": "Retrouve une sélection de ressources pour explorer les plateformes et les fournisseurs spécialisés dans les marques premium." },
+    { "type": "text", "id": "note", "label": "Mention sous la grille", "default": "Marques citées à titre d'illustration des catégories couvertes. Elles ne sont ni partenaires ni affiliées à la communauté." }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Visuel",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "Photo dont tu détiens les droits. Pas de logo modifié." },
+        { "type": "text", "id": "alt", "label": "Texte alternatif" },
+        { "type": "text", "id": "brand", "label": "Titre", "default": "Stone Island" },
+        { "type": "text", "id": "category", "label": "Catégorie", "default": "Sweats & mailles" },
+        { "type": "url", "id": "link", "label": "Lien (optionnel)" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Grille éditoriale",
+      "blocks": [
+        { "type": "tile", "settings": { "brand": "Stone Island", "category": "Sweats & mailles" } },
+        { "type": "tile", "settings": { "brand": "CP Company", "category": "Pulls & vestes" } },
+        { "type": "tile", "settings": { "brand": "Ralph Lauren", "category": "Ensembles" } },
+        { "type": "tile", "settings": { "brand": "Canada Goose", "category": "Doudounes" } },
+        { "type": "tile", "settings": { "brand": "Nike", "category": "Running & sportswear" } },
+        { "type": "tile", "settings": { "brand": "Under Armour", "category": "Vestes techniques" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

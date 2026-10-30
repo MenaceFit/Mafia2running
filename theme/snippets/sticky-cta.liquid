@@ -1,0 +1,23 @@
+{%- comment -%} Mobile purchase bar. Appears once the hero is out of view, hides near the offer section. {%- endcomment -%}
+{%- liquid
+  assign access = settings.access_product
+  if request.page_type == 'index'
+    assign target = '#offre'
+  elsif access != blank
+    assign target = access.url
+  else
+    assign target = routes.root_url | append: '#offre'
+  endif
+-%}
+{%- unless request.page_type == 'cart' or request.page_type == 'product' -%}
+  <div class="sticky-cta" data-sticky-cta aria-hidden="true">
+    <div class="sticky-cta__text">
+      <strong>{{ settings.sticky_cta_text }}</strong>
+      {%- if access != blank -%}<span>{{ access.price | money }}</span>{%- endif -%}
+    </div>
+    <a class="btn btn--light" href="{{ target }}" tabindex="-1" data-track="cta_click" data-track-label="sticky_mobile">
+      {{ settings.cta_label | default: 'Rejoindre' }}
+      {% render 'icon', name: 'arrow', class: 'icon--arrow' %}
+    </a>
+  </div>
+{%- endunless -%}

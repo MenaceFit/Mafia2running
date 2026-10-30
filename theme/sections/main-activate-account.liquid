@@ -1,0 +1,15 @@
+<section class="section section--tight">
+  <div class="container container--narrow" style="max-width:560px;display:grid;gap:24px">
+    <h1 class="h1">Activer le compte</h1>
+    {%- form 'activate_customer_password', class: 'form-grid' -%}
+      {%- if form.errors -%}<div class="notice notice--error">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <div class="field"><label for="ActPassword">Mot de passe</label><input id="ActPassword" type="password" name="customer[password]" autocomplete="new-password" required></div>
+      <div class="field"><label for="ActPassword2">Confirmation</label><input id="ActPassword2" type="password" name="customer[password_confirmation]" autocomplete="new-password" required></div>
+      <button class="btn btn--lg" type="submit">Activer</button>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Activation du compte", "settings": [] }
+{% endschema %}

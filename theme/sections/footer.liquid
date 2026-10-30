@@ -1,0 +1,107 @@
+{%- liquid
+  assign brand = settings.brand_name | default: shop.name
+  assign nav_menu = linklists[section.settings.menu]
+-%}
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="{{ routes.root_url }}" class="footer__logo" aria-label="{{ brand | escape }} – accueil">
+          {%- if settings.logo_inverse != blank -%}
+            {{ settings.logo_inverse | image_url: width: 480 | image_tag: loading: 'lazy', alt: brand, widths: '160, 240, 320, 480', sizes: '160px', style: 'width: 160px; height: auto;' }}
+          {%- else -%}
+            <span class="logo-mark" aria-hidden="true">{{ brand | slice: 0, 2 | upcase }}</span>
+            <span>{{ brand }}</span>
+          {%- endif -%}
+        </a>
+        {%- if section.settings.about != blank -%}
+          <div class="small">{{ section.settings.about }}</div>
+        {%- endif -%}
+        {%- if settings.social_tiktok != blank or settings.social_instagram != blank or settings.social_snapchat != blank or settings.social_telegram != blank -%}
+          <ul class="footer__social" role="list">
+            {%- if settings.social_tiktok != blank -%}<li><a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'icon', name: 'tiktok' %}</a></li>{%- endif -%}
+            {%- if settings.social_instagram != blank -%}<li><a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon', name: 'instagram' %}</a></li>{%- endif -%}
+            {%- if settings.social_snapchat != blank -%}<li><a href="{{ settings.social_snapchat }}" target="_blank" rel="noopener" aria-label="Snapchat">{% render 'icon', name: 'snapchat' %}</a></li>{%- endif -%}
+            {%- if settings.social_telegram != blank -%}<li><a href="{{ settings.social_telegram }}" target="_blank" rel="noopener" aria-label="Telegram">{% render 'icon', name: 'telegram' %}</a></li>{%- endif -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      <div class="footer__cols">
+        <div>
+          <p class="footer__title">Navigation</p>
+          <ul class="footer__links" role="list">
+            {%- if nav_menu.links.size > 0 -%}
+              {%- for link in nav_menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}
+            {%- else -%}
+              {%- render 'default-nav' -%}
+            {%- endif -%}
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer__title">Informations</p>
+          <ul class="footer__links" role="list">
+            {%- for policy in shop.policies -%}
+              <li><a href="{{ policy.url }}">{{ policy.title }}</a></li>
+            {%- endfor -%}
+            {%- for block in section.blocks -%}
+              {%- if block.settings.url != blank -%}
+                <li {{ block.shopify_attributes }}><a href="{{ block.settings.url }}">{{ block.settings.title }}</a></li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+          {%- if shop.policies.size == 0 and request.design_mode -%}
+            <p class="small" style="margin-top:12px;opacity:.7">Remplis tes politiques dans Paramètres &gt; Politiques : elles apparaîtront ici automatiquement (CGV, confidentialité, remboursement, mentions légales).</p>
+          {%- endif -%}
+        </div>
+
+        <div>
+          <p class="footer__title">Contact</p>
+          <ul class="footer__links" role="list">
+            {%- if section.settings.email != blank -%}
+              <li><a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a></li>
+            {%- elsif shop.email != blank -%}
+              <li><a href="mailto:{{ shop.email }}">{{ shop.email }}</a></li>
+            {%- endif -%}
+            {%- if section.settings.contact_page != blank -%}
+              <li><a href="{{ section.settings.contact_page }}">Formulaire de contact</a></li>
+            {%- endif -%}
+            {%- if section.settings.hours != blank -%}<li>{{ section.settings.hours }}</li>{%- endif -%}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ brand }}. Tous droits réservés.</p>
+      {%- if section.settings.disclaimer != blank -%}
+        <p class="footer__disclaimer">{{ section.settings.disclaimer }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pied de page",
+  "settings": [
+    { "type": "richtext", "id": "about", "label": "Présentation", "default": "<p>Communauté privée dédiée à l'achat-revente de vêtements : ressources running, semi-luxe, plateformes, logistique et accompagnement.</p>" },
+    { "type": "link_list", "id": "menu", "label": "Menu de navigation", "default": "footer" },
+    { "type": "text", "id": "email", "label": "E-mail de contact", "info": "Vide = e-mail de la boutique." },
+    { "type": "url", "id": "contact_page", "label": "Page de contact" },
+    { "type": "text", "id": "hours", "label": "Disponibilité", "default": "Réponse sous 24 à 48 h ouvrées" },
+    { "type": "text", "id": "disclaimer", "label": "Mention légale courte", "default": "Les marques citées appartiennent à leurs propriétaires respectifs et ne sont pas partenaires de la communauté. Aucun résultat financier n'est garanti." }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Lien informations",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titre", "default": "Conditions d'accès" },
+        { "type": "url", "id": "url", "label": "Lien" }
+      ]
+    }
+  ]
+}
+{% endschema %}

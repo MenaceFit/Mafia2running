@@ -1,0 +1,76 @@
+<section class="section{% if section.settings.surface %} section--surface{% endif %}" id="{{ section.settings.anchor | handle }}" aria-labelledby="Title-{{ section.id }}">
+  <div class="container">
+    <div class="faq__grid">
+      <div class="faq__aside">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 id="Title-{{ section.id }}" class="h2" data-reveal style="--reveal-i: 1">{% render 'highlight', text: section.settings.title %}</h2>
+        {%- if section.settings.text != blank -%}<p class="lead" data-reveal style="--reveal-i: 2">{{ section.settings.text }}</p>{%- endif -%}
+        {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+          <a href="{{ section.settings.button_link }}" class="btn btn--ghost" data-reveal style="--reveal-i: 3">
+            {% render 'icon', name: 'message' %}{{ section.settings.button_label }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="accordion" data-reveal>
+        {%- for block in section.blocks -%}
+          <details class="accordion__item" data-accordion {{ block.shopify_attributes }}{% if forloop.first and section.settings.open_first %} open{% endif %}>
+            <summary>
+              <span>{{ block.settings.question }}</span>
+              <span class="accordion__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="accordion__content">
+              <div class="accordion__answer rte">{{ block.settings.answer }}</div>
+            </div>
+          </details>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- if section.blocks.size > 0 -%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {%- for block in section.blocks -%}
+      {
+        "@type": "Question",
+        "name": {{ block.settings.question | json }},
+        "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.answer | strip_html | json }} }
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancre (ID)", "default": "faq" },
+    { "type": "checkbox", "id": "surface", "label": "Fond gris clair", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "FAQ" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Questions *fréquentes*" },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Tu ne trouves pas ta réponse ? Écris-nous avec ton numéro de commande si tu as déjà acheté." },
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "Nous contacter" },
+    { "type": "url", "id": "button_link", "label": "Lien du bouton" },
+    { "type": "checkbox", "id": "open_first", "label": "Ouvrir la première question", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Comment accéder au groupe après mon achat ?" },
+        { "type": "richtext", "id": "answer", "label": "Réponse", "default": "<p>Réponse à rédiger.</p>" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "FAQ" } ]
+}
+{% endschema %}

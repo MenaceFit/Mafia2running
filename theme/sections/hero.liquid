@@ -1,0 +1,123 @@
+{%- liquid
+  assign card_count = 0
+-%}
+<section class="hero" id="{{ section.settings.anchor | default: 'accueil' | handle }}" aria-labelledby="HeroTitle-{{ section.id }}">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero__grid">
+      <div class="hero__content">
+        {%- if section.settings.badge != blank -%}
+          <span class="badge" data-reveal><span class="badge__dot" aria-hidden="true"></span>{{ section.settings.badge }}</span>
+        {%- endif -%}
+
+        <h1 id="HeroTitle-{{ section.id }}" class="h-display hero__title" data-reveal style="--reveal-i: 1">
+          {%- render 'highlight', text: section.settings.title -%}
+        </h1>
+
+        {%- if section.settings.subtitle != blank -%}
+          <p class="lead hero__subtitle" data-reveal style="--reveal-i: 2">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+
+        <div class="hero__actions" data-reveal style="--reveal-i: 3">
+          {%- if section.settings.button_1_label != blank -%}
+            <a href="{{ section.settings.button_1_link | default: '#offre' }}" class="btn btn--lg" data-track="cta_click" data-track-label="hero_primary">
+              {{ section.settings.button_1_label }}
+              {% render 'icon', name: 'arrow', class: 'icon--arrow' %}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.button_2_label != blank -%}
+            <a href="{{ section.settings.button_2_link | default: '#ressources' }}" class="btn btn--lg btn--ghost" data-track="cta_click" data-track-label="hero_secondary">
+              {{ section.settings.button_2_label }}
+            </a>
+          {%- endif -%}
+        </div>
+
+        <ul class="hero__meta" role="list" data-reveal style="--reveal-i: 4">
+          {%- if section.settings.meta_1 != blank -%}<li><span>{% render 'icon', name: 'lock' %}{{ section.settings.meta_1 }}</span></li>{%- endif -%}
+          {%- if section.settings.meta_2 != blank -%}<li><span>{% render 'icon', name: 'telegram' %}{{ section.settings.meta_2 }}</span></li>{%- endif -%}
+          {%- if section.settings.meta_3 != blank -%}<li><span>{% render 'icon', name: 'phone' %}{{ section.settings.meta_3 }}</span></li>{%- endif -%}
+        </ul>
+      </div>
+
+      <div class="hero__visual" data-reveal="scale" style="--reveal-i: 2" data-parallax-root>
+        <div class="hero__orbit" aria-hidden="true"></div>
+        <div class="hero__orbit hero__orbit--2" aria-hidden="true"></div>
+        <div class="hero__core" data-parallax="0.4">
+          <div class="hero__core-inner">
+            {% render 'icon', name: 'lock' %}
+            <strong>{{ section.settings.core_title }}</strong>
+            <span>{{ section.settings.core_label }}</span>
+          </div>
+        </div>
+        {%- for block in section.blocks limit: 4 -%}
+          {%- assign card_count = card_count | plus: 1 -%}
+          <div class="float-card float-card--{{ forloop.index }}{% if block.settings.dark %} float-card--dark{% endif %}" data-parallax="{{ forloop.index | times: 0.35 | plus: 0.6 }}" {{ block.shopify_attributes }}>
+            <span class="float-card__icon">{% render 'icon', name: block.settings.icon %}</span>
+            <span class="float-card__label">{{ block.settings.label }}</span>
+            <span class="float-card__value">{{ block.settings.value }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.show_scroll -%}
+    <a href="{{ section.settings.scroll_target | default: '#ressources' }}" class="scroll-indicator" aria-label="Faire défiler vers la suite">
+      <span class="scroll-indicator__track" aria-hidden="true"></span>
+      <span aria-hidden="true">Défiler</span>
+    </a>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "div",
+  "class": "section-hero",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancre (ID)", "default": "accueil" },
+    { "type": "text", "id": "badge", "label": "Badge", "default": "Communauté privée • Achat-revente" },
+    { "type": "textarea", "id": "title", "label": "Titre", "default": "Accède aux *meilleures ressources* pour développer ton activité.", "info": "Entoure des mots avec des *astérisques* pour les mettre en évidence." },
+    { "type": "textarea", "id": "subtitle", "label": "Sous-titre", "default": "Running, semi-luxe, plateformes spécialisées, contacts et outils exclusifs : retrouve toutes les ressources essentielles réunies dans un seul espace privé." },
+    { "type": "header", "content": "Boutons" },
+    { "type": "text", "id": "button_1_label", "label": "Bouton principal", "default": "Découvrir le groupe" },
+    { "type": "url", "id": "button_1_link", "label": "Lien du bouton principal", "info": "Vide = section offre (#offre)." },
+    { "type": "text", "id": "button_2_label", "label": "Bouton secondaire", "default": "Voir les avantages" },
+    { "type": "url", "id": "button_2_link", "label": "Lien du bouton secondaire", "info": "Vide = section ressources (#ressources)." },
+    { "type": "header", "content": "Réassurance" },
+    { "type": "text", "id": "meta_1", "label": "Élément 1", "default": "Paiement sécurisé" },
+    { "type": "text", "id": "meta_2", "label": "Élément 2", "default": "Groupe privé Telegram" },
+    { "type": "text", "id": "meta_3", "label": "Élément 3", "default": "100 % accessible sur mobile" },
+    { "type": "header", "content": "Visuel" },
+    { "type": "text", "id": "core_title", "label": "Bloc central – titre", "default": "Groupe privé" },
+    { "type": "text", "id": "core_label", "label": "Bloc central – légende", "default": "Accès membres" },
+    { "type": "checkbox", "id": "show_scroll", "label": "Afficher l'indicateur de scroll", "default": true },
+    { "type": "text", "id": "scroll_target", "label": "Cible de l'indicateur", "default": "#ressources" }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Carte flottante",
+      "limit": 4,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icône", "default": "running", "options": [{"value": "running", "label": "Running"}, {"value": "diamond", "label": "Diamant"}, {"value": "bot", "label": "Bot"}, {"value": "package", "label": "Colis"}, {"value": "tag", "label": "Étiquette"}, {"value": "recycle", "label": "Seconde main"}, {"value": "truck", "label": "Livraison"}, {"value": "contact", "label": "Contact"}, {"value": "users", "label": "Communauté"}, {"value": "bell", "label": "Alerte"}, {"value": "search", "label": "Recherche"}, {"value": "zap", "label": "Éclair"}, {"value": "clock", "label": "Horloge"}, {"value": "shield", "label": "Bouclier"}, {"value": "lock", "label": "Cadenas"}, {"value": "target", "label": "Cible"}, {"value": "compass", "label": "Boussole"}, {"value": "camera", "label": "Photo"}, {"value": "chart", "label": "Graphique"}, {"value": "message", "label": "Message"}, {"value": "handshake", "label": "Accompagnement"}, {"value": "cap", "label": "Formation"}, {"value": "spark", "label": "Étoile"}, {"value": "layers", "label": "Sélection"}, {"value": "link", "label": "Lien"}, {"value": "phone", "label": "Mobile"}, {"value": "card", "label": "Paiement"}, {"value": "refresh", "label": "Mise à jour"}, {"value": "telegram", "label": "Telegram"}] },
+        { "type": "text", "id": "label", "label": "Libellé", "default": "Running" },
+        { "type": "text", "id": "value", "label": "Texte", "default": "+6 contacts spécialisés" },
+        { "type": "checkbox", "id": "dark", "label": "Style bleu nuit", "default": false }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Hero",
+      "blocks": [
+        { "type": "card", "settings": { "icon": "running", "label": "Running", "value": "+6 contacts spécialisés" } },
+        { "type": "card", "settings": { "icon": "diamond", "label": "Semi-luxe", "value": "+40 plateformes et ressources", "dark": true } },
+        { "type": "card", "settings": { "icon": "bot", "label": "Vinted UK", "value": "Bot de surveillance des annonces" } },
+        { "type": "card", "settings": { "icon": "package", "label": "Logistique", "value": "+15 agents et solutions" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

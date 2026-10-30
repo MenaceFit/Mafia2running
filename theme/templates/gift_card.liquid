@@ -1,0 +1,22 @@
+{%- layout none -%}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <title>Carte cadeau – {{ shop.name }}</title>
+    {%- render 'css-variables' -%}
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    {{ content_for_header }}
+  </head>
+  <body>
+    <main class="section"><div class="container container--narrow" style="display:grid;gap:20px;text-align:center;justify-items:center">
+      <h1 class="h1">Carte cadeau {{ gift_card.initial_value | money }}</h1>
+      {%- if gift_card.enabled == false or gift_card.expired -%}<p class="notice notice--error">Cette carte cadeau n'est plus valide.</p>{%- endif -%}
+      <p class="lead">Solde : {{ gift_card.balance | money }}</p>
+      <p class="h3" style="letter-spacing:.08em">{{ gift_card.code | format_code }}</p>
+      <a class="btn" href="{{ shop.url }}">Utiliser sur la boutique</a>
+    </div></main>
+  </body>
+</html>

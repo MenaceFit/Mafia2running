@@ -1,0 +1,15 @@
+{
+  "name": "telegram-delivery",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Délivrance sécurisée des invitations Telegram après paiement Shopify",
+  "type": "module",
+  "engines": { "node": ">=18.17" },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js",
+    "check": "node scripts/check.js",
+    "setup-telegram": "node scripts/setup-telegram-webhook.js",
+    "revoke": "node scripts/revoke.js"
+  }
+}

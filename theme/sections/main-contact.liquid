@@ -1,0 +1,46 @@
+<section class="section section--tight">
+  <div class="container container--narrow">
+    <header class="page-head" style="padding-top:0">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h1 class="h1">{{ page.title }}</h1>
+      {%- if page.content != blank -%}<div class="rte lead">{{ page.content }}</div>{%- endif -%}
+    </header>
+
+    {%- form 'contact', class: 'form-grid', id: 'ContactForm' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="notice notice--success" role="status" tabindex="-1" autofocus>{{ section.settings.success }}</p>
+      {%- elsif form.errors -%}
+        <div class="notice notice--error" role="alert">{{ form.errors | default_errors }}</div>
+      {%- endif -%}
+      <div class="form-grid form-grid--2">
+        <div class="field">
+          <label for="ContactName">Nom</label>
+          <input id="ContactName" type="text" name="contact[name]" autocomplete="name" value="{{ form.name }}">
+        </div>
+        <div class="field">
+          <label for="ContactEmail">E-mail <span aria-hidden="true">*</span></label>
+          <input id="ContactEmail" type="email" name="contact[email]" autocomplete="email" required value="{{ form.email }}">
+        </div>
+      </div>
+      <div class="field">
+        <label for="ContactOrder">Numéro de commande (si tu as déjà acheté)</label>
+        <input id="ContactOrder" type="text" name="contact[order]" placeholder="#1001" value="{{ form.order }}">
+      </div>
+      <div class="field">
+        <label for="ContactBody">Message <span aria-hidden="true">*</span></label>
+        <textarea id="ContactBody" name="contact[body]" required>{{ form.body }}</textarea>
+      </div>
+      <div><button type="submit" class="btn btn--lg">Envoyer {% render 'icon', name: 'arrow', class: 'icon--arrow' %}</button></div>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Formulaire de contact",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Contact" },
+    { "type": "text", "id": "success", "label": "Message de confirmation", "default": "Merci, ton message a bien été envoyé. Nous te répondons dès que possible." }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,44 @@
+{%- comment -%}
+  Purchase form for the access product.
+  Works without JavaScript (POST /cart/add then redirect to checkout). With JS, the cart is
+  emptied first so the customer always checks out exactly one access.
+  Params: product, label, button_class, location (tracking id), theme ('dark' | 'light')
+{%- endcomment -%}
+{%- liquid
+  assign btn_label = label | default: settings.cta_label | default: 'Rejoindre le groupe'
+  assign variant = product.selected_or_first_available_variant
+-%}
+{%- if product != blank and variant != blank -%}
+  {%- form 'product', product, class: 'buy-form', data-buy-form: '', data-location: location -%}
+    <input type="hidden" name="id" value="{{ variant.id }}">
+    <input type="hidden" name="quantity" value="1">
+    {%- if settings.direct_checkout -%}
+      <input type="hidden" name="return_to" value="/checkout">
+    {%- endif -%}
+    <script type="application/json" data-product-json>
+      {"id": {{ product.id | json }}, "title": {{ product.title | json }}, "variant": {{ variant.id | json }}, "price": {{ variant.price | divided_by: 100.0 | json }}, "currency": {{ cart.currency.iso_code | json }}}
+    </script>
+
+    {%- if settings.require_waiver -%}
+      <label class="waiver" data-waiver>
+        <input type="checkbox" name="properties[Contenu numérique]" value="Accès immédiat demandé – renonciation au droit de rétractation acceptée" required>
+        <span class="waiver__box">{% render 'icon', name: 'check' %}</span>
+        <span>{{ settings.waiver_text }}</span>
+      </label>
+    {%- endif -%}
+
+    <button type="submit" class="btn {{ button_class | default: 'btn--lg btn--block' }}"{% unless variant.available %} disabled{% endunless %} data-track="cta_click" data-track-label="{{ location }}">
+      <span>{% if variant.available %}{{ btn_label }}{% else %}Bientôt disponible{% endif %}</span>
+      {% render 'icon', name: 'arrow', class: 'icon--arrow' %}
+    </button>
+    <p class="form-error" role="alert" data-form-error hidden></p>
+  {%- endform -%}
+{%- else -%}
+  {%- if request.design_mode -%}
+    <p class="editor-note">Sélectionne le produit « Accès au groupe » dans Paramètres du thème &gt; Produit d'accès (ou dans les réglages de cette section).</p>
+  {%- endif -%}
+  <a class="btn {{ button_class | default: 'btn--lg btn--block' }}" href="{{ routes.all_products_collection_url }}" data-track="cta_click" data-track-label="{{ location }}">
+    <span>{{ btn_label }}</span>
+    {% render 'icon', name: 'arrow', class: 'icon--arrow' %}
+  </a>
+{%- endif -%}

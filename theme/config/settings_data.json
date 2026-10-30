@@ -1,0 +1,25 @@
+{
+  "current": {
+    "brand_name": "Mafia Running",
+    "color_background": "#FFFFFF",
+    "color_primary": "#101B35",
+    "color_secondary": "#1C3156",
+    "color_surface": "#F5F6F8",
+    "color_muted": "#777F8D",
+    "color_text": "#101B35",
+    "font_heading": "dm_sans_n7",
+    "font_body": "dm_sans_n4",
+    "radius": 18,
+    "button_radius": 40,
+    "animations": true,
+    "direct_checkout": true,
+    "require_waiver": true,
+    "sticky_cta": true,
+    "tracking_enabled": true
+  },
+  "presets": {
+    "Default": {
+      "brand_name": "Mafia Running"
+    }
+  }
+}

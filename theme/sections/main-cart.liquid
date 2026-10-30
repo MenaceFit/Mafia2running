@@ -1,0 +1,39 @@
+<section class="section section--tight">
+  <div class="container container--narrow">
+    <header class="page-head" style="padding-top:0"><h1 class="h1">Panier</h1></header>
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        {%- for item in cart.items -%}
+          <div class="cart-line">
+            {%- if item.image -%}
+              {{ item.image | image_url: width: 160 | image_tag: loading: 'lazy', alt: item.title }}
+            {%- else -%}
+              <span class="placeholder placeholder--dark" style="width:72px;height:72px;border-radius:12px">{% render 'icon', name: 'lock' %}</span>
+            {%- endif -%}
+            <div>
+              <a href="{{ item.url }}" class="h4">{{ item.product.title }}</a>
+              {%- for p in item.properties -%}
+                {%- unless p.first contains '_' or p.last == blank -%}<p class="small muted">{{ p.first }} : {{ p.last }}</p>{%- endunless -%}
+              {%- endfor -%}
+              <a href="{{ item.url_to_remove }}" class="small muted" style="text-decoration:underline">Retirer</a>
+            </div>
+            <span>{{ item.final_line_price | money }}</span>
+            <input type="hidden" name="updates[]" value="{{ item.quantity }}">
+          </div>
+        {%- endfor -%}
+        <div class="cart-summary">
+          <p class="h3">Total : {{ cart.total_price | money_with_currency }}</p>
+          <p class="small muted">Taxes incluses si applicables. Codes promo à saisir au paiement.</p>
+          <button type="submit" name="checkout" class="btn btn--lg" data-track="begin_checkout" data-track-label="cart">Passer au paiement {% render 'icon', name: 'arrow', class: 'icon--arrow' %}</button>
+        </div>
+      </form>
+    {%- else -%}
+      <p class="lead">Ton panier est vide.</p>
+      <p style="margin-top:24px"><a class="btn btn--lg" href="{{ routes.root_url }}#offre">Découvrir l'offre {% render 'icon', name: 'arrow', class: 'icon--arrow' %}</a></p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Panier", "settings": [] }
+{% endschema %}

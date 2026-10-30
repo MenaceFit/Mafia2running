@@ -1,0 +1,89 @@
+{%- liquid
+  assign brand = settings.brand_name | default: shop.name
+  assign cta_url = section.settings.cta_link
+  if cta_url == blank
+    if request.page_type == 'index'
+      assign cta_url = '#offre'
+    else
+      assign cta_url = routes.root_url | append: '#offre'
+    endif
+  endif
+  assign menu = linklists[section.settings.menu]
+-%}
+<div class="header" data-header>
+  <div class="container header__inner">
+    <a href="{{ routes.root_url }}" class="header__logo" aria-label="{{ brand | escape }} – accueil">
+      {%- if settings.logo != blank -%}
+        {%- assign logo_style = '--logo-w: ' | append: settings.logo_width | append: 'px' -%}
+        {%- assign logo_sizes = settings.logo_width | append: 'px' -%}
+        {{ settings.logo | image_url: width: 480 | image_tag: loading: 'eager', alt: brand, style: logo_style, widths: '160, 240, 320, 480', sizes: logo_sizes }}
+      {%- else -%}
+        <span class="logo-mark" aria-hidden="true">{{ brand | slice: 0, 2 | upcase }}</span>
+        <span>{{ brand }}</span>
+      {%- endif -%}
+    </a>
+
+    <nav class="header__nav" aria-label="Navigation principale">
+      <ul role="list">
+        {%- if menu.links.size > 0 -%}
+          {%- for link in menu.links -%}
+            <li><a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a></li>
+          {%- endfor -%}
+        {%- else -%}
+          {%- render 'default-nav' -%}
+        {%- endif -%}
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      {%- if section.settings.show_cart and cart.item_count > 0 -%}
+        <a href="{{ routes.cart_url }}" class="header__cart" aria-label="Panier ({{ cart.item_count }})">
+          {% render 'icon', name: 'cart' %}
+          <span class="header__cart-count">{{ cart.item_count }}</span>
+        </a>
+      {%- endif -%}
+      <a href="{{ cta_url }}" class="btn btn--sm header__cta" data-track="cta_click" data-track-label="header">
+        {{ section.settings.cta_label }}
+        {% render 'icon', name: 'arrow', class: 'icon--arrow' %}
+      </a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="MobileMenu" aria-label="Ouvrir le menu" data-menu-toggle>
+        <span class="menu-toggle__bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="mobile-menu" id="MobileMenu" data-mobile-menu>
+    <nav aria-label="Navigation mobile">
+      <ul class="mobile-menu__list" role="list">
+        {%- if menu.links.size > 0 -%}
+          {%- for link in menu.links -%}
+            <li><a class="mobile-menu__link" href="{{ link.url }}" data-menu-link>{{ link.title }}{% render 'icon', name: 'arrow-up-right' %}</a></li>
+          {%- endfor -%}
+        {%- else -%}
+          {%- render 'default-nav', mobile: true -%}
+        {%- endif -%}
+      </ul>
+    </nav>
+    <div class="mobile-menu__foot">
+      <a href="{{ cta_url }}" class="btn btn--lg btn--block" data-menu-link data-track="cta_click" data-track-label="mobile_menu">
+        {{ section.settings.cta_label }}
+        {% render 'icon', name: 'arrow', class: 'icon--arrow' %}
+      </a>
+      <p class="small muted">{{ section.settings.mobile_note }}</p>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "En-tête",
+  "class": "header-wrapper",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu", "info": "Si le menu est vide, les liens par défaut sont affichés : Accueil, Nos ressources, Fonctionnalités, FAQ, Contact." },
+    { "type": "text", "id": "cta_label", "label": "Texte du bouton", "default": "Accéder au groupe" },
+    { "type": "url", "id": "cta_link", "label": "Lien du bouton", "info": "Vide = section offre de la page d'accueil (#offre)." },
+    { "type": "checkbox", "id": "show_cart", "label": "Afficher l'icône panier quand il contient un article", "default": true },
+    { "type": "text", "id": "mobile_note", "label": "Note sous le bouton (menu mobile)", "default": "Paiement sécurisé • Accès envoyé après confirmation du paiement" }
+  ]
+}
+{% endschema %}

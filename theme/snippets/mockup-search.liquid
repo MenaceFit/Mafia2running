@@ -1,0 +1,21 @@
+{%- comment -%} Illustrative mockup: keyword search with filters. No real data. {%- endcomment -%}
+<div class="mock-ui" role="img" aria-label="Illustration : recherche par mots-clés et filtres">
+  <div class="mock-ui__panel" aria-hidden="true">
+    <div class="mock-search">{% render 'icon', name: 'search' %}<span>{{ keywords | default: 'nike running' }}</span><span class="mock-caret"></span></div>
+    <div class="mock-chips">
+      <span class="mock-chip is-active">Taille M</span>
+      <span class="mock-chip is-active">Neuf avec étiquette</span>
+      <span class="mock-chip">Running</span>
+      <span class="mock-chip">Trier : plus récent</span>
+    </div>
+    <div class="mock-results">
+      {%- for i in (1..3) -%}
+        <div class="mock-result">
+          <span class="mock-result__thumb"></span>
+          <span class="mock-result__lines">{%- assign w1 = '88,70,80' | split: ',' -%}{%- assign w2 = '42,56,34' | split: ',' -%}<span style="width: {{ w1[forloop.index0] }}%"></span><span style="width: {{ w2[forloop.index0] }}%"></span></span>
+          <span class="mock-result__tag">{% if forloop.first %}Nouveau{% else %}{{ forloop.index | times: 3 }} min{% endif %}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>

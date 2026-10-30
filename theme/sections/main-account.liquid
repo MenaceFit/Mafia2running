@@ -1,0 +1,17 @@
+<section class="section section--tight">
+  <div class="container container--narrow" style="max-width:560px;display:grid;gap:24px">
+    <h1 class="h1">Mon compte</h1>
+    <p class="lead">{{ customer.first_name }} {{ customer.last_name }} · {{ customer.email }}</p>
+    <h2 class="h3">Mes commandes</h2>
+    {%- for order in customer.orders -%}
+      <a class="card" href="{{ order.customer_url }}"><span class="h4">{{ order.name }}</span><span class="muted small">{{ order.created_at | date: "%d/%m/%Y" }} · {{ order.financial_status_label }} · {{ order.total_price | money }}</span></a>
+    {%- else -%}
+      <p class="muted">Aucune commande pour le moment.</p>
+    {%- endfor -%}
+    <p><a class="link-arrow" href="{{ routes.account_logout_url }}">Se déconnecter {% render "icon", name: "arrow" %}</a></p>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Compte", "settings": [] }
+{% endschema %}

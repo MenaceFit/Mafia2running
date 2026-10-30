@@ -1,0 +1,24 @@
+<section class="section section--tight">
+  <div class="container container--narrow" style="max-width:560px;display:grid;gap:24px">
+    <h1 class="h1">Connexion</h1>
+    {%- form 'customer_login', class: 'form-grid' -%}
+      {%- if form.errors -%}<div class="notice notice--error">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <div class="field"><label for="LoginEmail">E-mail</label><input id="LoginEmail" type="email" name="customer[email]" autocomplete="email" required></div>
+      {%- if form.password_needed -%}<div class="field"><label for="LoginPassword">Mot de passe</label><input id="LoginPassword" type="password" name="customer[password]" autocomplete="current-password" required></div>{%- endif -%}
+      <button class="btn btn--lg" type="submit">Se connecter</button>
+      <p class="small"><a href="{{ routes.account_register_url }}" style="text-decoration:underline">Créer un compte</a> · <a href="#recover" style="text-decoration:underline">Mot de passe oublié</a></p>
+    {%- endform -%}
+    <div id="recover">
+      {%- form 'recover_customer_password', class: 'form-grid' -%}
+        <h2 class="h3">Réinitialiser le mot de passe</h2>
+        {%- if form.posted_successfully? -%}<p class="notice notice--success">Un e-mail de réinitialisation a été envoyé.</p>{%- endif -%}
+        <div class="field"><label for="RecoverEmail">E-mail</label><input id="RecoverEmail" type="email" name="email" autocomplete="email" required></div>
+        <button class="btn btn--ghost" type="submit">Envoyer</button>
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Connexion", "settings": [] }
+{% endschema %}

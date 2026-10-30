@@ -1,0 +1,23 @@
+<section class="section section--tight">
+  <div class="container container--narrow">
+    <header class="page-head" style="padding-top:0"><h1 class="h1">Recherche</h1></header>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="field" style="grid-template-columns:1fr auto;gap:10px">
+      <label for="SearchInput" class="visually-hidden">Rechercher</label>
+      <input id="SearchInput" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Rechercher…">
+      <button class="btn" type="submit">Rechercher</button>
+    </form>
+    {%- if search.performed -%}
+      <div style="margin-top:32px;display:grid;gap:16px">
+        {%- for item in search.results -%}
+          <a href="{{ item.url }}" class="card"><span class="h4">{{ item.title }}</span></a>
+        {%- else -%}
+          <p class="muted">Aucun résultat pour « {{ search.terms | escape }} ».</p>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Recherche", "settings": [] }
+{% endschema %}

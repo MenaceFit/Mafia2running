@@ -1,0 +1,15 @@
+<article class="section section--tight">
+  <div class="container container--narrow">
+    <header class="page-head" style="padding-top:0">
+      <p class="small muted">{{ article.published_at | date: '%d/%m/%Y' }}</p>
+      <h1 class="h1">{{ article.title }}</h1>
+    </header>
+    {%- if article.image -%}<div class="media-frame" style="margin-bottom:32px">{% render 'media', image: article.image, sizes: '(min-width: 900px) 820px, 100vw', eager: true %}</div>{%- endif -%}
+    <div class="rte">{{ article.content }}</div>
+    <p style="margin-top:40px"><a class="link-arrow" href="{{ blog.url }}">Tous les articles {% render 'icon', name: 'arrow' %}</a></p>
+  </div>
+</article>
+
+{% schema %}
+{ "name": "Article", "settings": [] }
+{% endschema %}

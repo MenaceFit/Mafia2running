@@ -1,0 +1,18 @@
+{%- comment -%} Clean mockup of the private group's spaces (redrawn, not a raw screenshot). {%- endcomment -%}
+<div class="mock-topics" role="img" aria-label="Aperçu des espaces du groupe privé">
+  {%- assign topic_lines = topics | newline_to_br | split: '<br />' -%}
+  {%- for line in topic_lines -%}
+    {%- assign topic = line | strip | split: '|' -%}
+    {%- if topic[0] != blank -%}
+      {%- assign topic_icon = topic[2] | strip | default: 'message' -%}
+      <div class="mock-topic" aria-hidden="true">
+        <span class="mock-topic__icon">{% render 'icon', name: topic_icon %}</span>
+        <span class="mock-topic__body">
+          <span class="mock-topic__name">{{ topic[0] | strip }}</span>
+          <span class="mock-topic__desc">{{ topic[1] | strip }}</span>
+        </span>
+        <span class="mock-topic__pin"></span>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>

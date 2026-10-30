@@ -1,0 +1,38 @@
+{%- comment -%} Design tokens driven by Theme settings (Thème > Personnaliser > Paramètres du thème). {%- endcomment -%}
+{%- liquid
+  assign heading_font = settings.font_heading
+  assign body_font = settings.font_body
+  assign body_font_medium = body_font | font_modify: 'weight', '500'
+  assign body_font_bold = body_font | font_modify: 'weight', 'bold'
+  assign heading_font_medium = heading_font | font_modify: 'weight', '500'
+-%}
+{{ heading_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
+{{ body_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
+<style>
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+  {{ body_font_medium | font_face: font_display: 'swap' }}
+  {{ body_font_bold | font_face: font_display: 'swap' }}
+  {{ heading_font_medium | font_face: font_display: 'swap' }}
+
+  :root {
+    --c-bg: {{ settings.color_background }};
+    --c-primary: {{ settings.color_primary }};
+    --c-primary-rgb: {{ settings.color_primary.red }}, {{ settings.color_primary.green }}, {{ settings.color_primary.blue }};
+    --c-secondary: {{ settings.color_secondary }};
+    --c-surface: {{ settings.color_surface }};
+    --c-muted: {{ settings.color_muted }};
+    --c-text: {{ settings.color_text }};
+    --c-text-rgb: {{ settings.color_text.red }}, {{ settings.color_text.green }}, {{ settings.color_text.blue }};
+
+    --font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    --font-heading-weight: {{ heading_font.weight }};
+    --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+    --font-body-weight: {{ body_font.weight }};
+    --heading-scale: {{ settings.heading_scale | divided_by: 100.0 }};
+
+    --radius: {{ settings.radius }}px;
+    --radius-sm: {{ settings.radius | divided_by: 2 }}px;
+    --radius-btn: {{ settings.button_radius }}px;
+  }
+</style>

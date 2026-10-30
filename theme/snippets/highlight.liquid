@@ -1,0 +1,6 @@
+{%- comment -%} Wraps words written between *asterisks* in <em> (highlighted in bleu nuit). {%- endcomment -%}
+{%- assign hl_parts = text | escape | split: '*' -%}
+{%- for part in hl_parts -%}
+  {%- assign hl_mod = forloop.index0 | modulo: 2 -%}
+  {%- if hl_mod == 1 -%}<em>{{ part }}</em>{%- else -%}{{ part }}{%- endif -%}
+{%- endfor -%}

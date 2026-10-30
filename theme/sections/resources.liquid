@@ -1,0 +1,66 @@
+<section class="section{% if section.settings.surface %} section--surface{% endif %}" id="{{ section.settings.anchor | handle }}" aria-labelledby="Title-{{ section.id }}">
+  <div class="container">
+    <div class="section-head section-head--center">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 id="Title-{{ section.id }}" class="h2" data-reveal style="--reveal-i: 1">{% render 'highlight', text: section.settings.title %}</h2>
+      {%- if section.settings.subtitle != blank -%}<p class="lead" data-reveal style="--reveal-i: 2">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+
+    <ul class="resources" role="list">
+      {%- for block in section.blocks -%}
+        <li class="resource" data-reveal style="--reveal-i: {{ forloop.index0 | modulo: 2 }}" data-spotlight {{ block.shopify_attributes }}>
+          <div class="resource__top">
+            <span class="resource__icon">{% render 'icon', name: block.settings.icon %}</span>
+            <span class="resource__index" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          </div>
+          <div style="display:grid;gap:12px">
+            <p class="resource__count" aria-hidden="true">{{ block.settings.prefix }}<span data-count="{{ block.settings.number }}">{{ block.settings.number }}</span></p>
+            <h3 class="resource__title">
+              <span class="visually-hidden">{{ block.settings.prefix }}{{ block.settings.number }} – </span>{{ block.settings.title }}
+            </h3>
+            <p class="resource__text">{{ block.settings.text }}</p>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ressources",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancre (ID)", "default": "ressources" },
+    { "type": "checkbox", "id": "surface", "label": "Fond gris clair", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Fournisseurs & plateformes" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Toutes les ressources dont tu as besoin, *réunies au même endroit.*" },
+    { "type": "textarea", "id": "subtitle", "label": "Sous-titre", "default": "Des contacts et des plateformes sélectionnés, classés par usage, pour gagner du temps dans tes recherches." }
+  ],
+  "blocks": [
+    {
+      "type": "resource",
+      "name": "Ressource",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icône", "default": "tag", "options": [{"value": "running", "label": "Running"}, {"value": "diamond", "label": "Diamant"}, {"value": "bot", "label": "Bot"}, {"value": "package", "label": "Colis"}, {"value": "tag", "label": "Étiquette"}, {"value": "recycle", "label": "Seconde main"}, {"value": "truck", "label": "Livraison"}, {"value": "contact", "label": "Contact"}, {"value": "users", "label": "Communauté"}, {"value": "bell", "label": "Alerte"}, {"value": "search", "label": "Recherche"}, {"value": "zap", "label": "Éclair"}, {"value": "clock", "label": "Horloge"}, {"value": "shield", "label": "Bouclier"}, {"value": "lock", "label": "Cadenas"}, {"value": "target", "label": "Cible"}, {"value": "compass", "label": "Boussole"}, {"value": "camera", "label": "Photo"}, {"value": "chart", "label": "Graphique"}, {"value": "message", "label": "Message"}, {"value": "handshake", "label": "Accompagnement"}, {"value": "cap", "label": "Formation"}, {"value": "spark", "label": "Étoile"}, {"value": "layers", "label": "Sélection"}, {"value": "link", "label": "Lien"}, {"value": "phone", "label": "Mobile"}, {"value": "card", "label": "Paiement"}, {"value": "refresh", "label": "Mise à jour"}, {"value": "telegram", "label": "Telegram"}] },
+        { "type": "text", "id": "prefix", "label": "Préfixe du compteur", "default": "+" },
+        { "type": "number", "id": "number", "label": "Compteur", "default": 5 },
+        { "type": "text", "id": "title", "label": "Titre", "default": "Plateformes neuves" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "Plateformes proposant des articles neufs avec étiquettes." }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Ressources",
+      "blocks": [
+        { "type": "resource", "settings": { "icon": "tag", "prefix": "+", "number": 5, "title": "Plateformes neuves", "text": "Plateformes proposant des articles neufs avec étiquettes, en sportswear comme en semi-luxe." } },
+        { "type": "resource", "settings": { "icon": "recycle", "prefix": "+", "number": 40, "title": "Seconde main", "text": "Sites sélectionnés pour trouver des articles d'occasion à prix intéressants." } },
+        { "type": "resource", "settings": { "icon": "truck", "prefix": "+", "number": 15, "title": "Agents de livraison", "text": "Contacts et solutions logistiques, avec frais, délais et modalités comparés." } },
+        { "type": "resource", "settings": { "icon": "running", "prefix": "+", "number": 6, "title": "Contacts spécialisés", "text": "Contacts dédiés au running authentique et au sportswear." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

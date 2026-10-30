@@ -1,0 +1,16 @@
+<section class="section section--tight">
+  <div class="container container--narrow" style="max-width:560px;display:grid;gap:24px">
+    <h1 class="h1">Créer un compte</h1>
+    {%- form 'create_customer', class: 'form-grid' -%}
+      {%- if form.errors -%}<div class="notice notice--error">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <div class="field"><label for="RegFirst">Prénom</label><input id="RegFirst" type="text" name="customer[first_name]" autocomplete="given-name"></div>
+      <div class="field"><label for="RegEmail">E-mail</label><input id="RegEmail" type="email" name="customer[email]" autocomplete="email" required></div>
+      <div class="field"><label for="RegPassword">Mot de passe</label><input id="RegPassword" type="password" name="customer[password]" autocomplete="new-password" required></div>
+      <button class="btn btn--lg" type="submit">Créer mon compte</button>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Inscription", "settings": [] }
+{% endschema %}

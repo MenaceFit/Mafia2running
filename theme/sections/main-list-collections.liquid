@@ -1,0 +1,17 @@
+<section class="section section--tight">
+  <div class="container">
+    <header class="page-head" style="padding-top:0"><h1 class="h1">Collections</h1></header>
+    <div class="grid-products">
+      {%- for collection in collections -%}
+        <a href="{{ collection.url }}" class="product-card">
+          <div class="product-card__media">{% render 'media', image: collection.featured_image, label: collection.title, art: 'rings', sizes: '(min-width: 750px) 33vw, 100vw' %}</div>
+          <p class="h4">{{ collection.title }}</p>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Liste des collections", "settings": [] }
+{% endschema %}

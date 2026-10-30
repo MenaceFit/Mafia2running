@@ -1,0 +1,13 @@
+<a href="{{ product.url }}" class="product-card">
+  <div class="product-card__media">
+    {%- if product.featured_media -%}
+      {% render 'media', image: product.featured_media, sizes: '(min-width: 750px) 33vw, 100vw' %}
+    {%- else -%}
+      {% render 'media', label: product.title, dark: true, art: 'rings' %}
+    {%- endif -%}
+  </div>
+  <div>
+    <p class="h4">{{ product.title }}</p>
+    <p class="muted">{{ product.price | money }}</p>
+  </div>
+</a>

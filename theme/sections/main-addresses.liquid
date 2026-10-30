@@ -1,0 +1,12 @@
+<section class="section section--tight">
+  <div class="container container--narrow" style="max-width:560px;display:grid;gap:24px">
+    <h1 class="h1">Adresses</h1>
+    <p class="muted">Aucune adresse de livraison n’est nécessaire pour un accès numérique.</p>
+    {%- for address in customer.addresses -%}<div class="card">{{ address | format_address }}</div>{%- endfor -%}
+    <p><a class="link-arrow" href="{{ routes.account_url }}">Retour au compte {% render "icon", name: "arrow" %}</a></p>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Adresses", "settings": [] }
+{% endschema %}

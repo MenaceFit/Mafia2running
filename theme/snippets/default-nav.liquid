@@ -1,0 +1,19 @@
+{%- comment -%} Fallback navigation used until a "main-menu" is created in Shopify (Contenu > Menus). {%- endcomment -%}
+{%- liquid
+  if request.page_type == 'index'
+    assign base = ''
+  else
+    assign base = routes.root_url
+  endif
+  assign contact_url = routes.root_url | append: 'pages/contact' | replace: '//', '/'
+-%}
+{%- capture items -%}{{ routes.root_url }}|Accueil;{{ base }}#ressources|Nos ressources;{{ base }}#fonctionnalites|Fonctionnalités;{{ base }}#faq|FAQ;{{ contact_url }}|Contact{%- endcapture -%}
+{%- assign nav_items = items | split: ';' -%}
+{%- for item in nav_items -%}
+  {%- assign parts = item | split: '|' -%}
+  {%- if mobile -%}
+    <li><a class="mobile-menu__link" href="{{ parts[0] }}" data-menu-link>{{ parts[1] }}{% render 'icon', name: 'arrow-up-right' %}</a></li>
+  {%- else -%}
+    <li><a href="{{ parts[0] }}">{{ parts[1] }}</a></li>
+  {%- endif -%}
+{%- endfor -%}

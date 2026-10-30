@@ -1,0 +1,39 @@
+{%- comment -%}
+  Responsive image (WebP served automatically by Shopify CDN, lazy-loaded) or a tasteful
+  placeholder when no image is uploaded yet.
+  Params: image, alt, sizes, eager (bool), label, sublabel, dark (bool), art ('lines' | 'rings')
+{%- endcomment -%}
+{%- if image != blank -%}
+  {%- liquid
+    assign loading = 'lazy'
+    assign priority = 'auto'
+    if eager
+      assign loading = 'eager'
+      assign priority = 'high'
+    endif
+    assign img_alt = alt | default: image.alt | default: label | escape
+  -%}
+  {{ image | image_url: width: 1800 | image_tag:
+    widths: '360, 540, 720, 900, 1200, 1500, 1800',
+    sizes: sizes,
+    loading: loading,
+    fetchpriority: priority,
+    alt: img_alt
+  }}
+{%- else -%}
+  <div class="placeholder{% if dark %} placeholder--dark{% endif %}" role="img" aria-label="{{ label | default: 'Visuel' | escape }}">
+    <div class="placeholder__art" aria-hidden="true">
+      {%- if art == 'rings' -%}
+        <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice"><g fill="none" stroke="currentColor" stroke-opacity=".09"><circle cx="200" cy="200" r="60"/><circle cx="200" cy="200" r="110"/><circle cx="200" cy="200" r="160"/><circle cx="200" cy="200" r="210"/><circle cx="200" cy="200" r="260"/></g></svg>
+      {%- else -%}
+        <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice"><g fill="none" stroke="currentColor" stroke-opacity=".08"><path d="M-20 420 C 100 300, 180 380, 420 140"/><path d="M-20 450 C 100 330, 180 410, 420 170"/><path d="M-20 480 C 100 360, 180 440, 420 200"/><path d="M-20 510 C 100 390, 180 470, 420 230"/></g></svg>
+      {%- endif -%}
+    </div>
+    {%- if label != blank -%}
+      <div class="placeholder__label">
+        <strong>{{ label }}</strong>
+        {%- if sublabel != blank and request.design_mode -%}<span>{{ sublabel }}</span>{%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%}

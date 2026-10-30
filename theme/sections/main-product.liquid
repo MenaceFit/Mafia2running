@@ -1,0 +1,85 @@
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign included = product.metafields.custom.included.value
+-%}
+<section class="section section--tight" aria-labelledby="ProductTitle">
+  <div class="container">
+    <div class="product">
+      <div class="product__media" data-reveal="scale">
+        {%- if product.featured_media -%}
+          {%- assign media_alt = product.featured_media.alt | default: product.title -%}
+          {% render 'media', image: product.featured_media, sizes: '(min-width: 990px) 640px, 100vw', eager: true, alt: media_alt %}
+        {%- else -%}
+          <div class="placeholder placeholder--dark" style="aspect-ratio:1">
+            <div class="placeholder__label">
+              {% render 'icon', name: 'lock', class: 'icon' %}
+              <strong>{{ product.title }}</strong>
+              <span>{{ settings.brand_name | default: shop.name }}</span>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="product__info">
+        {%- if section.settings.badge != blank -%}<span class="badge"><span class="badge__dot" aria-hidden="true"></span>{{ section.settings.badge }}</span>{%- endif -%}
+        <h1 id="ProductTitle" class="h1">{{ product.title }}</h1>
+
+        <div class="product-buy">
+          <div class="price">
+            <span class="price__amount">{{ variant.price | money }}</span>
+            {%- if variant.compare_at_price > variant.price -%}
+              <span class="price__compare"><span class="visually-hidden">Prix habituel</span>{{ variant.compare_at_price | money }}</span>
+            {%- endif -%}
+            {%- if product.metafields.custom.price_note != blank -%}
+              <span class="price__note">{{ product.metafields.custom.price_note }}</span>
+            {%- elsif section.settings.price_note != blank -%}
+              <span class="price__note">{{ section.settings.price_note }}</span>
+            {%- endif -%}
+          </div>
+          {% render 'buy-form', product: product, label: section.settings.button_label, button_class: 'btn--lg btn--block', location: 'product_page' %}
+          <ul class="offer-card__trust" role="list" style="opacity:1;color:var(--c-muted)">
+            {%- if section.settings.trust_1 != blank -%}<li>{% render 'icon', name: 'lock' %}{{ section.settings.trust_1 }}</li>{%- endif -%}
+            {%- if section.settings.trust_2 != blank -%}<li>{% render 'icon', name: 'telegram' %}{{ section.settings.trust_2 }}</li>{%- endif -%}
+          </ul>
+        </div>
+
+        {%- if included != blank -%}
+          <div style="display:grid;gap:14px">
+            <h2 class="h4">Ce qui est inclus</h2>
+            <ul class="check-list" role="list">
+              {%- for item in included -%}<li>{% render 'icon', name: 'check' %}<span>{{ item }}</span></li>{%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        {%- if product.description != blank -%}
+          <div class="rte muted">{{ product.description }}</div>
+        {%- endif -%}
+
+        <p class="offer-links muted">
+          {%- if section.settings.access_page != blank -%}<a href="{{ section.settings.access_page }}">Conditions d'accès</a>{%- endif -%}
+          {%- if shop.terms_of_service != blank -%}<a href="{{ shop.terms_of_service.url }}">{{ shop.terms_of_service.title }}</a>{%- endif -%}
+          {%- if shop.refund_policy != blank -%}<a href="{{ shop.refund_policy.url }}">{{ shop.refund_policy.title }}</a>{%- endif -%}
+        </p>
+      </div>
+    </div>
+  </div>
+  <script type="application/json" data-product-view>
+    {"id": {{ product.id | json }}, "title": {{ product.title | json }}, "price": {{ variant.price | divided_by: 100.0 | json }}, "currency": {{ cart.currency.iso_code | json }}}
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Produit",
+  "settings": [
+    { "type": "paragraph", "content": "Le prix, le titre, la description et l'image se modifient dans Produits. Liste « Ce qui est inclus » : métachamp produit custom.included (liste de textes). Note de prix : métachamp custom.price_note." },
+    { "type": "text", "id": "badge", "label": "Badge", "default": "Accès complet" },
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "Rejoindre le groupe" },
+    { "type": "text", "id": "price_note", "label": "Note sous le prix (si pas de métachamp)" },
+    { "type": "text", "id": "trust_1", "label": "Réassurance 1", "default": "Paiement sécurisé par Shopify" },
+    { "type": "text", "id": "trust_2", "label": "Réassurance 2", "default": "Lien d'invitation personnel envoyé après confirmation du paiement" },
+    { "type": "url", "id": "access_page", "label": "Page « Conditions d'accès »" }
+  ]
+}
+{% endschema %}

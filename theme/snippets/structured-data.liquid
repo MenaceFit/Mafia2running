@@ -1,0 +1,65 @@
+{%- comment -%}
+  JSON-LD: Organization + WebSite on every page, Product on product pages and on the
+  home page when an access product is configured. No reviews / ratings are emitted on purpose.
+{%- endcomment -%}
+{%- liquid
+  assign brand = settings.brand_name | default: shop.name
+  assign access = settings.access_product
+  if request.page_type == 'product'
+    assign access = product
+  endif
+-%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": {{ request.origin | append: '/#organization' | json }},
+        "name": {{ brand | json }},
+        "url": {{ request.origin | json }}
+        {%- if settings.logo != blank -%},
+        "logo": {{ settings.logo | image_url: width: 512 | prepend: 'https:' | json }}
+        {%- endif -%}
+        {%- assign socials = '' -%}
+        {%- assign social_keys = 'social_tiktok,social_instagram,social_snapchat,social_telegram' | split: ',' -%}
+        {%- for key in social_keys -%}
+          {%- if settings[key] != blank -%}
+            {%- assign socials = socials | append: settings[key] | append: '|' -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if socials != blank -%},
+        "sameAs": {{ socials | split: '|' | json }}
+        {%- endif %}
+      },
+      {
+        "@type": "WebSite",
+        "@id": {{ request.origin | append: '/#website' | json }},
+        "name": {{ brand | json }},
+        "url": {{ request.origin | json }},
+        "inLanguage": "fr-FR",
+        "publisher": { "@id": {{ request.origin | append: '/#organization' | json }} }
+      }
+      {%- if access != blank -%},
+      {
+        "@type": "Product",
+        "name": {{ access.title | json }},
+        "description": {{ access.description | strip_html | strip_newlines | truncate: 500 | json }},
+        "url": {{ request.origin | append: access.url | json }},
+        "brand": { "@type": "Brand", "name": {{ brand | json }} },
+        {%- if access.featured_media -%}
+        "image": [{{ access.featured_media | image_url: width: 1200 | prepend: 'https:' | json }}],
+        {%- endif -%}
+        "offers": {
+          "@type": "Offer",
+          "url": {{ request.origin | append: access.url | json }},
+          "price": {{ access.price | divided_by: 100.0 | json }},
+          "priceCurrency": {{ cart.currency.iso_code | json }},
+          "availability": "https://schema.org/{% if access.available %}InStock{% else %}OutOfStock{% endif %}",
+          "seller": { "@id": {{ request.origin | append: '/#organization' | json }} }
+        }
+      }
+      {%- endif %}
+    ]
+  }
+</script>

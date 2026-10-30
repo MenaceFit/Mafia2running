@@ -1,0 +1,49 @@
+<section class="stats" aria-label="{{ section.settings.aria_label | escape }}" style="--stats-count: {{ section.blocks.size | at_least: 1 }}">
+  <div class="container">
+    <ul class="stats__list" role="list">
+      {%- for block in section.blocks -%}
+        <li class="stat" data-reveal style="--reveal-i: {{ forloop.index0 }}" {{ block.shopify_attributes }}>
+          <span class="stat__value" aria-hidden="true">{{ block.settings.prefix }}<span data-count="{{ block.settings.number }}">{{ block.settings.number }}</span>{{ block.settings.suffix }}</span>
+          <span class="stat__label">
+            <span class="visually-hidden">{{ block.settings.prefix }}{{ block.settings.number }}{{ block.settings.suffix }} </span>{{ block.settings.label }}
+          </span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Chiffres clés",
+  "settings": [
+    { "type": "text", "id": "aria_label", "label": "Libellé accessibilité", "default": "Les ressources du groupe en chiffres" },
+    { "type": "paragraph", "content": "Indique uniquement des chiffres réels et vérifiables (nombre de ressources). N'affiche pas de nombre de membres ou de résultats financiers non vérifiés." }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Chiffre",
+      "settings": [
+        { "type": "text", "id": "prefix", "label": "Préfixe", "default": "+" },
+        { "type": "number", "id": "number", "label": "Nombre", "default": 6 },
+        { "type": "text", "id": "suffix", "label": "Suffixe" },
+        { "type": "text", "id": "label", "label": "Libellé", "default": "contacts running" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Chiffres clés",
+      "blocks": [
+        { "type": "stat", "settings": { "prefix": "+", "number": 6, "label": "contacts running" } },
+        { "type": "stat", "settings": { "prefix": "+", "number": 5, "label": "plateformes neuves" } },
+        { "type": "stat", "settings": { "prefix": "+", "number": 40, "label": "sites de seconde main" } },
+        { "type": "stat", "settings": { "prefix": "+", "number": 15, "label": "agents de livraison" } },
+        { "type": "stat", "settings": { "prefix": "", "number": 1, "label": "bot Vinted UK" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
