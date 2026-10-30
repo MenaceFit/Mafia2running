@@ -15,7 +15,8 @@
     "direct_checkout": true,
     "require_waiver": true,
     "sticky_cta": true,
-    "tracking_enabled": true
+    "tracking_enabled": true,
+    "color_accent": "#3B3BE0"
   },
   "presets": {
     "Default": {

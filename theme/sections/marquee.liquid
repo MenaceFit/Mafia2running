@@ -1,0 +1,21 @@
+{%- assign items = section.settings.items | split: ',' -%}
+<div class="marquee" aria-label="Marques et univers couverts">
+  <div class="marquee__track">
+    {%- for i in (1..2) -%}
+      <ul class="marquee__list" role="list"{% if i == 2 %} aria-hidden="true"{% endif %}>
+        {%- for item in items -%}<li>{{ item | strip }}</li>{%- endfor -%}
+      </ul>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bandeau défilant",
+  "settings": [
+    { "type": "textarea", "id": "items", "label": "Éléments (séparés par des virgules)", "default": "Nike Running, Stone Island, CP Company, Ralph Lauren, Canada Goose, Under Armour, Vinted UK" },
+    { "type": "paragraph", "content": "Marques citées pour illustrer les catégories : elles ne sont pas partenaires du groupe." }
+  ],
+  "presets": [ { "name": "Bandeau défilant" } ]
+}
+{% endschema %}

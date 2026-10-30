@@ -322,7 +322,7 @@
    * ------------------------------------------------------------------ */
   const sticky = $('[data-sticky-cta]');
   if (sticky && 'IntersectionObserver' in window) {
-    const hero = $('.hero') || $('.page-head');
+    const hero = $('.hero') || $('.sh') || $('.page-head');
     const blockers = [$('[data-offer]'), $('.footer')].filter(Boolean);
     const state = { pastHero: !hero, blocked: new Set() };
     const update = () => {

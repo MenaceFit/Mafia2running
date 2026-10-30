@@ -7,7 +7,7 @@
   endif
   assign contact_url = routes.root_url | append: 'pages/contact' | replace: '//', '/'
 -%}
-{%- capture items -%}{{ routes.root_url }}|Accueil;{{ base }}#ressources|Nos ressources;{{ base }}#fonctionnalites|Fonctionnalités;{{ base }}#faq|FAQ;{{ contact_url }}|Contact{%- endcapture -%}
+{%- capture items -%}{{ routes.root_url }}|Accueil;{{ base }}#trouvailles|Trouvailles;{{ base }}#offre|Le groupe;{{ base }}#faq|FAQ;{{ contact_url }}|Contact{%- endcapture -%}
 {%- assign nav_items = items | split: ';' -%}
 {%- for item in nav_items -%}
   {%- assign parts = item | split: '|' -%}

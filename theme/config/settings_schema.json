@@ -10,72 +10,246 @@
   {
     "name": "Marque",
     "settings": [
-      { "type": "text", "id": "brand_name", "label": "Nom de la marque", "default": "Mafia Running" },
-      { "type": "image_picker", "id": "logo", "label": "Logo (fond clair)" },
-      { "type": "image_picker", "id": "logo_inverse", "label": "Logo (fond bleu nuit)", "info": "Utilisé dans le footer. Si vide, le nom de la marque est affiché." },
-      { "type": "range", "id": "logo_width", "label": "Largeur du logo", "min": 60, "max": 240, "step": 4, "unit": "px", "default": 120 },
-      { "type": "image_picker", "id": "favicon", "label": "Favicon", "info": "32 × 32 px, PNG." },
-      { "type": "image_picker", "id": "share_image", "label": "Image de partage (réseaux sociaux)", "info": "1200 × 630 px. Utilisée par Telegram, Snapchat, TikTok, WhatsApp, etc. lorsque la page n'a pas sa propre image." }
+      {
+        "type": "text",
+        "id": "brand_name",
+        "label": "Nom de la marque",
+        "default": "Mafia Running"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo (fond clair)"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_inverse",
+        "label": "Logo (fond bleu nuit)",
+        "info": "Utilisé dans le footer. Si vide, le nom de la marque est affiché."
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Largeur du logo",
+        "min": 60,
+        "max": 240,
+        "step": 4,
+        "unit": "px",
+        "default": 120
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "32 × 32 px, PNG."
+      },
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Image de partage (réseaux sociaux)",
+        "info": "1200 × 630 px. Utilisée par Telegram, Snapchat, TikTok, WhatsApp, etc. lorsque la page n'a pas sa propre image."
+      }
     ]
   },
   {
     "name": "Couleurs",
     "settings": [
-      { "type": "color", "id": "color_background", "label": "Fond principal", "default": "#FFFFFF" },
-      { "type": "color", "id": "color_primary", "label": "Bleu nuit (boutons, titres, sections premium)", "default": "#101B35" },
-      { "type": "color", "id": "color_secondary", "label": "Bleu secondaire", "default": "#1C3156" },
-      { "type": "color", "id": "color_surface", "label": "Gris clair (fonds de section)", "default": "#F5F6F8" },
-      { "type": "color", "id": "color_muted", "label": "Gris texte", "default": "#777F8D" },
-      { "type": "color", "id": "color_text", "label": "Texte principal", "default": "#101B35" }
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Fond principal",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Couleur d'accent (badges promo, mots en avant)",
+        "default": "#3B3BE0"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Bleu nuit (boutons, titres, sections premium)",
+        "default": "#101B35"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Bleu secondaire",
+        "default": "#1C3156"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Gris clair (fonds de section)",
+        "default": "#F5F6F8"
+      },
+      {
+        "type": "color",
+        "id": "color_muted",
+        "label": "Gris texte",
+        "default": "#777F8D"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Texte principal",
+        "default": "#101B35"
+      }
     ]
   },
   {
     "name": "Typographie",
     "settings": [
-      { "type": "font_picker", "id": "font_heading", "label": "Police des titres", "default": "dm_sans_n7" },
-      { "type": "font_picker", "id": "font_body", "label": "Police du texte", "default": "dm_sans_n4" },
-      { "type": "range", "id": "heading_scale", "label": "Taille des titres", "min": 80, "max": 130, "step": 5, "unit": "%", "default": 100 }
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Police des titres",
+        "default": "dm_sans_n7"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Police du texte",
+        "default": "dm_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "heading_scale",
+        "label": "Taille des titres",
+        "min": 80,
+        "max": 130,
+        "step": 5,
+        "unit": "%",
+        "default": 100
+      }
     ]
   },
   {
     "name": "Formes et animations",
     "settings": [
-      { "type": "range", "id": "radius", "label": "Arrondi des cartes", "min": 0, "max": 28, "step": 2, "unit": "px", "default": 18 },
-      { "type": "range", "id": "button_radius", "label": "Arrondi des boutons", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 40 },
-      { "type": "checkbox", "id": "animations", "label": "Activer les animations au scroll", "default": true, "info": "Les animations sont automatiquement désactivées pour les visiteurs ayant activé « réduire les animations »." }
+      {
+        "type": "range",
+        "id": "radius",
+        "label": "Arrondi des cartes",
+        "min": 0,
+        "max": 28,
+        "step": 2,
+        "unit": "px",
+        "default": 18
+      },
+      {
+        "type": "range",
+        "id": "button_radius",
+        "label": "Arrondi des boutons",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "default": 40
+      },
+      {
+        "type": "checkbox",
+        "id": "animations",
+        "label": "Activer les animations au scroll",
+        "default": true,
+        "info": "Les animations sont automatiquement désactivées pour les visiteurs ayant activé « réduire les animations »."
+      }
     ]
   },
   {
     "name": "Produit d'accès",
     "settings": [
-      { "type": "product", "id": "access_product", "label": "Produit « Accès au groupe »", "info": "Produit numérique vendu sur la boutique. Utilisé par tous les boutons « Accéder au groupe » et la barre d'achat mobile." },
-      { "type": "text", "id": "cta_label", "label": "Texte du bouton d'achat", "default": "Rejoindre le groupe" },
-      { "type": "checkbox", "id": "direct_checkout", "label": "Envoyer directement au paiement", "default": true, "info": "Le panier est ignoré : un clic sur le bouton d'achat mène au checkout Shopify." },
-      { "type": "checkbox", "id": "require_waiver", "label": "Exiger l'accord pour l'exécution immédiate (contenu numérique)", "default": true, "info": "Case à cocher obligatoire avant l'achat : le client accepte l'accès immédiat et reconnaît perdre son droit de rétractation (art. L221-28 13° du Code de la consommation)." },
-      { "type": "richtext", "id": "waiver_text", "label": "Texte de la case à cocher", "default": "<p>Je demande l'accès immédiat au contenu numérique et je reconnais perdre mon droit de rétractation une fois l'accès fourni.</p>" }
+      {
+        "type": "product",
+        "id": "access_product",
+        "label": "Produit « Accès au groupe »",
+        "info": "Produit numérique vendu sur la boutique. Utilisé par tous les boutons « Accéder au groupe » et la barre d'achat mobile."
+      },
+      {
+        "type": "text",
+        "id": "cta_label",
+        "label": "Texte du bouton d'achat",
+        "default": "Rejoindre le groupe"
+      },
+      {
+        "type": "checkbox",
+        "id": "direct_checkout",
+        "label": "Envoyer directement au paiement",
+        "default": true,
+        "info": "Le panier est ignoré : un clic sur le bouton d'achat mène au checkout Shopify."
+      },
+      {
+        "type": "checkbox",
+        "id": "require_waiver",
+        "label": "Exiger l'accord pour l'exécution immédiate (contenu numérique)",
+        "default": true,
+        "info": "Case à cocher obligatoire avant l'achat : le client accepte l'accès immédiat et reconnaît perdre son droit de rétractation (art. L221-28 13° du Code de la consommation)."
+      },
+      {
+        "type": "richtext",
+        "id": "waiver_text",
+        "label": "Texte de la case à cocher",
+        "default": "<p>Je demande l'accès immédiat au contenu numérique et je reconnais perdre mon droit de rétractation une fois l'accès fourni.</p>"
+      }
     ]
   },
   {
     "name": "Barre d'achat mobile",
     "settings": [
-      { "type": "checkbox", "id": "sticky_cta", "label": "Afficher la barre d'achat sticky sur mobile", "default": true },
-      { "type": "text", "id": "sticky_cta_text", "label": "Texte d'accroche", "default": "Accès complet au groupe privé" }
+      {
+        "type": "checkbox",
+        "id": "sticky_cta",
+        "label": "Afficher la barre d'achat sticky sur mobile",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "sticky_cta_text",
+        "label": "Texte d'accroche",
+        "default": "Accès complet au groupe privé"
+      }
     ]
   },
   {
     "name": "Suivi et consentement",
     "settings": [
-      { "type": "paragraph", "content": "Les événements (clics CTA, consultation produit, ajout au panier, début du paiement) sont envoyés à dataLayer et à Shopify Customer Events uniquement si le visiteur a accepté le suivi via la bannière de cookies Shopify (Customer Privacy API). L'achat confirmé est suivi par les pixels configurés dans Paramètres > Événements clients." },
-      { "type": "checkbox", "id": "tracking_enabled", "label": "Activer les événements de suivi", "default": true }
+      {
+        "type": "paragraph",
+        "content": "Les événements (clics CTA, consultation produit, ajout au panier, début du paiement) sont envoyés à dataLayer et à Shopify Customer Events uniquement si le visiteur a accepté le suivi via la bannière de cookies Shopify (Customer Privacy API). L'achat confirmé est suivi par les pixels configurés dans Paramètres > Événements clients."
+      },
+      {
+        "type": "checkbox",
+        "id": "tracking_enabled",
+        "label": "Activer les événements de suivi",
+        "default": true
+      }
     ]
   },
   {
     "name": "Réseaux sociaux",
     "settings": [
-      { "type": "text", "id": "social_tiktok", "label": "TikTok (URL)" },
-      { "type": "text", "id": "social_instagram", "label": "Instagram (URL)" },
-      { "type": "text", "id": "social_snapchat", "label": "Snapchat (URL)" },
-      { "type": "text", "id": "social_telegram", "label": "Canal Telegram public (URL)", "info": "Uniquement un canal public. Ne jamais mettre ici le lien du groupe privé." }
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok (URL)"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram (URL)"
+      },
+      {
+        "type": "text",
+        "id": "social_snapchat",
+        "label": "Snapchat (URL)"
+      },
+      {
+        "type": "text",
+        "id": "social_telegram",
+        "label": "Canal Telegram public (URL)",
+        "info": "Uniquement un canal public. Ne jamais mettre ici le lien du groupe privé."
+      }
     ]
   }
 ]

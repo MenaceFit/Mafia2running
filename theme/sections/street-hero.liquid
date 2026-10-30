@@ -1,0 +1,74 @@
+<section class="sh" id="accueil" aria-labelledby="ShTitle">
+  <div class="container sh__grid">
+    <div class="sh__content">
+      {%- if section.settings.badge != blank -%}
+        <span class="sh__badge" data-reveal><span class="sh__live" aria-hidden="true"></span>{{ section.settings.badge }}</span>
+      {%- endif -%}
+      <h1 id="ShTitle" class="sh__title" data-reveal style="--reveal-i:1">{% render 'highlight', text: section.settings.title %}</h1>
+      {%- if section.settings.subtitle != blank -%}<p class="sh__sub" data-reveal style="--reveal-i:2">{{ section.settings.subtitle }}</p>{%- endif -%}
+      <div class="sh__actions" data-reveal style="--reveal-i:3">
+        <a href="{{ section.settings.button_link | default: '#offre' }}" class="btn btn--lg btn--accent" data-track="cta_click" data-track-label="hero_primary">{{ section.settings.button_label }} {% render 'icon', name: 'arrow', class: 'icon--arrow' %}</a>
+        {%- if section.settings.button_2_label != blank -%}
+          <a href="{{ section.settings.button_2_link | default: '#trouvailles' }}" class="btn btn--lg btn--outline-light">{{ section.settings.button_2_label }}</a>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.proof != blank -%}<p class="sh__proof" data-reveal style="--reveal-i:4">{{ section.settings.proof }}</p>{%- endif -%}
+    </div>
+
+    <div class="sh__stack" data-reveal="scale" style="--reveal-i:2" aria-hidden="true">
+      {%- for block in section.blocks limit: 3 -%}
+        <div class="sh__card sh__card--{{ forloop.index }}" {{ block.shopify_attributes }}>
+          <div class="sh__img">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'eager', widths: '300, 450, 600', sizes: '(min-width: 990px) 260px, 45vw', alt: '' }}
+            {%- elsif block.settings.asset != 'none' -%}
+              <img src="{{ block.settings.asset | append: '.webp' | asset_url }}" alt="" width="800" height="1000" loading="eager">
+            {%- endif -%}
+          </div>
+          <div class="sh__tag">
+            <span class="sh__tag-name">{{ block.settings.name }}</span>
+            <span class="sh__tag-price">{{ block.settings.price }}{% if block.settings.old_price != blank %} <s>{{ block.settings.old_price }}</s>{% endif %}</span>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero streetwear",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "badge", "label": "Badge", "default": "Groupe privé Telegram 🇫🇷" },
+    { "type": "textarea", "id": "title", "label": "Titre", "default": "Nike Running & semi-luxe *à prix cassés.*", "info": "Mots entre *astérisques* = mis en couleur." },
+    { "type": "textarea", "id": "subtitle", "label": "Sous-titre", "default": "Les contacts, les plateformes et les bons plans pour choper du Nike Running et des marques premium bien moins cher. Tout est dans le groupe." },
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "Rejoindre le groupe" },
+    { "type": "url", "id": "button_link", "label": "Lien du bouton", "info": "Vide = section offre (#offre)." },
+    { "type": "text", "id": "button_2_label", "label": "Bouton secondaire", "default": "Voir les trouvailles" },
+    { "type": "url", "id": "button_2_link", "label": "Lien du bouton secondaire" },
+    { "type": "text", "id": "proof", "label": "Petite ligne sous les boutons", "default": "Accès immédiat après paiement • 100 % sur ton téléphone" }
+  ],
+  "blocks": [
+    {
+      "type": "deal",
+      "name": "Carte trouvaille",
+      "limit": 3,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "select", "id": "asset", "label": "Photo par défaut (si aucune photo)", "default": "none", "options": [
+          { "value": "none", "label": "Aucune" },
+          { "value": "deal-stone-island", "label": "Pull Stone Island" },
+          { "value": "deal-cp-company", "label": "Pull CP Company" },
+          { "value": "deal-ralph-lauren", "label": "Ensemble Ralph Lauren" },
+          { "value": "deal-under-armour", "label": "Veste Under Armour" }
+        ] },
+        { "type": "text", "id": "name", "label": "Article", "default": "Pull Stone Island" },
+        { "type": "text", "id": "price", "label": "Prix trouvé", "default": "68 €" },
+        { "type": "text", "id": "old_price", "label": "Prix boutique (barré)", "default": "300 €" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Hero streetwear" } ]
+}
+{% endschema %}

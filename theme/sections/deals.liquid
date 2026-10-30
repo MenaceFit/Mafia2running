@@ -1,0 +1,84 @@
+<section class="section deals" id="{{ section.settings.anchor | handle }}" aria-labelledby="DealsTitle">
+  <div class="container">
+    <div class="deals__head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<span class="deals__eyebrow" data-reveal>{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 id="DealsTitle" class="deals__title" data-reveal style="--reveal-i:1">{% render 'highlight', text: section.settings.title %}</h2>
+      </div>
+      {%- if section.settings.text != blank -%}<p class="lead" data-reveal style="--reveal-i:2">{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+
+    <ul class="deals__grid" role="list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign pct = 0
+          if block.settings.price > 0 and block.settings.old_price > block.settings.price
+            assign saved = block.settings.old_price | minus: block.settings.price | times: 100.0
+            assign pct = saved | divided_by: block.settings.old_price | round
+          endif
+        -%}
+        <li class="deal" data-reveal style="--reveal-i: {{ forloop.index0 | modulo: 4 }}" {{ block.shopify_attributes }}>
+          <div class="deal__media">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300, 450, 600, 900', sizes: '(min-width: 990px) 25vw, 50vw', alt: block.settings.name }}
+            {%- elsif block.settings.asset != 'none' -%}
+              <img src="{{ block.settings.asset | append: '.webp' | asset_url }}" alt="{{ block.settings.name | escape }}" width="800" height="1000" loading="lazy">
+            {%- else -%}
+              {% render 'media', label: block.settings.name, dark: true, art: 'rings' %}
+            {%- endif -%}
+            {%- if pct > 0 -%}<span class="deal__badge">-{{ pct }} %</span>{%- endif -%}
+          </div>
+          <div class="deal__info">
+            <p class="deal__name">{{ block.settings.name }}</p>
+            <p class="deal__price">
+              <strong>{{ block.settings.price }} €</strong>
+              {%- if block.settings.old_price > block.settings.price -%}<s>{{ block.settings.old_price }} €</s>{%- endif -%}
+            </p>
+            {%- if block.settings.note != blank -%}<p class="deal__note">{{ block.settings.note }}</p>{%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if section.settings.disclaimer != blank -%}<p class="deals__disclaimer">{{ section.settings.disclaimer }}</p>{%- endif -%}
+    {%- if section.settings.button_label != blank -%}
+      <div class="deals__cta"><a href="#offre" class="btn btn--lg" data-track="cta_click" data-track-label="deals">{{ section.settings.button_label }} {% render 'icon', name: 'arrow', class: 'icon--arrow' %}</a></div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Trouvailles",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancre (ID)", "default": "trouvailles" },
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Trouvailles du groupe" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Ce que les membres *chopent.*" },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Des exemples de pièces trouvées grâce aux contacts et plateformes du groupe. Authentiques, pas des copies." },
+    { "type": "text", "id": "disclaimer", "label": "Mention", "default": "Exemples de bons plans partagés dans le groupe. Les prix et les stocks varient selon les arrivages : aucun prix n'est garanti." },
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "Je veux ces prix" }
+  ],
+  "blocks": [
+    {
+      "type": "deal",
+      "name": "Trouvaille",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "select", "id": "asset", "label": "Photo par défaut (si aucune photo)", "default": "none", "options": [
+          { "value": "none", "label": "Aucune" },
+          { "value": "deal-stone-island", "label": "Pull Stone Island" },
+          { "value": "deal-cp-company", "label": "Pull CP Company" },
+          { "value": "deal-ralph-lauren", "label": "Ensemble Ralph Lauren" },
+          { "value": "deal-under-armour", "label": "Veste Under Armour" }
+        ] },
+        { "type": "text", "id": "name", "label": "Article", "default": "Pull Stone Island" },
+        { "type": "number", "id": "price", "label": "Prix trouvé (€)", "default": 68 },
+        { "type": "number", "id": "old_price", "label": "Prix boutique (€, optionnel)", "info": "Si rempli, le prix est barré et le % de réduction s'affiche." },
+        { "type": "text", "id": "note", "label": "Détail", "info": "Ex. : Tailles M et L" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Trouvailles" } ]
+}
+{% endschema %}
