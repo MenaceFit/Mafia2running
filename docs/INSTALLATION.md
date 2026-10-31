@@ -101,3 +101,11 @@ La page d'accueil contient : titre centré → quiz « Quel pack est fait pour t
 - [ ] Bannière cookies active
 - [ ] Test sur iPhone et Android (menu, barre d'achat, FAQ, achat)
 - [ ] Mot de passe de la boutique retiré
+
+## Arrivages membres et avis
+
+**Vidéos** (dossier `produit/videos/`, déjà compressées pour mobile) :
+1. Shopify > *Contenu > Fichiers* > importe `arrivage-1.mp4` et `arrivage-2.mp4`.
+2. *Personnaliser* > section **Arrivages membres** > chaque bloc « Vidéo » > choisis la vidéo.
+
+**Avis clients** : section **Avis clients** > *Ajouter un bloc « Avis »* > prénom, note, texte copié tel quel ou capture du message. Mets uniquement de vrais avis. La section reste cachée tant qu'elle est vide.

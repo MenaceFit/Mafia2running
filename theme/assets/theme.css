@@ -906,3 +906,25 @@ body:has(.sticky-cta.is-shown) .footer { padding-bottom: calc(100px + env(safe-a
 .footer__policies { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px; }
 .footer__policies a:hover { color: #fff; }
 .footer--simple .footer__disclaimer { font-size: 0.78rem; opacity: 0.6; max-width: 60ch; }
+
+/* Arrivages membres */
+.arrivals__live { display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--c-muted); }
+.arrivals__text { color: var(--c-muted); margin: -12px 0 22px; }
+.arrivals__grid { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(240px, 72%); gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; scrollbar-width: none; }
+.arrivals__grid::-webkit-scrollbar { display: none; }
+@media (min-width: 750px) { .arrivals__grid { grid-auto-columns: minmax(260px, 1fr); } }
+.arrival { scroll-snap-align: start; }
+.arrival__media { position: relative; aspect-ratio: 9 / 16; border-radius: 18px; overflow: hidden; background: var(--c-surface); border: 1px solid var(--c-border); }
+.arrival__media video, .arrival__video, .arrival__media .placeholder { width: 100%; height: 100%; object-fit: cover; display: block; }
+.arrival__caption { position: absolute; left: 10px; right: 10px; bottom: 10px; padding: 8px 12px; border-radius: 10px; background: rgba(0, 0, 0, 0.6); color: #fff; font-size: 0.85rem; font-weight: 500; text-align: center; }
+
+/* Avis */
+.reviews__grid { display: grid; gap: 14px; }
+@media (min-width: 750px) { .reviews__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.review { display: grid; gap: 10px; align-content: start; padding: 22px; border-radius: 18px; background: var(--c-surface); border: 1px solid var(--c-border); }
+.review__shot { width: 100%; height: auto; border-radius: 12px; }
+.review__stars { color: var(--c-gold, #d4af37); letter-spacing: 2px; font-size: 1.1rem; }
+.review__text { font-size: 1rem; line-height: 1.55; }
+.review__name { font-weight: 600; color: var(--c-gold, #d4af37); }
+.review__name span { color: var(--c-muted); font-weight: 400; }
+.arrivals__live { white-space: nowrap; }

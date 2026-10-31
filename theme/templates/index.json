@@ -175,13 +175,41 @@
         "question-7",
         "question-10"
       ]
+    },
+    "arrivages": {
+      "type": "arrivals",
+      "settings": {},
+      "blocks": {
+        "v1": {
+          "type": "video",
+          "settings": {
+            "caption": "Arrivage Running 🇫🇷"
+          }
+        },
+        "v2": {
+          "type": "video",
+          "settings": {
+            "caption": ""
+          }
+        }
+      },
+      "block_order": [
+        "v1",
+        "v2"
+      ]
+    },
+    "avis": {
+      "type": "reviews",
+      "settings": {}
     }
   },
   "order": [
     "hero",
     "quiz",
     "packs",
+    "arrivages",
     "deals",
+    "avis",
     "faq"
   ]
 }

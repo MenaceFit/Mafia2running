@@ -1,0 +1,49 @@
+{%- if section.blocks.size > 0 or request.design_mode -%}
+<section class="section section--tight reviews" id="{{ section.settings.anchor | handle }}" aria-labelledby="RevTitle">
+  <div class="container">
+    <h2 id="RevTitle" class="packs__title" style="margin-bottom:24px">{{ section.settings.title }}</h2>
+    {%- if section.blocks.size == 0 -%}
+      <p class="packs__empty">Ajoute ici les vrais avis de tes membres (bloc « Avis »). Cette section reste cachée sur le site tant qu'elle est vide.</p>
+    {%- endif -%}
+    <ul class="reviews__grid" role="list">
+      {%- for block in section.blocks -%}
+        <li class="review" {{ block.shopify_attributes }}>
+          {%- if block.settings.screenshot != blank -%}
+            {%- assign shot_alt = 'Capture d’avis de ' | append: block.settings.name -%}
+            {{ block.settings.screenshot | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400, 600, 800', sizes: '(min-width: 990px) 33vw, 90vw', alt: shot_alt, class: 'review__shot' }}
+          {%- endif -%}
+          {%- if block.settings.rating > 0 -%}<p class="review__stars" aria-label="{{ block.settings.rating }} sur 5">{% for i in (1..block.settings.rating) %}★{% endfor %}</p>{%- endif -%}
+          {%- if block.settings.text != blank -%}<p class="review__text">“{{ block.settings.text }}”</p>{%- endif -%}
+          <p class="review__name">{{ block.settings.name }}{% if block.settings.date != blank %} <span>· {{ block.settings.date }}</span>{% endif %}</p>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Avis clients",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancre (ID)", "default": "avis" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Avis des membres ⭐" },
+    { "type": "paragraph", "content": "Ajoute uniquement de vrais avis (avec l'accord des membres). Les faux avis sont interdits par la loi (art. L121-4 du Code de la consommation)." }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Avis",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Prénom ou pseudo", "default": "Membre" },
+        { "type": "range", "id": "rating", "label": "Note", "min": 0, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "text", "label": "Avis (copié tel quel)" },
+        { "type": "image_picker", "id": "screenshot", "label": "Capture du message (optionnel)" },
+        { "type": "text", "id": "date", "label": "Date (optionnel)" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Avis clients" } ]
+}
+{% endschema %}

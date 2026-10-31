@@ -1,0 +1,53 @@
+<section class="section section--tight arrivals" id="{{ section.settings.anchor | handle }}" aria-labelledby="ArrTitle">
+  <div class="container">
+    <div class="packs__head">
+      <h2 id="ArrTitle" class="packs__title">{{ section.settings.title }}</h2>
+      {%- if section.settings.badge != blank -%}<span class="arrivals__live"><span class="sh__live" aria-hidden="true"></span>{{ section.settings.badge }}</span>{%- endif -%}
+    </div>
+    {%- if section.settings.text != blank -%}<p class="arrivals__text">{{ section.settings.text }}</p>{%- endif -%}
+
+    <ul class="arrivals__grid" role="list">
+      {%- for block in section.blocks -%}
+        <li class="arrival" {{ block.shopify_attributes }}>
+          <div class="arrival__media">
+            {%- if block.settings.video != blank -%}
+              {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, preload: 'none', image_size: '600x', class: 'arrival__video' }}
+            {%- elsif block.settings.video_url != blank -%}
+              <video class="arrival__video" src="{{ block.settings.video_url }}" autoplay loop muted playsinline preload="none"{% if block.settings.poster != blank %} poster="{{ block.settings.poster | image_url: width: 600 }}"{% endif %}></video>
+            {%- else -%}
+              {% render 'media', label: 'Vidéo à ajouter', dark: true, art: 'rings' %}
+            {%- endif -%}
+            {%- if block.settings.caption != blank -%}<p class="arrival__caption">{{ block.settings.caption }}</p>{%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Arrivages membres",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancre (ID)", "default": "arrivages" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Arrivages membres 📦" },
+    { "type": "text", "id": "badge", "label": "Badge", "default": "Vidéos réelles" },
+    { "type": "text", "id": "text", "label": "Texte", "default": "Les colis reçus par les membres grâce aux contacts du groupe." }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Vidéo",
+      "settings": [
+        { "type": "video", "id": "video", "label": "Vidéo (importée dans Shopify)" },
+        { "type": "url", "id": "video_url", "label": "Ou lien direct .mp4", "info": "Si tu as importé la vidéo dans Contenu > Fichiers, colle son lien ici." },
+        { "type": "image_picker", "id": "poster", "label": "Image d'aperçu (avec le lien direct)" },
+        { "type": "text", "id": "caption", "label": "Légende", "default": "Arrivage Running 🇫🇷" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [ { "name": "Arrivages membres", "blocks": [ { "type": "video" }, { "type": "video" } ] } ]
+}
+{% endschema %}
