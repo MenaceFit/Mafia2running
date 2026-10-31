@@ -102,9 +102,27 @@
             "price": 47,
             "note": "Tailles S et L"
           }
+        },
+        "deal-5": {
+          "type": "deal",
+          "settings": {
+            "asset": "deal-nike-phenom",
+            "name": "Pantalon Nike Phenom Elite",
+            "price": 57
+          }
+        },
+        "deal-6": {
+          "type": "deal",
+          "settings": {
+            "asset": "deal-ua-coldgear",
+            "name": "Veste Under Armour ColdGear",
+            "price": 40
+          }
         }
       },
       "block_order": [
+        "deal-5",
+        "deal-6",
         "deal-1",
         "deal-2",
         "deal-3",

@@ -1,12 +1,13 @@
-<section class="section section--tight arrivals" id="{{ section.settings.anchor | handle }}" aria-labelledby="ArrTitle">
+<section class="section section--tight arrivals" data-carousel id="{{ section.settings.anchor | handle }}" aria-labelledby="ArrTitle">
   <div class="container">
     <div class="packs__head">
       <h2 id="ArrTitle" class="packs__title">{{ section.settings.title }}</h2>
-      {%- if section.settings.badge != blank -%}<span class="arrivals__live"><span class="sh__live" aria-hidden="true"></span>{{ section.settings.badge }}</span>{%- endif -%}
+      {% render 'carousel-nav' %}
     </div>
+    {%- if section.settings.badge != blank -%}<p class="arrivals__live"><span class="sh__live" aria-hidden="true"></span>{{ section.settings.badge }}</p>{%- endif -%}
     {%- if section.settings.text != blank -%}<p class="arrivals__text">{{ section.settings.text }}</p>{%- endif -%}
 
-    <ul class="arrivals__grid" role="list">
+    <ul class="arrivals__grid" role="list" data-carousel-track>
       {%- for block in section.blocks -%}
         <li class="arrival" {{ block.shopify_attributes }}>
           <div class="arrival__media">

@@ -928,3 +928,18 @@ body:has(.sticky-cta.is-shown) .footer { padding-bottom: calc(100px + env(safe-a
 .review__name { font-weight: 600; color: var(--c-gold, #d4af37); }
 .review__name span { color: var(--c-muted); font-weight: 400; }
 .arrivals__live { white-space: nowrap; }
+
+/* Carousels (arrivages + avis) */
+.cnav { display: flex; gap: 8px; flex: none; }
+.cnav__btn { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--c-border-strong); color: var(--c-text); transition: background-color var(--t-fast), border-color var(--t-fast), opacity var(--t-fast); }
+.cnav__btn:hover { border-color: var(--c-gold, #d4af37); background: rgba(212, 175, 55, 0.08); }
+.cnav__btn:disabled { opacity: 0.3; pointer-events: none; }
+.cnav__prev { transform: rotate(180deg); }
+.arrivals__live { margin: -14px 0 8px; }
+.reviews__grid { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(260px, 82%); grid-template-columns: none; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 6px; }
+.reviews__grid::-webkit-scrollbar { display: none; }
+@media (min-width: 750px) { .reviews__grid { grid-template-columns: none; grid-auto-columns: calc((100% - 28px) / 3); } }
+.review { scroll-snap-align: start; }
+.review--demo { opacity: 0.55; border-style: dashed; }
+.arrivals__grid { scroll-behavior: smooth; }
+.reviews__grid { scroll-behavior: smooth; }

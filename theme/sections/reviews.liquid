@@ -1,11 +1,19 @@
 {%- if section.blocks.size > 0 or request.design_mode -%}
-<section class="section section--tight reviews" id="{{ section.settings.anchor | handle }}" aria-labelledby="RevTitle">
+<section class="section section--tight reviews" data-carousel id="{{ section.settings.anchor | handle }}" aria-labelledby="RevTitle">
   <div class="container">
-    <h2 id="RevTitle" class="packs__title" style="margin-bottom:24px">{{ section.settings.title }}</h2>
+    <div class="packs__head">
+      <h2 id="RevTitle" class="packs__title">{{ section.settings.title }}</h2>
+      {% render 'carousel-nav' %}
+    </div>
     {%- if section.blocks.size == 0 -%}
-      <p class="packs__empty">Ajoute ici les vrais avis de tes membres (bloc « Avis »). Cette section reste cachée sur le site tant qu'elle est vide.</p>
+      <p class="packs__empty" style="margin-bottom:16px">Aperçu visible seulement dans l'éditeur : ajoute de vrais avis (bloc « Avis ») pour publier cette section.</p>
     {%- endif -%}
-    <ul class="reviews__grid" role="list">
+    <ul class="reviews__grid" role="list" data-carousel-track>
+      {%- if section.blocks.size == 0 -%}
+        {%- for i in (1..3) -%}
+          <li class="review review--demo"><p class="review__stars">★★★★★</p><p class="review__text">“Colle ici le message d'un membre, tel quel.”</p><p class="review__name">Prénom <span>· exemple</span></p></li>
+        {%- endfor -%}
+      {%- endif -%}
       {%- for block in section.blocks -%}
         <li class="review" {{ block.shopify_attributes }}>
           {%- if block.settings.screenshot != blank -%}

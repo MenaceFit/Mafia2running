@@ -350,6 +350,40 @@
   }
 
   /* ------------------------------------------------------------------
+   * Carousels (arrivals videos + reviews): arrows + slow auto-scroll
+   * ------------------------------------------------------------------ */
+  $$('[data-carousel]').forEach((root) => {
+    const track = $('[data-carousel-track]', root);
+    const prev = $('[data-carousel-prev]', root);
+    const next = $('[data-carousel-next]', root);
+    if (!track) return;
+    const step = () => { const item = track.firstElementChild; return item ? item.getBoundingClientRect().width + 14 : track.clientWidth; };
+    const atEnd = () => track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+    const update = () => {
+      if (prev) prev.disabled = track.scrollLeft <= 4;
+      if (next) next.disabled = atEnd();
+      const nav = $('[data-carousel-nav]', root);
+      if (nav) nav.hidden = track.scrollWidth <= track.clientWidth + 4;
+    };
+    prev && prev.addEventListener('click', () => track.scrollBy({ left: -step() }));
+    next && next.addEventListener('click', () => track.scrollBy({ left: step() }));
+    track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+    window.addEventListener('resize', update);
+    update();
+
+    // Auto-scroll every 4 s while visible; stops for good once the visitor interacts.
+    if (!animationsOn) return;
+    let stopped = false; let visible = false;
+    ['pointerdown', 'wheel', 'touchstart', 'keydown'].forEach((ev) => track.addEventListener(ev, () => { stopped = true; }, { passive: true }));
+    [prev, next].forEach((b) => b && b.addEventListener('click', () => { stopped = true; }));
+    if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0.4 }).observe(track);
+    setInterval(() => {
+      if (stopped || !visible || document.hidden) return;
+      if (atEnd()) track.scrollTo({ left: 0 }); else track.scrollBy({ left: step() });
+    }, 4000);
+  });
+
+  /* ------------------------------------------------------------------
    * Pack quiz
    * ------------------------------------------------------------------ */
   $$('[data-quiz]').forEach((quiz) => {
