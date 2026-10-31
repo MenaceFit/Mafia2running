@@ -45,3 +45,23 @@
 
 🚫 Ne partage pas le contenu du groupe.
 Bonne chasse aux bonnes affaires 🔥
+
+---
+
+# Description – Pack Ebook +35 niches Vinted
+
+📘 **L'ebook avec +35 niches Vinted rentables.**
+
+🔍 +35 niches qui se vendent vite sur Vinted.
+💸 Des exemples d'achats à petit prix revendus beaucoup plus cher (ex. : acheté 4 €, revendu 130 €).
+🛍️ Où acheter chaque niche pas cher.
+🏷️ À quel prix revendre.
+📸 Comment faire des annonces qui vendent.
+👟 + l'accès au groupe privé Nike Running & semi-luxe.
+
+✅ Paiement unique, pas d'abonnement.
+📲 Ebook en PDF + groupe Telegram, tout sur ton téléphone.
+
+⚠️ Les exemples de bénéfices sont des cas réels partagés, pas une garantie : tes résultats dépendent de ton travail.
+
+👉 Clique sur « Acheter » et commence aujourd'hui !
