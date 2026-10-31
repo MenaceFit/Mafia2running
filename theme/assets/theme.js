@@ -322,8 +322,9 @@
    * ------------------------------------------------------------------ */
   const sticky = $('[data-sticky-cta]');
   if (sticky && 'IntersectionObserver' in window) {
-    const hero = $('.hero') || $('.sh') || $('.page-head');
-    const blockers = [$('[data-offer]'), $('.footer')].filter(Boolean);
+    const hero = $('.hero') || $('.sh') || $('.hs') || $('.page-head');
+    const offerEl = $('[data-offer]') || $('#packs');
+    const blockers = [offerEl, $('.footer')].filter(Boolean);
     const state = { pastHero: !hero, blocked: new Set() };
     const update = () => {
       const show = state.pastHero && state.blocked.size === 0;
@@ -347,6 +348,37 @@
     blockers.forEach((b) => blockIo.observe(b));
     update();
   }
+
+  /* ------------------------------------------------------------------
+   * Pack quiz
+   * ------------------------------------------------------------------ */
+  $$('[data-quiz]').forEach((quiz) => {
+    const total = Number(quiz.dataset.total) || 1;
+    const bar = $('[data-quiz-bar]', quiz);
+    const steps = $$('[data-quiz-step]', quiz);
+    const result = $('[data-quiz-result]', quiz);
+    let scores = [];
+    const show = (i) => {
+      steps.forEach((s, k) => { s.hidden = k !== i; });
+      result.hidden = i < steps.length;
+      if (bar) bar.style.width = `${Math.min(100, ((i + 1) / total) * 100)}%`;
+    };
+    quiz.addEventListener('click', (e) => {
+      const btn = e.target.closest('.quiz__answer');
+      if (btn) {
+        scores.push(Number(btn.dataset.score) || 1);
+        const next = scores.length;
+        if (next >= steps.length) {
+          const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+          const pick = avg <= 1.75 ? '1' : '2';
+          $$('[data-result]', result).forEach((r) => { r.hidden = r.dataset.result !== pick; });
+          Tracking.track('quiz_complete', { result: pick });
+        }
+        show(next);
+      }
+      if (e.target.closest('[data-quiz-restart]')) { scores = []; show(0); }
+    });
+  });
 
   /* ------------------------------------------------------------------
    * Theme editor: keep things visible & in sync

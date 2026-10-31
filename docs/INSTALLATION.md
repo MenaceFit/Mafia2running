@@ -38,6 +38,15 @@ Chaque section de la page d'accueil (Hero, chiffres, Running, Semi-luxe, Ressour
 
 **Images** : les emplacements d'images (Running, Semi-luxe, Accompagnement) affichent un visuel neutre tant qu'aucune image n'est ajoutée. Utilise uniquement des photos dont tu as les droits (tes propres photos, banque d'images sous licence). Les photos de sites de marques ou de revendeurs ne sont généralement pas réutilisables. Shopify les sert automatiquement en WebP, avec lazy loading.
 
+## 2 bis. Page d'accueil (style noir & doré)
+
+La page d'accueil contient : titre centré → quiz « Quel pack est fait pour toi ? » → « Nos packs » → exemples de trouvailles → FAQ.
+
+1. Crée tes packs comme produits (un produit par pack, avec son image et son prix).
+2. Mets-les dans une collection, par exemple « Packs », et choisis-la dans la section **Nos packs**.
+3. Dans la section **Quiz pack**, choisis le Pack 1 (petit budget) et le Pack 2 (complet). Les questions et réponses se modifient dans les blocs.
+4. Le style noir & doré se coupe dans *Paramètres du thème > Couleurs* (case « Style noir & doré »).
+
 ## 3. Créer le produit d'accès
 
 *Produits > Ajouter un produit* :

@@ -60,7 +60,7 @@
     {% render 'structured-data' %}
   </head>
 
-  <body class="template-{{ template.name | handle }}{% if template.suffix %} template-{{ template.name | handle }}--{{ template.suffix | handle }}{% endif %}">
+  <body class="{% if settings.dark_mode %}theme-dark {% endif %}template-{{ template.name | handle }}{% if template.suffix %} template-{{ template.name | handle }}--{{ template.suffix | handle }}{% endif %}">
     <a class="skip-link" href="#MainContent">Aller au contenu</a>
 
     {% sections 'header-group' %}

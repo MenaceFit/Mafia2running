@@ -1,0 +1,14 @@
+<a href="{{ product.url }}" class="pack">
+  <div class="pack__media">
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: 800 | image_tag: loading: 'lazy', widths: '300, 450, 600, 800', sizes: '(min-width: 990px) 25vw, 50vw', alt: product.title }}
+    {%- else -%}
+      {% render 'media', label: product.title, dark: true, art: 'rings' %}
+    {%- endif -%}
+  </div>
+  <p class="pack__title">{{ product.title }}</p>
+  <p class="pack__price">
+    {{ product.price | money }}
+    {%- if product.compare_at_price > product.price -%} <s>{{ product.compare_at_price | money }}</s>{%- endif -%}
+  </p>
+</a>

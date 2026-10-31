@@ -1,0 +1,83 @@
+{%- liquid
+  assign questions = section.blocks | where: 'type', 'question'
+  assign total = questions.size
+-%}
+<section class="section section--tight quiz" id="quiz" aria-labelledby="QuizTitle">
+  <div class="container container--narrow">
+    <h2 id="QuizTitle" class="quiz__title" data-reveal>{{ section.settings.title }}</h2>
+    {%- if section.settings.text != blank -%}<p class="quiz__sub" data-reveal>{{ section.settings.text }}</p>{%- endif -%}
+
+    <div class="quiz__card" data-quiz data-total="{{ total }}" data-reveal>
+      <div class="quiz__bar"><span data-quiz-bar style="width: {{ 100 | divided_by: total | at_least: 1 }}%"></span></div>
+      {%- for q in questions -%}
+        <div class="quiz__step" data-quiz-step="{{ forloop.index }}"{% unless forloop.first %} hidden{% endunless %} {{ q.shopify_attributes }}>
+          <p class="quiz__count">{{ forloop.index }} / {{ total }}</p>
+          <p class="quiz__q">{{ q.settings.question }}</p>
+          <div class="quiz__answers">
+            {%- assign answers = q.settings.answers | newline_to_br | split: '<br />' -%}
+            {%- assign n = 0 -%}
+            {%- for a in answers -%}
+              {%- assign a = a | strip -%}
+              {%- if a != blank -%}
+                {%- assign n = n | plus: 1 -%}
+                <button type="button" class="quiz__answer" data-score="{{ n }}">{{ a }}</button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endfor -%}
+
+      <div class="quiz__result" data-quiz-result hidden>
+        <p class="quiz__count">Résultat</p>
+        {%- for i in (1..2) -%}
+          {%- liquid
+            assign pkey = 'product_' | append: i
+            assign tkey = 'result_' | append: i
+            assign p = section.settings[pkey]
+          -%}
+          <div data-result="{{ i }}" hidden>
+            <p class="quiz__q">{{ section.settings[tkey] }}</p>
+            {%- if p != blank -%}
+              <a class="quiz__pack" href="{{ p.url }}">
+                {%- if p.featured_media -%}{{ p.featured_media | image_url: width: 240 | image_tag: loading: 'lazy', alt: p.title }}{%- endif -%}
+                <span><strong>{{ p.title }}</strong><span>{{ p.price | money }}</span></span>
+              </a>
+              <a class="btn btn--lg btn--gold btn--block" href="{{ p.url }}" data-track="cta_click" data-track-label="quiz_result">Voir ce pack</a>
+            {%- else -%}
+              <a class="btn btn--lg btn--gold btn--block" href="#packs">Voir les packs</a>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+        <button type="button" class="quiz__restart" data-quiz-restart>Recommencer</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Quiz pack",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titre", "default": "Quel pack est fait pour toi ?" },
+    { "type": "text", "id": "text", "label": "Sous-titre", "default": "Réponds à 4 questions, on te dit quel pack prendre." },
+    { "type": "paragraph", "content": "Chaque réponse compte selon sa position (1re = 1 point, 2e = 2 points…). Moyenne basse → Pack 1, moyenne haute → Pack 2." },
+    { "type": "product", "id": "product_1", "label": "Pack 1 (petit budget / débutant)" },
+    { "type": "text", "id": "result_1", "label": "Texte résultat Pack 1", "default": "Le pack idéal pour démarrer 👇" },
+    { "type": "product", "id": "product_2", "label": "Pack 2 (plus complet)" },
+    { "type": "text", "id": "result_2", "label": "Texte résultat Pack 2", "default": "Tu veux aller plus loin : prends le pack complet 👇" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Quel est ton objectif ?" },
+        { "type": "textarea", "id": "answers", "label": "Réponses (une par ligne, de la plus petite à la plus grande)", "default": "Tester l'achat-revente\nMe faire un complément de revenu\nEn faire mon activité principale" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Quiz pack" } ]
+}
+{% endschema %}

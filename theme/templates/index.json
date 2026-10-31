@@ -1,65 +1,70 @@
 {
   "sections": {
     "hero": {
-      "type": "street-hero",
+      "type": "simple-hero",
+      "settings": {}
+    },
+    "quiz": {
+      "type": "pack-quiz",
       "settings": {
-        "badge": "Groupe privé Telegram 🇫🇷",
-        "title": "Nike Running & semi-luxe *à prix cassés.*",
-        "subtitle": "Les contacts, les plateformes et les bons plans pour choper du Nike Running et des marques premium bien moins cher. Tout est dans le groupe.",
-        "button_label": "Rejoindre le groupe",
-        "button_2_label": "Voir les trouvailles",
-        "proof": "Accès après paiement • 100 % sur ton téléphone"
+        "title": "Quel pack est fait pour toi ?",
+        "text": "Réponds à 4 questions, on te dit quel pack prendre.",
+        "result_1": "Le pack idéal pour démarrer 👇",
+        "result_2": "Tu veux aller plus loin : prends le pack complet 👇"
       },
       "blocks": {
-        "card-1": {
-          "type": "deal",
+        "q1": {
+          "type": "question",
           "settings": {
-            "asset": "deal-ralph-lauren",
-            "name": "Ensemble Ralph Lauren",
-            "price": "120 €",
-            "old_price": "300 €"
+            "question": "Quel est ton objectif ?",
+            "answers": "Tester l'achat-revente\nMe faire un complément de revenu\nEn faire mon activité principale"
           }
         },
-        "card-2": {
-          "type": "deal",
+        "q2": {
+          "type": "question",
           "settings": {
-            "asset": "deal-stone-island",
-            "name": "Pull Stone Island",
-            "price": "68 €",
-            "old_price": "300 €"
+            "question": "Qu'est-ce qui t'intéresse le plus ?",
+            "answers": "Nike Running\nLes deux\nLe semi-luxe (Stone Island, Ralph Lauren…)"
           }
         },
-        "card-3": {
-          "type": "deal",
+        "q3": {
+          "type": "question",
           "settings": {
-            "asset": "deal-under-armour",
-            "name": "Veste hybride Under Armour",
-            "price": "47 €",
-            "old_price": ""
+            "question": "Ton budget pour démarrer ?",
+            "answers": "Moins de 200 €\nEntre 200 et 500 €\nPlus de 500 €"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "Tu as déjà fait de l'achat-revente ?",
+            "answers": "Jamais\nUn peu\nOui, régulièrement"
           }
         }
       },
       "block_order": [
-        "card-1",
-        "card-2",
-        "card-3"
+        "q1",
+        "q2",
+        "q3",
+        "q4"
       ]
     },
-    "marquee": {
-      "type": "marquee",
+    "packs": {
+      "type": "packs",
       "settings": {
-        "items": "Nike Running, Stone Island, CP Company, Ralph Lauren, Canada Goose, Under Armour, Vinted UK"
+        "title": "Nos packs",
+        "limit": 4
       }
     },
     "deals": {
       "type": "deals",
       "settings": {
         "anchor": "trouvailles",
-        "eyebrow": "Trouvailles du groupe",
-        "title": "Ce que les membres *chopent.*",
+        "eyebrow": "Exemples de trouvailles",
+        "title": "Ce que les membres *chopent*",
         "text": "Des exemples de pièces trouvées grâce aux contacts et plateformes du groupe. Authentiques, pas des copies.",
         "disclaimer": "Exemples de bons plans partagés dans le groupe. Les prix et les stocks varient selon les arrivages : aucun prix n'est garanti.",
-        "button_label": "Je veux ces prix"
+        "button_label": ""
       },
       "blocks": {
         "deal-1": {
@@ -106,146 +111,14 @@
         "deal-4"
       ]
     },
-    "stats": {
-      "type": "stats",
-      "settings": {
-        "aria_label": "Ce qu'il y a dans le groupe"
-      },
-      "blocks": {
-        "stat-1": {
-          "type": "stat",
-          "settings": {
-            "prefix": "+",
-            "number": 6,
-            "label": "contacts running"
-          }
-        },
-        "stat-2": {
-          "type": "stat",
-          "settings": {
-            "prefix": "+",
-            "number": 5,
-            "label": "plateformes neuves"
-          }
-        },
-        "stat-3": {
-          "type": "stat",
-          "settings": {
-            "prefix": "+",
-            "number": 40,
-            "label": "sites de seconde main"
-          }
-        },
-        "stat-4": {
-          "type": "stat",
-          "settings": {
-            "prefix": "+",
-            "number": 15,
-            "label": "agents de livraison"
-          }
-        },
-        "stat-5": {
-          "type": "stat",
-          "settings": {
-            "prefix": "",
-            "number": 1,
-            "label": "bot Vinted UK"
-          }
-        }
-      },
-      "block_order": [
-        "stat-1",
-        "stat-2",
-        "stat-3",
-        "stat-4",
-        "stat-5"
-      ]
-    },
-    "offre": {
-      "type": "offer",
-      "settings": {
-        "anchor": "offre",
-        "style": "dark",
-        "surface": true,
-        "badge": "Accès au groupe",
-        "title": "Rejoins le *groupe privé.*",
-        "text": "Un seul paiement et tu as accès à tout : contacts, plateformes, bons plans et bot Vinted UK.",
-        "price_note": "",
-        "button_label": "REJOINDRE LE GROUPE",
-        "trust_1": "Paiement sécurisé par Shopify",
-        "trust_2": "Lien d'invitation personnel envoyé après confirmation du paiement",
-        "trust_3": "Lien à usage unique, jamais affiché publiquement",
-        "access_page": "/pages/conditions-acces"
-      },
-      "blocks": {
-        "item-1": {
-          "type": "item",
-          "settings": {
-            "text": "Plus de 6 contacts running authentiques"
-          }
-        },
-        "item-2": {
-          "type": "item",
-          "settings": {
-            "text": "Plus de 5 plateformes neuves avec étiquettes"
-          }
-        },
-        "item-3": {
-          "type": "item",
-          "settings": {
-            "text": "Plus de 40 sites de seconde main"
-          }
-        },
-        "item-4": {
-          "type": "item",
-          "settings": {
-            "text": "Plus de 15 agents de livraison"
-          }
-        },
-        "item-5": {
-          "type": "item",
-          "settings": {
-            "text": "Accès au bot Vinted UK"
-          }
-        },
-        "item-6": {
-          "type": "item",
-          "settings": {
-            "text": "Accès au groupe privé Telegram"
-          }
-        },
-        "item-7": {
-          "type": "item",
-          "settings": {
-            "text": "Accompagnement complet"
-          }
-        },
-        "item-8": {
-          "type": "item",
-          "settings": {
-            "text": "Ajout des nouvelles ressources selon les disponibilités"
-          }
-        }
-      },
-      "block_order": [
-        "item-1",
-        "item-2",
-        "item-3",
-        "item-4",
-        "item-5",
-        "item-6",
-        "item-7",
-        "item-8"
-      ]
-    },
     "faq": {
       "type": "faq",
       "settings": {
         "anchor": "faq",
-        "surface": true,
-        "eyebrow": "FAQ",
-        "title": "Questions *fréquentes*",
-        "text": "Tu ne trouves pas ta réponse ? Écris-nous avec ton numéro de commande si tu as déjà acheté.",
+        "surface": false,
+        "eyebrow": "",
+        "title": "Questions fréquentes",
+        "text": "",
         "button_label": "Nous contacter",
         "button_link": "/pages/contact",
         "open_first": true
@@ -306,10 +179,9 @@
   },
   "order": [
     "hero",
-    "marquee",
+    "quiz",
+    "packs",
     "deals",
-    "stats",
-    "offre",
     "faq"
   ]
 }

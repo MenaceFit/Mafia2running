@@ -1,0 +1,38 @@
+{%- liquid
+  assign source = section.settings.collection
+  assign link = source.url | default: routes.all_products_collection_url
+-%}
+<section class="section section--tight packs" id="packs" aria-labelledby="PacksTitle">
+  <div class="container">
+    <div class="packs__head">
+      <h2 id="PacksTitle" class="packs__title">{{ section.settings.title }}</h2>
+      <a href="{{ link }}" class="packs__all">Tout voir</a>
+    </div>
+    <ul class="packs__grid" role="list">
+      {%- if source != blank and source.products.size > 0 -%}
+        {%- for product in source.products limit: section.settings.limit -%}
+          <li data-reveal style="--reveal-i: {{ forloop.index0 | modulo: 4 }}">{% render 'pack-card', product: product %}</li>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for product in collections.all.products limit: section.settings.limit -%}
+          <li data-reveal>{% render 'pack-card', product: product %}</li>
+        {%- else -%}
+          <li class="packs__empty">Ajoute tes packs dans Produits, puis choisis une collection dans cette section.</li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Nos packs",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titre", "default": "Nos packs" },
+    { "type": "collection", "id": "collection", "label": "Collection des packs", "info": "Vide = tous les produits." },
+    { "type": "range", "id": "limit", "label": "Nombre de packs affichés", "min": 2, "max": 8, "step": 1, "default": 4 }
+  ],
+  "presets": [ { "name": "Nos packs" } ]
+}
+{% endschema %}

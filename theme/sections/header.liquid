@@ -3,9 +3,9 @@
   assign cta_url = section.settings.cta_link
   if cta_url == blank
     if request.page_type == 'index'
-      assign cta_url = '#offre'
+      assign cta_url = '#packs'
     else
-      assign cta_url = routes.root_url | append: '#offre'
+      assign cta_url = routes.root_url | append: '#packs'
     endif
   endif
   assign menu = linklists[section.settings.menu]

@@ -1,0 +1,37 @@
+<section class="hs" id="accueil" aria-labelledby="HsTitle">
+  <div class="container hs__inner">
+    {%- if section.settings.eyebrow != blank -%}<p class="hs__eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h1 id="HsTitle" class="hs__title" data-reveal style="--reveal-i:1">{% render 'highlight', text: section.settings.title %}</h1>
+    {%- if section.settings.subtitle != blank -%}<p class="hs__sub" data-reveal style="--reveal-i:2">{{ section.settings.subtitle }}</p>{%- endif -%}
+    <div class="hs__actions" data-reveal style="--reveal-i:3">
+      {%- if section.settings.button_label != blank -%}<a href="{{ section.settings.button_link | default: '#quiz' }}" class="btn btn--lg btn--gold" data-track="cta_click" data-track-label="hero_primary">{{ section.settings.button_label }}</a>{%- endif -%}
+      {%- if section.settings.button_2_label != blank -%}<a href="{{ section.settings.button_2_link | default: '#packs' }}" class="btn btn--lg btn--ghost" data-track="cta_click" data-track-label="hero_secondary">{{ section.settings.button_2_label }}</a>{%- endif -%}
+    </div>
+    <ul class="hs__checks" role="list" data-reveal style="--reveal-i:4">
+      {%- for i in (1..3) -%}
+        {%- assign key = 'check_' | append: i -%}
+        {%- if section.settings[key] != blank -%}<li><span aria-hidden="true">✓</span> {{ section.settings[key] }}</li>{%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Accueil simple",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Petit texte au-dessus", "default": "MAFIA RUNNING 🇫🇷" },
+    { "type": "textarea", "id": "title", "label": "Titre", "default": "Nike Running & semi-luxe *pas cher*", "info": "Mots entre *astérisques* = en doré." },
+    { "type": "textarea", "id": "subtitle", "label": "Sous-titre", "default": "Nike Running, Under Armour, Stone Island, Ralph Lauren… Les contacts et les bons plans pour acheter moins cher, réunis dans un groupe Telegram privé." },
+    { "type": "text", "id": "button_label", "label": "Bouton principal", "default": "Trouver mon pack" },
+    { "type": "url", "id": "button_link", "label": "Lien bouton principal", "info": "Vide = quiz (#quiz)." },
+    { "type": "text", "id": "button_2_label", "label": "Bouton secondaire", "default": "Voir les packs" },
+    { "type": "url", "id": "button_2_link", "label": "Lien bouton secondaire", "info": "Vide = packs (#packs)." },
+    { "type": "text", "id": "check_1", "label": "Ligne ✓ 1", "default": "Paiement unique, sans abonnement", "info": "Mets uniquement des infos vraies (ex. pas de nombre de membres inventé)." },
+    { "type": "text", "id": "check_2", "label": "Ligne ✓ 2", "default": "Accès au groupe après paiement" },
+    { "type": "text", "id": "check_3", "label": "Ligne ✓ 3", "default": "Paiement sécurisé" }
+  ],
+  "presets": [ { "name": "Accueil simple" } ]
+}
+{% endschema %}

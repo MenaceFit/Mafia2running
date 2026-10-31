@@ -16,7 +16,9 @@
     "require_waiver": true,
     "sticky_cta": true,
     "tracking_enabled": true,
-    "color_accent": "#3B3BE0"
+    "color_accent": "#3B3BE0",
+    "dark_mode": true,
+    "color_gold": "#D4AF37"
   },
   "presets": {
     "Default": {

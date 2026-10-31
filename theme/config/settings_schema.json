@@ -55,6 +55,19 @@
     "name": "Couleurs",
     "settings": [
       {
+        "type": "checkbox",
+        "id": "dark_mode",
+        "label": "Style noir & doré",
+        "default": true,
+        "info": "Fond noir, boutons dorés (comme les boutiques Telegram/TikTok). Décoche pour le style blanc."
+      },
+      {
+        "type": "color",
+        "id": "color_gold",
+        "label": "Doré (boutons, mots en avant)",
+        "default": "#D4AF37"
+      },
+      {
         "type": "color",
         "id": "color_background",
         "label": "Fond principal",

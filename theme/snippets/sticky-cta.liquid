@@ -2,7 +2,7 @@
 {%- liquid
   assign access = settings.access_product
   if request.page_type == 'index'
-    assign target = '#offre'
+    assign target = '#packs'
   elsif access != blank
     assign target = access.url
   else

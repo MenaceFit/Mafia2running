@@ -2,6 +2,26 @@
   assign brand = settings.brand_name | default: shop.name
   assign nav_menu = linklists[section.settings.menu]
 -%}
+{%- if section.settings.simple -%}
+<footer class="footer footer--simple">
+  <div class="container">
+    {%- if settings.social_tiktok != blank or settings.social_instagram != blank or settings.social_snapchat != blank or settings.social_telegram != blank -%}
+      <ul class="footer__social" role="list">
+        {%- if settings.social_tiktok != blank -%}<li><a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'icon', name: 'tiktok' %}</a></li>{%- endif -%}
+        {%- if settings.social_instagram != blank -%}<li><a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon', name: 'instagram' %}</a></li>{%- endif -%}
+        {%- if settings.social_snapchat != blank -%}<li><a href="{{ settings.social_snapchat }}" target="_blank" rel="noopener" aria-label="Snapchat">{% render 'icon', name: 'snapchat' %}</a></li>{%- endif -%}
+        {%- if settings.social_telegram != blank -%}<li><a href="{{ settings.social_telegram }}" target="_blank" rel="noopener" aria-label="Telegram">{% render 'icon', name: 'telegram' %}</a></li>{%- endif -%}
+      </ul>
+    {%- endif -%}
+    <p>&copy; {{ 'now' | date: '%Y' }} {{ brand }}</p>
+    <p class="footer__policies">
+      {%- for policy in shop.policies -%}<a href="{{ policy.url }}">{{ policy.title }}</a>{%- endfor -%}
+      {%- if section.settings.contact_page != blank -%}<a href="{{ section.settings.contact_page }}">Contact</a>{%- endif -%}
+    </p>
+    {%- if section.settings.disclaimer != blank -%}<p class="footer__disclaimer">{{ section.settings.disclaimer }}</p>{%- endif -%}
+  </div>
+</footer>
+{%- else -%}
 <footer class="footer">
   <div class="container">
     <div class="footer__top">
@@ -81,11 +101,13 @@
     </div>
   </div>
 </footer>
+{%- endif -%}
 
 {% schema %}
 {
   "name": "Pied de page",
   "settings": [
+    { "type": "checkbox", "id": "simple", "label": "Footer simple (copyright + liens)", "default": true },
     { "type": "richtext", "id": "about", "label": "Présentation", "default": "<p>Communauté privée dédiée à l'achat-revente de vêtements : ressources running, semi-luxe, plateformes, logistique et accompagnement.</p>" },
     { "type": "link_list", "id": "menu", "label": "Menu de navigation", "default": "footer" },
     { "type": "text", "id": "email", "label": "E-mail de contact", "info": "Vide = e-mail de la boutique." },
