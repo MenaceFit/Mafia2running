@@ -10,7 +10,9 @@
         "title": "Quel pack est fait pour toi ?",
         "text": "Réponds à 4 questions, on te dit quel pack prendre.",
         "result_1": "Le pack idéal pour démarrer 👇",
-        "result_2": "Tu veux aller plus loin : prends le pack complet 👇"
+        "result_2": "Tu veux aller plus loin : prends le pack complet 👇",
+        "product_1": "",
+        "product_2": ""
       },
       "blocks": {
         "q1": {
@@ -53,7 +55,8 @@
       "type": "packs",
       "settings": {
         "title": "Nos packs",
-        "limit": 4
+        "limit": 2,
+        "collection": "accessoires"
       }
     },
     "deals": {
@@ -63,7 +66,7 @@
         "eyebrow": "Exemples de trouvailles",
         "title": "Ce que les membres *chopent*",
         "text": "Des exemples de pièces trouvées grâce aux contacts et plateformes du groupe. Authentiques, pas des copies.",
-        "disclaimer": "Exemples de bons plans partagés dans le groupe. Les prix et les stocks varient selon les arrivages : aucun prix n'est garanti.",
+        "disclaimer": "Plateformes où les produits sont neuf avec étiquettes authentiques",
         "button_label": ""
       },
       "blocks": {
@@ -73,7 +76,8 @@
             "asset": "deal-stone-island",
             "name": "Pull Stone Island",
             "price": 68,
-            "old_price": 300
+            "old_price": 300,
+            "note": ""
           }
         },
         "deal-2": {
@@ -82,7 +86,8 @@
             "asset": "deal-ralph-lauren",
             "name": "Ensemble Ralph Lauren",
             "price": 120,
-            "old_price": 300
+            "old_price": 300,
+            "note": ""
           }
         },
         "deal-3": {
@@ -108,7 +113,8 @@
           "settings": {
             "asset": "deal-nike-phenom",
             "name": "Pantalon Nike Phenom Elite",
-            "price": 57
+            "price": 57,
+            "note": ""
           }
         },
         "deal-6": {
@@ -116,7 +122,8 @@
           "settings": {
             "asset": "deal-ua-coldgear",
             "name": "Veste Under Armour ColdGear",
-            "price": 40
+            "price": 40,
+            "note": ""
           }
         }
       },
@@ -201,38 +208,152 @@
         "v1": {
           "type": "video",
           "settings": {
+            "video": "shopify://files/videos/arrivage-1-sans-filigrane.mp4",
+            "video_url": "",
             "caption": "Arrivage Running 🇫🇷"
           }
         },
         "v2": {
           "type": "video",
           "settings": {
+            "video": "shopify://files/videos/arrivage-2.mp4",
+            "video_url": "",
             "caption": ""
           }
         },
         "v3": {
           "type": "video",
           "settings": {
+            "video": "shopify://files/videos/arrivage-3.mp4",
+            "video_url": "",
             "caption": "Arrivage Nike Running 🇫🇷"
           }
         },
-        "v4": {
+        "video_BVjzeL": {
           "type": "video",
           "settings": {
-            "caption": ""
+            "video": "shopify://files/videos/VID_20261101_005653_338.mp4",
+            "video_url": "",
+            "caption": "Arrivage Running 🇫🇷"
+          }
+        },
+        "video_9bdjGV": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/arrivage-ralph-lauren-essentials.mp4",
+            "video_url": "",
+            "caption": "Arrivage Running 🇫🇷"
           }
         }
       },
       "block_order": [
-        "v4",
         "v1",
         "v2",
-        "v3"
+        "v3",
+        "video_BVjzeL",
+        "video_9bdjGV"
       ]
     },
     "avis": {
       "type": "reviews",
-      "settings": {}
+      "settings": {},
+      "blocks": {
+        "review_RxQaGq": {
+          "type": "review",
+          "settings": {
+            "name": "Léo",
+            "rating": 5,
+            "text": "Je suis très satisfait on peut trouver du semi-luxe comme des running pour vraiment pas cher parfait pour débuter !",
+            "date": "14/10"
+          }
+        },
+        "review_fXLCA3": {
+          "type": "review",
+          "settings": {
+            "name": "Ilyes",
+            "rating": 5,
+            "text": "Une fois l'achat réalisé il y a un vrai accompagnement d'ailleurs je recommande",
+            "date": "22/10"
+          }
+        },
+        "review_F46pmQ": {
+          "type": "review",
+          "settings": {
+            "name": "Zakaria",
+            "rating": 5,
+            "text": "Franchement le groupe est carré je recommande tout est bien expliqué",
+            "date": "24/10"
+          }
+        }
+      },
+      "block_order": [
+        "review_RxQaGq",
+        "review_fXLCA3",
+        "review_F46pmQ"
+      ]
+    },
+    "bot": {
+      "type": "bot-finds",
+      "settings": {},
+      "blocks": {
+        "f0": {
+          "type": "find",
+          "settings": {
+            "asset": "bot-find-telegram",
+            "title": "Les alertes du bot en direct",
+            "price": "",
+            "note": "Nouvelles annonces envoyées sur Telegram",
+            "image": "shopify://shop_images/bot-find-telegram.webp"
+          }
+        },
+        "f1": {
+          "type": "find",
+          "settings": {
+            "asset": "bot-find-tech-hoodie",
+            "title": "Nike Tech Hoodie",
+            "price": "9,99 £",
+            "note": "Taille M",
+            "image": "shopify://shop_images/bot-find-tech-hoodie.webp"
+          }
+        },
+        "f2": {
+          "type": "find",
+          "settings": {
+            "asset": "bot-find-pantalon-nike",
+            "title": "Pantalon Nike Running",
+            "price": "9 £",
+            "note": "",
+            "image": "shopify://shop_images/bot-find-pantalon-nike.webp"
+          }
+        },
+        "f3": {
+          "type": "find",
+          "settings": {
+            "asset": "bot-find-pantalon-berlin",
+            "title": "Pantalon Nike Running Berlin",
+            "price": "10 £",
+            "note": "",
+            "image": "shopify://shop_images/bot-find-pantalon-berlin.webp"
+          }
+        },
+        "f4": {
+          "type": "find",
+          "settings": {
+            "asset": "bot-find-ensemble-nike",
+            "title": "Ensemble Nike Running Division",
+            "price": "75 £",
+            "note": "",
+            "image": "shopify://shop_images/bot-find-ensemble-nike.webp"
+          }
+        }
+      },
+      "block_order": [
+        "f0",
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ]
     }
   },
   "order": [
@@ -241,6 +362,7 @@
     "packs",
     "arrivages",
     "deals",
+    "bot",
     "avis",
     "faq"
   ]

@@ -1,0 +1,84 @@
+<section class="section section--tight botf" data-carousel id="{{ section.settings.anchor | handle }}" aria-labelledby="BotfTitle">
+  <div class="container">
+    <div class="packs__head">
+      <h2 id="BotfTitle" class="packs__title">{{ section.settings.title }}</h2>
+      {% render 'carousel-nav' %}
+    </div>
+    {%- if section.settings.badge != blank -%}<p class="botf__badge"><span class="sh__live" aria-hidden="true"></span>{{ section.settings.badge }}</p>{%- endif -%}
+    {%- if section.settings.text != blank -%}<p class="arrivals__text">{{ section.settings.text }}</p>{%- endif -%}
+
+    <ul class="botf__grid" role="list" data-carousel-track>
+      {%- for block in section.blocks -%}
+        <li class="botf__item" {{ block.shopify_attributes }}>
+          <div class="botf__media">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350, 500, 700', sizes: '(min-width: 990px) 300px, 70vw', alt: block.settings.title }}
+            {%- elsif block.settings.asset != 'none' -%}
+              <img src="{{ block.settings.asset | append: '.webp' | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="600" height="800">
+            {%- else -%}
+              {% render 'media', label: block.settings.title, dark: true, art: 'rings' %}
+            {%- endif -%}
+            {%- if block.settings.price != blank -%}<span class="botf__price">{{ block.settings.price }}</span>{%- endif -%}
+          </div>
+          <p class="botf__title">{{ block.settings.title }}</p>
+          {%- if block.settings.note != blank -%}<p class="botf__note">{{ block.settings.note }}</p>{%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="deals__cta"><a href="{{ section.settings.button_link | default: '#packs' }}" class="btn btn--lg btn--gold" data-track="cta_click" data-track-label="bot_finds">{{ section.settings.button_label }}</a></div>
+    {%- endif -%}
+    {%- if section.settings.disclaimer != blank -%}<p class="deals__disclaimer" style="text-align:center">{{ section.settings.disclaimer }}</p>{%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .botf__badge { display: inline-flex; align-items: center; gap: 8px; margin: -14px 0 8px; font-size: 0.85rem; color: var(--c-muted); white-space: nowrap; }
+  .botf__grid { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(220px, 68%); gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; padding-bottom: 6px; }
+  .botf__grid::-webkit-scrollbar { display: none; }
+  @media (min-width: 750px) { .botf__grid { grid-auto-columns: calc((100% - 42px) / 4); } }
+  .botf__item { scroll-snap-align: start; display: grid; gap: 8px; align-content: start; }
+  .botf__media { position: relative; aspect-ratio: 3 / 4; border-radius: 18px; overflow: hidden; background: var(--c-surface); border: 1px solid var(--c-border); }
+  .botf__media img, .botf__media .placeholder { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  .botf__price { position: absolute; top: 10px; left: 10px; padding: 6px 12px; border-radius: 999px; background: linear-gradient(135deg, #fbe9a8, var(--c-gold, #d4af37) 50%, #a8822a); color: #111; font-weight: 800; font-size: 0.95rem; }
+  .botf__title { font-weight: 600; color: var(--c-primary); }
+  .botf__note { font-size: 0.82rem; color: var(--c-muted); margin-top: -4px; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Trouvailles bot Vinted UK",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancre (ID)", "default": "bot-vinted" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Trouvailles du bot Vinted UK 🤖" },
+    { "type": "text", "id": "badge", "label": "Badge", "default": "Disponible dans le groupe" },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Le bot envoie les nouvelles annonces Vinted UK directement sur Telegram. Voici des annonces repérées grâce à lui." },
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "Accéder au bot 🔒" },
+    { "type": "url", "id": "button_link", "label": "Lien du bouton", "info": "Vide = section packs (#packs)." },
+    { "type": "text", "id": "disclaimer", "label": "Mention", "default": "Captures d'annonces réelles. Les prix et la disponibilité changent en permanence." }
+  ],
+  "blocks": [
+    {
+      "type": "find",
+      "name": "Trouvaille",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Capture" },
+        { "type": "select", "id": "asset", "label": "Capture par défaut (si aucune image)", "default": "none", "options": [
+          { "value": "none", "label": "Aucune" },
+          { "value": "bot-find-ensemble-nike", "label": "Ensemble Nike Running Division" },
+          { "value": "bot-find-pantalon-nike", "label": "Pantalon Nike Running" },
+          { "value": "bot-find-pantalon-berlin", "label": "Pantalon Nike Berlin" },
+          { "value": "bot-find-tech-hoodie", "label": "Nike Tech Hoodie" },
+          { "value": "bot-find-telegram", "label": "Notifications du bot" }
+        ] },
+        { "type": "text", "id": "title", "label": "Titre", "default": "Trouvaille Vinted UK" },
+        { "type": "text", "id": "price", "label": "Prix (badge)", "default": "9 £" },
+        { "type": "text", "id": "note", "label": "Détail" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Trouvailles bot Vinted UK" } ]
+}
+{% endschema %}
