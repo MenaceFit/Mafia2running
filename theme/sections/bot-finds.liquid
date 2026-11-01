@@ -22,6 +22,12 @@
           </div>
           <p class="botf__title">{{ block.settings.title }}</p>
           {%- if block.settings.note != blank -%}<p class="botf__note">{{ block.settings.note }}</p>{%- endif -%}
+          {%- if block.settings.resale != blank or block.settings.profit != blank -%}
+            <div class="botf__flip">
+              {%- if block.settings.resale != blank -%}<p><span>Revendu</span><strong>{{ block.settings.resale }}</strong></p>{%- endif -%}
+              {%- if block.settings.profit != blank -%}<p class="botf__profit"><span>Bénéfice</span><strong>{{ block.settings.profit }}</strong></p>{%- endif -%}
+            </div>
+          {%- endif -%}
         </li>
       {%- endfor -%}
     </ul>
@@ -44,6 +50,13 @@
   .botf__price { position: absolute; top: 10px; left: 10px; padding: 6px 12px; border-radius: 999px; background: linear-gradient(135deg, #fbe9a8, var(--c-gold, #d4af37) 50%, #a8822a); color: #111; font-weight: 800; font-size: 0.95rem; }
   .botf__title { font-weight: 600; color: var(--c-primary); }
   .botf__note { font-size: 0.82rem; color: var(--c-muted); margin-top: -4px; }
+  .botf__flip { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .botf__flip p { display: grid; gap: 2px; padding: 8px 10px; border-radius: 12px; background: var(--c-surface); border: 1px solid var(--c-border); }
+  .botf__flip p:only-child { grid-column: 1 / -1; }
+  .botf__flip span { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-muted); }
+  .botf__flip strong { font-size: 1rem; color: var(--c-primary); }
+  .botf__profit { border-color: rgba(52, 211, 153, 0.35) !important; background: rgba(52, 211, 153, 0.08) !important; }
+  .botf__profit strong { color: #34d399; }
 {% endstylesheet %}
 
 {% schema %}
@@ -75,7 +88,9 @@
         ] },
         { "type": "text", "id": "title", "label": "Titre", "default": "Trouvaille Vinted UK" },
         { "type": "text", "id": "price", "label": "Prix (badge)", "default": "9 £" },
-        { "type": "text", "id": "note", "label": "Détail" }
+        { "type": "text", "id": "note", "label": "Détail" },
+        { "type": "text", "id": "resale", "label": "Prix de revente", "info": "Ex. : 45 €. Vide = encadré masqué." },
+        { "type": "text", "id": "profit", "label": "Bénéfice", "info": "Ex. : +35 €. Indique un résultat réel." }
       ]
     }
   ],
