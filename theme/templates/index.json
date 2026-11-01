@@ -215,9 +215,16 @@
           "settings": {
             "caption": "Arrivage Nike Running 🇫🇷"
           }
+        },
+        "v4": {
+          "type": "video",
+          "settings": {
+            "caption": ""
+          }
         }
       },
       "block_order": [
+        "v4",
         "v1",
         "v2",
         "v3"
