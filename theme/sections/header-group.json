@@ -2,7 +2,42 @@
   "type": "header",
   "name": "Groupe en-tête",
   "sections": {
-    "header": { "type": "header", "settings": {} }
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {},
+      "blocks": {
+        "m1": {
+          "type": "message",
+          "settings": {
+            "text": "⚡ Accès au groupe envoyé juste après le paiement"
+          }
+        },
+        "m2": {
+          "type": "message",
+          "settings": {
+            "text": "🤖 Bot Vinted UK inclus dans le groupe"
+          }
+        },
+        "m3": {
+          "type": "message",
+          "settings": {
+            "text": "🔒 Paiement unique et 100 % sécurisé"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3"
+      ]
+    },
+    "header": {
+      "type": "header",
+      "settings": {}
+    }
   },
-  "order": ["header"]
+  "order": [
+    "announcement",
+    "header"
+  ]
 }

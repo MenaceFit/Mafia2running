@@ -1,0 +1,79 @@
+{%- liquid
+  assign msgs = section.blocks | where: 'type', 'message'
+-%}
+{%- if msgs.size > 0 -%}
+<div class="abar" data-abar style="--abar-bg: {{ section.settings.bg }}; --abar-fg: {{ section.settings.fg }}">
+  <div class="abar__track" data-abar-track aria-live="polite">
+    {%- for block in msgs -%}
+      <p class="abar__msg{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
+        {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}">{{ block.settings.text }}</a>{%- else -%}{{ block.settings.text }}{%- endif -%}
+      </p>
+    {%- endfor -%}
+  </div>
+  {%- if section.settings.end_date != blank -%}
+    <p class="abar__timer" data-abar-end="{{ section.settings.end_date }}" hidden>
+      {{ section.settings.timer_label }} <strong data-abar-time></strong>
+    </p>
+  {%- endif -%}
+</div>
+{%- endif -%}
+
+{% stylesheet %}
+  .abar { background: var(--abar-bg, #d4af37); color: var(--abar-fg, #111); font-size: 0.85rem; font-weight: 600; text-align: center; padding: 9px 16px; display: grid; gap: 2px; }
+  .abar__track { position: relative; min-height: 1.4em; }
+  .abar__msg { position: absolute; inset: 0; opacity: 0; transform: translateY(6px); transition: opacity .4s, transform .4s; }
+  .abar__msg.is-active { position: relative; opacity: 1; transform: none; }
+  .abar a { text-decoration: underline; text-underline-offset: 2px; }
+  .abar__timer { font-size: 0.8rem; font-weight: 500; }
+  .abar__timer strong { font-variant-numeric: tabular-nums; font-weight: 800; }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    document.querySelectorAll('[data-abar]').forEach((bar) => {
+      const msgs = bar.querySelectorAll('.abar__msg');
+      if (msgs.length > 1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        let i = 0;
+        setInterval(() => { msgs[i].classList.remove('is-active'); i = (i + 1) % msgs.length; msgs[i].classList.add('is-active'); }, 3500);
+      }
+      const timer = bar.querySelector('[data-abar-end]');
+      if (!timer) return;
+      const end = Date.parse(timer.dataset.abarEnd);
+      const out = timer.querySelector('[data-abar-time]');
+      const tick = () => {
+        const s = Math.floor((end - Date.now()) / 1000);
+        if (!isFinite(s) || s <= 0) { timer.hidden = true; return false; }
+        const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), sec = s % 60;
+        out.textContent = (d ? d + 'j ' : '') + String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+        timer.hidden = false; return true;
+      };
+      if (tick()) { const t = setInterval(() => { if (!tick()) clearInterval(t); }, 1000); }
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Barre d'annonce",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Fond", "default": "#D4AF37" },
+    { "type": "color", "id": "fg", "label": "Texte", "default": "#111111" },
+    { "type": "header", "content": "Compte à rebours (optionnel)" },
+    { "type": "paragraph", "content": "À utiliser seulement pour une vraie offre limitée dans le temps. Vide = pas de compte à rebours. Il disparaît tout seul à la date de fin." },
+    { "type": "text", "id": "end_date", "label": "Date de fin de l'offre", "info": "Format : 2026-11-30T23:59:00+01:00" },
+    { "type": "text", "id": "timer_label", "label": "Texte avant le compte à rebours", "default": "⏳ L'offre se termine dans" }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texte", "default": "⚡ Accès immédiat au groupe après paiement" },
+        { "type": "url", "id": "link", "label": "Lien (optionnel)" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [ { "name": "Barre d'annonce" } ]
+}
+{% endschema %}

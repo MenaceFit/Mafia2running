@@ -1,0 +1,156 @@
+{%- liquid
+  assign show = true
+  if request.page_type == 'cart' or request.page_type == 'password'
+    assign show = false
+  endif
+  if section.settings.enabled == false
+    assign show = false
+  endif
+  assign btn_link = section.settings.button_link | default: '#packs'
+  if request.page_type != 'index' and btn_link == '#packs'
+    assign btn_link = routes.root_url | append: '#packs'
+  endif
+-%}
+{%- if show -%}
+<div class="ppop" data-ppop data-delay="{{ section.settings.delay }}" data-scroll="{{ section.settings.scroll }}" data-exit="{{ section.settings.exit_intent }}" data-days="{{ section.settings.days }}" data-key="ppop-{{ section.settings.version }}" hidden>
+  <div class="ppop__overlay" data-ppop-close></div>
+  <div class="ppop__box" role="dialog" aria-modal="true" aria-labelledby="PpopTitle">
+    <button type="button" class="ppop__x" data-ppop-close aria-label="Fermer">✕</button>
+    {%- if section.settings.image != blank -%}
+      <div class="ppop__img">{{ section.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400, 600, 800', sizes: '(min-width: 750px) 420px, 90vw', alt: '' }}</div>
+    {%- endif -%}
+    <div class="ppop__body">
+      {%- if section.settings.eyebrow != blank -%}<p class="ppop__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <p id="PpopTitle" class="ppop__title">{{ section.settings.title }}</p>
+      {%- if section.settings.text != blank -%}<p class="ppop__text">{{ section.settings.text }}</p>{%- endif -%}
+
+      {%- if section.settings.code != blank -%}
+        <button type="button" class="ppop__code" data-ppop-copy="{{ section.settings.code | escape }}">
+          <span>{{ section.settings.code }}</span><small data-ppop-copied>Copier</small>
+        </button>
+      {%- endif -%}
+
+      {%- if section.settings.show_email -%}
+        {%- form 'customer', class: 'ppop__form', id: 'PpopForm' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter,popup">
+          {%- if form.posted_successfully? -%}
+            <p class="ppop__ok">✅ {{ section.settings.email_success }}</p>
+          {%- else -%}
+            <label for="PpopEmail" class="visually-hidden">E-mail</label>
+            <input id="PpopEmail" type="email" name="contact[email]" required autocomplete="email" placeholder="Ton e-mail">
+            <button type="submit" class="btn btn--gold">{{ section.settings.email_button }}</button>
+          {%- endif -%}
+        {%- endform -%}
+        <p class="ppop__legal">{{ section.settings.email_legal }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ btn_link }}" class="btn btn--lg btn--gold btn--block" data-ppop-cta data-track="cta_click" data-track-label="popup">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+      <button type="button" class="ppop__no" data-ppop-close>{{ section.settings.dismiss_label }}</button>
+    </div>
+  </div>
+</div>
+{%- endif -%}
+
+{% stylesheet %}
+  .ppop { position: fixed; inset: 0; z-index: 90; display: grid; place-items: end center; padding: 12px; }
+  @media (min-width: 750px) { .ppop { place-items: center; } }
+  .ppop[hidden] { display: none; }
+  .ppop__overlay { position: absolute; inset: 0; background: rgba(0,0,0,.65); backdrop-filter: blur(4px); animation: ppopFade .3s ease; }
+  .ppop__box { position: relative; width: min(420px, 100%); max-height: 92vh; overflow: auto; border-radius: 24px; background: #111; color: #fff; border: 1px solid rgba(212,175,55,.45); box-shadow: 0 30px 80px rgba(0,0,0,.6); animation: ppopUp .45s cubic-bezier(.22,1,.36,1); }
+  .ppop__x { position: absolute; top: 10px; right: 10px; z-index: 2; width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,.55); color: #fff; font-size: 16px; }
+  .ppop__img img { width: 100%; height: auto; display: block; max-height: 220px; object-fit: cover; }
+  .ppop__body { padding: 24px 22px 18px; display: grid; gap: 12px; text-align: center; }
+  .ppop__eyebrow { font-size: .75rem; font-weight: 800; letter-spacing: .2em; color: #d4af37; }
+  .ppop__title { font-family: var(--font-heading); font-weight: 800; font-size: 1.7rem; line-height: 1.1; letter-spacing: -.02em; }
+  .ppop__text { color: #bbb; font-size: .98rem; line-height: 1.5; }
+  .ppop__code { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px; border: 2px dashed #d4af37; border-radius: 14px; color: #d4af37; font-weight: 800; font-size: 1.3rem; letter-spacing: .1em; }
+  .ppop__code small { font-size: .7rem; letter-spacing: .05em; color: #aaa; font-weight: 500; }
+  .ppop__form { display: grid; gap: 8px; }
+  .ppop__form input { min-height: 50px; padding: 0 16px; border-radius: 40px; border: 1px solid rgba(255,255,255,.2); background: #1b1b1b; color: #fff; font-size: 16px; }
+  .ppop__ok { color: #34d399; font-weight: 600; }
+  .ppop__legal { font-size: .7rem; color: #777; }
+  .ppop__no { color: #888; font-size: .85rem; text-decoration: underline; text-underline-offset: 3px; }
+  @keyframes ppopFade { from { opacity: 0; } }
+  @keyframes ppopUp { from { opacity: 0; transform: translateY(40px) scale(.97); } }
+  @media (prefers-reduced-motion: reduce) { .ppop__overlay, .ppop__box { animation: none; } }
+  html.ppop-open { overflow: hidden; }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    const pop = document.querySelector('[data-ppop]');
+    if (!pop) return;
+    const key = pop.dataset.key;
+    const days = Number(pop.dataset.days) || 3;
+    const store = { get() { try { return Number(localStorage.getItem(key)) || 0; } catch (e) { return 0; } }, set() { try { localStorage.setItem(key, String(Date.now())); } catch (e) {} } };
+    let shown = false; let lastFocus = null;
+    const open = (force) => {
+      if (shown && !force) return;
+      if (!force && Date.now() - store.get() < days * 864e5) return;
+      shown = true; lastFocus = document.activeElement;
+      pop.hidden = false; document.documentElement.classList.add('ppop-open');
+      const f = pop.querySelector('input, .btn, .ppop__x'); f && f.focus({ preventScroll: true });
+      window.themeTrack && window.themeTrack('popup_view', {});
+    };
+    const close = () => { pop.hidden = true; document.documentElement.classList.remove('ppop-open'); store.set(); lastFocus && lastFocus.focus && lastFocus.focus(); };
+    pop.querySelectorAll('[data-ppop-close]').forEach((b) => b.addEventListener('click', close));
+    const cta = pop.querySelector('[data-ppop-cta]'); cta && cta.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !pop.hidden) close(); });
+    const copy = pop.querySelector('[data-ppop-copy]');
+    copy && copy.addEventListener('click', () => {
+      const lbl = copy.querySelector('[data-ppop-copied]');
+      (navigator.clipboard ? navigator.clipboard.writeText(copy.dataset.ppopCopy) : Promise.reject()).then(() => { lbl.textContent = 'Copié ✓'; }).catch(() => { lbl.textContent = 'Sélectionne le code'; });
+    });
+    if (pop.querySelector('.ppop__ok')) { open(true); return; }
+    if (window.Shopify && window.Shopify.designMode) {
+      document.addEventListener('shopify:section:select', (e) => { if (e.target.contains(pop)) open(true); });
+      document.addEventListener('shopify:section:deselect', (e) => { if (e.target.contains(pop)) { pop.hidden = true; document.documentElement.classList.remove('ppop-open'); } });
+      return;
+    }
+    const delay = Number(pop.dataset.delay) || 0;
+    if (delay > 0) setTimeout(() => open(), delay * 1000);
+    const pct = Number(pop.dataset.scroll) || 0;
+    if (pct > 0) {
+      const onScroll = () => {
+        const h = document.documentElement.scrollHeight - innerHeight;
+        if (h > 0 && scrollY / h * 100 >= pct) { removeEventListener('scroll', onScroll); open(); }
+      };
+      addEventListener('scroll', onScroll, { passive: true });
+    }
+    if (pop.dataset.exit === 'true' && matchMedia('(hover: hover)').matches) {
+      document.addEventListener('mouseout', (e) => { if (!e.relatedTarget && e.clientY <= 0) open(); });
+    }
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Popup",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Activer le popup", "default": true },
+    { "type": "header", "content": "Quand l'afficher" },
+    { "type": "range", "id": "delay", "label": "Après X secondes (0 = jamais)", "min": 0, "max": 60, "step": 1, "unit": "s", "default": 12 },
+    { "type": "range", "id": "scroll", "label": "Après X % de la page lue (0 = jamais)", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 50 },
+    { "type": "checkbox", "id": "exit_intent", "label": "Quand la souris quitte la page (ordinateur)", "default": true },
+    { "type": "range", "id": "days", "label": "Ne plus le montrer pendant", "min": 1, "max": 30, "step": 1, "unit": "j", "default": 3 },
+    { "type": "text", "id": "version", "label": "Version", "default": "1", "info": "Change ce chiffre pour remontrer le popup à tout le monde (nouvelle offre)." },
+    { "type": "header", "content": "Contenu" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "AVANT DE PARTIR 👀" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Trouve ton pack en 30 secondes" },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Nike Running et semi-luxe pas cher : les contacts, le bot Vinted UK et les bons plans sont dans le groupe." },
+    { "type": "text", "id": "code", "label": "Code promo (optionnel)", "info": "Crée d'abord le code dans Remises. Vide = pas de code affiché." },
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "Voir les packs 🔥" },
+    { "type": "url", "id": "button_link", "label": "Lien du bouton", "info": "Vide = section packs." },
+    { "type": "text", "id": "dismiss_label", "label": "Lien « non merci »", "default": "Non merci" },
+    { "type": "header", "content": "Capture d'e-mail (optionnel)" },
+    { "type": "checkbox", "id": "show_email", "label": "Demander l'e-mail", "default": false, "info": "Les e-mails arrivent dans Clients (abonnés marketing)." },
+    { "type": "text", "id": "email_button", "label": "Bouton e-mail", "default": "Recevoir les bons plans" },
+    { "type": "text", "id": "email_success", "label": "Message de confirmation", "default": "C'est noté ! Surveille ta boîte mail." },
+    { "type": "text", "id": "email_legal", "label": "Mention sous le champ", "default": "Désinscription en 1 clic. Pas de spam." }
+  ],
+  "presets": [ { "name": "Popup" } ]
+}
+{% endschema %}

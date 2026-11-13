@@ -5,11 +5,29 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "access-conditions": { "type": "link", "settings": { "title": "Conditions d'accès", "url": "/pages/conditions-acces" } }
+        "access-conditions": {
+          "type": "link",
+          "settings": {
+            "title": "Conditions d'accès",
+            "url": "/pages/conditions-acces"
+          }
+        }
       },
-      "block_order": ["access-conditions"],
-      "settings": { "contact_page": "/pages/contact" }
+      "block_order": [
+        "access-conditions"
+      ],
+      "settings": {
+        "contact_page": "/pages/contact",
+        "simple": true
+      }
+    },
+    "popup": {
+      "type": "promo-popup",
+      "settings": {}
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer",
+    "popup"
+  ]
 }

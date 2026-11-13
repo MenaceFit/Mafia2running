@@ -21,6 +21,16 @@
         {%- endfor -%}
       {%- endif -%}
     </ul>
+    {%- if section.settings.show_trust -%}
+      <div class="packs__trust">
+        <p>{{ section.settings.trust_text }}</p>
+        {%- if shop.enabled_payment_types.size > 0 -%}
+          <ul class="packs__pay" role="list">
+            {%- for type in shop.enabled_payment_types -%}<li>{{ type | payment_type_svg_tag: class: 'packs__pay-icon' }}</li>{%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -31,6 +41,8 @@
   "settings": [
     { "type": "text", "id": "title", "label": "Titre", "default": "Nos packs" },
     { "type": "collection", "id": "collection", "label": "Collection des packs", "info": "Vide = tous les produits." },
+    { "type": "checkbox", "id": "show_trust", "label": "Afficher la réassurance et les moyens de paiement", "default": true },
+    { "type": "text", "id": "trust_text", "label": "Texte de réassurance", "default": "🔒 Paiement 100 % sécurisé • ⚡ Accès envoyé après paiement • ✅ Paiement unique" },
     { "type": "range", "id": "limit", "label": "Nombre de packs affichés", "min": 2, "max": 8, "step": 1, "default": 4 }
   ],
   "presets": [ { "name": "Nos packs" } ]
