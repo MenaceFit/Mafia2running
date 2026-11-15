@@ -2,7 +2,16 @@
   "sections": {
     "hero": {
       "type": "simple-hero",
-      "settings": {}
+      "settings": {
+        "eyebrow": "MAFIA RUNNING 🇫🇷",
+        "title": "Nike Running & semi-luxe *pas cher*",
+        "subtitle": "Nike Running, Under Armour, Stone Island, Ralph Lauren… Les contacts et les bons plans pour acheter moins cher, réunis dans un groupe Telegram privé.",
+        "button_label": "Trouver mon pack",
+        "button_2_label": "Voir les packs",
+        "check_1": "Paiement unique, sans abonnement",
+        "check_2": "Accès au groupe après paiement",
+        "check_3": "Paiement sécurisé"
+      }
     },
     "quiz": {
       "type": "pack-quiz",
@@ -56,7 +65,9 @@
       "settings": {
         "title": "Nos packs",
         "limit": 2,
-        "collection": "accessoires"
+        "collection": "accessoires",
+        "show_trust": true,
+        "trust_text": "🔒 Paiement 100 % sécurisé • ⚡ Accès envoyé après paiement • ✅ Paiement unique"
       }
     },
     "deals": {
@@ -137,68 +148,97 @@
       ]
     },
     "faq": {
-      "type": "faq",
+      "type": "faq-cards",
       "settings": {
         "anchor": "faq",
-        "surface": false,
-        "eyebrow": "",
-        "title": "Questions fréquentes",
-        "text": "",
-        "button_label": "Nous contacter",
-        "button_link": "/pages/contact",
-        "open_first": true
+        "title": "Tes questions",
+        "more_text": "Une autre question ? 💬",
+        "button_label": "Nous contacter →",
+        "button_link": "/pages/contact"
       },
       "blocks": {
-        "question-1": {
+        "fq0": {
           "type": "question",
           "settings": {
-            "question": "Comment accéder au groupe après mon achat ?",
-            "answer": "<p>Dès que Shopify confirme ton paiement, un <strong>lien d'invitation Telegram personnel</strong> t'est délivré : par e-mail, et/ou en envoyant ton numéro de commande à notre bot Telegram (la méthode est rappelée dans ta confirmation de commande).</p><p>Ce lien est à usage unique et expire après un délai limité : utilise-le depuis le compte Telegram avec lequel tu veux rejoindre le groupe. Si tu ne reçois rien, vérifie tes spams puis contacte-nous avec ton numéro de commande.</p>"
+            "question": "✅ Les produits sont-ils authentiques ?",
+            "answer": "<p>Les contacts et plateformes du groupe sont sélectionnés pour des articles authentiques, souvent neufs avec étiquettes. Dans le groupe, on t'explique aussi comment vérifier une pièce avant d'acheter. Tu restes responsable de tes achats : prends toujours le temps de vérifier.</p>"
           }
         },
-        "question-2": {
+        "fq1": {
           "type": "question",
           "settings": {
-            "question": "Est-ce adapté aux débutants ?",
-            "answer": "<p>Oui. Le groupe contient des ressources pour bien démarrer, un tutoriel Vinted UK et un espace pour poser tes questions. L'achat-revente demande toutefois du temps et de la rigueur : aucun résultat n'est garanti, tes résultats dépendent de ton implication et du marché.</p>"
+            "question": "🚚 Combien de temps pour la livraison ?",
+            "answer": "<p>Ça dépend du contact ou de la plateforme chez qui tu commandes. Les délais et les frais de chaque source sont indiqués dans le groupe, avec les agents de livraison disponibles.</p>"
           }
         },
-        "question-3": {
+        "fq2": {
           "type": "question",
           "settings": {
-            "question": "Que contient exactement le groupe ?",
-            "answer": "<p>Plus de 6 contacts running, plus de 5 plateformes d'articles neufs avec étiquettes, plus de 40 sites de seconde main, plus de 15 agents de livraison, l'accès au bot Vinted UK, des tutoriels et l'accompagnement de la communauté. De nouvelles ressources sont ajoutées selon les disponibilités.</p>"
+            "question": "📲 Comment je reçois mon accès ?",
+            "answer": "<p>Dès que ton paiement est confirmé, tu reçois ton <strong>lien d'invitation Telegram personnel</strong>. Il est à usage unique : ouvre-le depuis le compte Telegram avec lequel tu veux rejoindre le groupe. Rien reçu ? Vérifie tes spams, puis contacte-nous avec ton numéro de commande.</p>"
           }
         },
-        "question-5": {
+        "fq3": {
           "type": "question",
           "settings": {
-            "question": "Comment fonctionne le bot Vinted UK ?",
-            "answer": "<p>Le bot surveille les nouvelles annonces publiques publiées sur Vinted UK selon les mots-clés configurés, puis envoie une alerte Telegram avec le lien de l'annonce. Il n'achète rien automatiquement : c'est toi qui décides. Les conditions d'utilisation et les éventuelles limites sont présentées dans le groupe.</p>"
+            "question": "🏁 Je débute, c'est fait pour moi ?",
+            "answer": "<p>Oui. Le groupe est organisé pour les débutants : par où commencer, où acheter, comment revendre, et un espace pour poser tes questions. L'achat-revente demande quand même du temps et du sérieux.</p>"
           }
         },
-        "question-7": {
+        "fq4": {
           "type": "question",
           "settings": {
-            "question": "Puis-je accéder au groupe depuis mon téléphone ?",
-            "answer": "<p>Oui. Le groupe est sur Telegram, application gratuite disponible sur iPhone, Android, ordinateur et navigateur web. Il suffit d'un compte Telegram.</p>"
+            "question": "👟 Quelles marques je peux trouver ?",
+            "answer": "<p>Surtout du Nike Running et de l'Under Armour, et du semi-luxe : Stone Island, CP Company, Ralph Lauren, Essentials… selon les arrivages. Ces marques ne sont pas partenaires du groupe.</p>"
           }
         },
-        "question-10": {
+        "fq5": {
           "type": "question",
           "settings": {
-            "question": "Puis-je obtenir un remboursement ?",
-            "answer": "<p>L'accès est un contenu numérique fourni immédiatement après le paiement. Au moment de l'achat, tu demandes cet accès immédiat et tu reconnais perdre ton droit de rétractation une fois l'accès fourni (article L221-28 du Code de la consommation).</p><p>Si un problème technique t'empêche d'accéder au groupe (lien non reçu ou invalide), contacte-nous : nous t'envoyons un nouveau lien ou trouvons une solution. Les détails figurent dans notre politique de remboursement.</p>"
+            "question": "🤖 Comment marche le bot Vinted UK ?",
+            "answer": "<p>Le bot surveille les nouvelles annonces Vinted UK selon des mots-clés et t'envoie une alerte Telegram avec le lien. Il n'achète rien à ta place : c'est toi qui décides.</p>"
+          }
+        },
+        "fq6": {
+          "type": "question",
+          "settings": {
+            "question": "💳 Le paiement est-il sécurisé ?",
+            "answer": "<p>Oui. Le paiement passe par le checkout sécurisé de Shopify (carte bancaire, Apple Pay, Google Pay… selon ce qui est proposé). On n'a jamais accès à tes données bancaires. C'est un paiement unique, sans abonnement.</p>"
+          }
+        },
+        "fq7": {
+          "type": "question",
+          "settings": {
+            "question": "📈 Combien je peux gagner ?",
+            "answer": "<p>Impossible de te promettre un chiffre : ça dépend de ton budget, du temps que tu y passes et du marché. Les exemples montrés sur le site sont des résultats individuels, pas une garantie.</p>"
+          }
+        },
+        "fq8": {
+          "type": "question",
+          "settings": {
+            "question": "🤝 Et si j'ai une question après l'achat ?",
+            "answer": "<p>Tu poses ta question directement dans le groupe ou tu nous écris via la page contact avec ton numéro de commande. On te répond dès que possible.</p>"
+          }
+        },
+        "fq9": {
+          "type": "question",
+          "settings": {
+            "question": "↩️ Puis-je être remboursé ?",
+            "answer": "<p>L'accès est un contenu numérique fourni tout de suite après le paiement : en l'achetant, tu acceptes de renoncer au droit de rétractation (article L221-28 du Code de la consommation). Si un problème technique t'empêche d'entrer dans le groupe, contacte-nous : on t'envoie un nouveau lien ou on trouve une solution.</p>"
           }
         }
       },
       "block_order": [
-        "question-1",
-        "question-2",
-        "question-3",
-        "question-5",
-        "question-7",
-        "question-10"
+        "fq0",
+        "fq1",
+        "fq2",
+        "fq3",
+        "fq4",
+        "fq5",
+        "fq6",
+        "fq7",
+        "fq8",
+        "fq9"
       ]
     },
     "arrivages": {
@@ -209,6 +249,14 @@
           "type": "video",
           "settings": {
             "video": "shopify://files/videos/arrivage-1-sans-filigrane.mp4",
+            "video_url": "",
+            "caption": "Arrivage Running 🇫🇷"
+          }
+        },
+        "video_im4iRU": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/Snapchat-1458962745.mp4",
             "video_url": "",
             "caption": "Arrivage Running 🇫🇷"
           }
@@ -248,48 +296,11 @@
       },
       "block_order": [
         "v1",
+        "video_im4iRU",
         "v2",
         "v3",
         "video_BVjzeL",
         "video_9bdjGV"
-      ]
-    },
-    "avis": {
-      "type": "reviews",
-      "settings": {},
-      "blocks": {
-        "review_RxQaGq": {
-          "type": "review",
-          "settings": {
-            "name": "Léo",
-            "rating": 5,
-            "text": "Je suis très satisfait on peut trouver du semi-luxe comme des running pour vraiment pas cher parfait pour débuter !",
-            "date": "14/10"
-          }
-        },
-        "review_fXLCA3": {
-          "type": "review",
-          "settings": {
-            "name": "Ilyes",
-            "rating": 5,
-            "text": "Une fois l'achat réalisé il y a un vrai accompagnement d'ailleurs je recommande",
-            "date": "22/10"
-          }
-        },
-        "review_F46pmQ": {
-          "type": "review",
-          "settings": {
-            "name": "Zakaria",
-            "rating": 5,
-            "text": "Franchement le groupe est carré je recommande tout est bien expliqué",
-            "date": "24/10"
-          }
-        }
-      },
-      "block_order": [
-        "review_RxQaGq",
-        "review_fXLCA3",
-        "review_F46pmQ"
       ]
     },
     "bot": {
@@ -354,16 +365,57 @@
         "f3",
         "f4"
       ]
+    },
+    "avis": {
+      "type": "reviews-gallery",
+      "settings": {},
+      "blocks": {
+        "review_RxQaGq": {
+          "type": "review",
+          "settings": {
+            "tag": "⭐ Avis",
+            "text": "Je suis très satisfait on peut trouver du semi-luxe comme des running pour vraiment pas cher parfait pour débuter !",
+            "name": "Léo",
+            "date": "14/10",
+            "rating": 5
+          }
+        },
+        "review_fXLCA3": {
+          "type": "review",
+          "settings": {
+            "tag": "⭐ Avis",
+            "text": "Une fois l'achat réalisé il y a un vrai accompagnement d'ailleurs je recommande",
+            "name": "Ilyes",
+            "date": "22/10",
+            "rating": 5
+          }
+        },
+        "review_F46pmQ": {
+          "type": "review",
+          "settings": {
+            "tag": "⭐ Avis",
+            "text": "Franchement le groupe est carré je recommande tout est bien expliqué",
+            "name": "Zakaria",
+            "date": "24/10",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": [
+        "review_RxQaGq",
+        "review_fXLCA3",
+        "review_F46pmQ"
+      ]
     }
   },
   "order": [
     "hero",
+    "avis",
     "quiz",
     "packs",
     "arrivages",
     "deals",
     "bot",
-    "avis",
     "faq"
   ]
 }

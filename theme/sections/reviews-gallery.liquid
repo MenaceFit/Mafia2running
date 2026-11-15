@@ -1,0 +1,240 @@
+{%- liquid
+  assign total = section.blocks.size
+  assign cta_link = section.settings.cta_link | default: '#packs'
+-%}
+{%- if total > 0 or request.design_mode -%}
+<section class="section section--tight rg" id="{{ section.settings.anchor | handle }}" data-rg>
+  <div class="container">
+    <button type="button" class="rg__banner neon-card" data-rg-open="0" aria-haspopup="dialog">
+      <span class="rg__left">
+        {%- if section.settings.eyebrow != blank -%}<span class="rg__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <span class="rg__title">{{ section.settings.title }}</span>
+        {%- if section.settings.subtitle != blank -%}
+          <span class="rg__sub">{% if section.settings.show_stars %}<span class="rg__stars" aria-hidden="true">★★★★★</span> {% endif %}{{ section.settings.subtitle }}</span>
+        {%- endif -%}
+      </span>
+      <span class="rg__right">
+        <span class="rg__thumbs" aria-hidden="true">
+          {%- assign shown = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.settings.image != blank and shown < 3 -%}
+              {%- assign shown = shown | plus: 1 -%}
+              <span class="rg__thumb">{{ block.settings.image | image_url: width: 160, height: 160, crop: 'center' | image_tag: loading: 'lazy', alt: '', width: 80, height: 80 }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if shown == 0 -%}<span class="rg__thumb rg__thumb--emoji">⭐</span><span class="rg__thumb rg__thumb--emoji">💬</span><span class="rg__thumb rg__thumb--emoji">🔥</span>{%- endif -%}
+        </span>
+        {%- if section.settings.thumbs_label != blank -%}<span class="rg__label">{{ section.settings.thumbs_label }}</span>{%- endif -%}
+        <span class="btn btn--gold rg__btn">{{ section.settings.button_label }}</span>
+      </span>
+    </button>
+    {%- if total == 0 -%}
+      <p class="packs__empty" style="margin-top:14px">Ajoute tes vrais avis ici : bloc « Avis » avec la capture du message et/ou le texte. La section reste cachée sur le site tant qu'elle est vide.</p>
+    {%- endif -%}
+  </div>
+
+  {%- if total > 0 -%}
+  <div class="rgm" data-rg-modal hidden>
+    <div class="rgm__inner" role="dialog" aria-modal="true" aria-label="{{ section.settings.title | escape }}">
+      <div class="rgm__head">
+        <div>
+          <p class="rgm__title">{{ section.settings.title }}</p>
+          <p class="rgm__count"><span data-rg-index>1</span> / {{ total }}</p>
+        </div>
+        <button type="button" class="rgm__round" data-rg-close aria-label="Fermer">✕</button>
+      </div>
+
+      <div class="rgm__stage" data-rg-stage>
+        {%- for block in section.blocks -%}
+          <article class="rgm__slide neon-card" data-rg-slide{% unless forloop.first %} hidden{% endunless %} {{ block.shopify_attributes }}>
+            {%- if block.settings.tag != blank -%}<span class="rgm__tag">{{ block.settings.tag }}</span>{%- endif -%}
+            <div class="rgm__scroll">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '400, 700, 1000', sizes: '(min-width: 750px) 480px, 90vw', alt: 'Capture d’un avis client', class: 'rgm__img' }}
+              {%- endif -%}
+              {%- if block.settings.rating > 0 -%}<p class="rgm__stars" aria-label="{{ block.settings.rating }} sur 5">{% for i in (1..block.settings.rating) %}★{% endfor %}</p>{%- endif -%}
+              {%- if block.settings.text != blank -%}<p class="rgm__text">{{ block.settings.text | newline_to_br }}</p>{%- endif -%}
+              {%- if block.settings.name != blank -%}<p class="rgm__name">— {{ block.settings.name }}{% if block.settings.date != blank %} · {{ block.settings.date }}{% endif %}</p>{%- endif -%}
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+
+      <div class="rgm__nav">
+        <button type="button" class="rgm__round rgm__round--lg" data-rg-prev aria-label="Avis précédent">←</button>
+        <span class="rgm__hint">Fais défiler 👆</span>
+        <button type="button" class="rgm__round rgm__round--lg" data-rg-next aria-label="Avis suivant">→</button>
+      </div>
+
+      {%- if section.settings.cta_label != blank -%}
+        <a href="{{ cta_link }}" class="btn btn--lg btn--gold btn--block" data-rg-cta data-track="cta_click" data-track-label="reviews_gallery">{{ section.settings.cta_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.more_text != blank -%}
+        <p class="rgm__more">{{ section.settings.more_text }}{% if section.settings.more_link != blank %} <a href="{{ section.settings.more_link }}" target="_blank" rel="noopener">{{ section.settings.more_label }} →</a>{% endif %}</p>
+      {%- endif -%}
+      {%- if section.settings.disclaimer != blank -%}<p class="rgm__legal">{{ section.settings.disclaimer }}</p>{%- endif -%}
+    </div>
+  </div>
+  {%- endif -%}
+</section>
+{%- endif -%}
+
+{% stylesheet %}
+  /* ---------- Banner ---------- */
+  .rg__banner { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 20px; text-align: left; cursor: pointer; }
+  .rg__left { display: grid; gap: 6px; min-width: 0; }
+  .rg__eyebrow { font-size: .72rem; font-weight: 800; letter-spacing: .2em; color: var(--c-gold, #d4af37); text-transform: uppercase; }
+  .rg__title { font-family: var(--font-heading); font-weight: 800; font-size: clamp(1.35rem, 5vw, 1.9rem); line-height: 1.1; color: #fff; }
+  .rg__sub { font-size: .9rem; color: #b5b5b5; }
+  .rg__stars { color: var(--c-gold, #d4af37); letter-spacing: 1px; }
+  .rg__right { display: grid; justify-items: center; gap: 8px; flex: none; }
+  .rg__thumbs { display: flex; }
+  .rg__thumb { width: 46px; height: 46px; border-radius: 50%; overflow: hidden; border: 2px solid var(--c-gold, #d4af37); background: #111; margin-left: -12px; box-shadow: 0 0 14px rgba(212,175,55,.55); display: grid; place-items: center; }
+  .rg__thumb:first-child { margin-left: 0; }
+  .rg__thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .rg__thumb--emoji { font-size: 1.2rem; }
+  .rg__label { font-size: .78rem; font-weight: 700; color: #fff; white-space: nowrap; }
+  .rg__btn { min-height: 42px; padding: 0 16px; font-size: .9rem; font-weight: 700; white-space: nowrap; }
+  @media (max-width: 420px) { .rg__banner { padding: 18px 14px; gap: 10px; } .rg__thumb { width: 38px; height: 38px; } .rg__btn { padding: 0 12px; font-size: .82rem; } }
+
+  /* ---------- Viewer ---------- */
+  .rgm { position: fixed; inset: 0; z-index: 95; background: radial-gradient(80% 50% at 50% 0%, rgba(212,175,55,.16), transparent 70%), #07070a; overflow-y: auto; animation: rgmIn .3s ease; }
+  .rgm[hidden] { display: none; }
+  .rgm__inner { max-width: 520px; margin: 0 auto; padding: 20px 16px calc(24px + env(safe-area-inset-bottom)); display: grid; gap: 16px; min-height: 100%; align-content: start; }
+  .rgm__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .rgm__title { font-family: var(--font-heading); font-weight: 800; font-size: 1.5rem; color: #fff; line-height: 1.15; }
+  .rgm__count { color: var(--c-gold, #d4af37); font-weight: 800; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .rgm__round { flex: none; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(212,175,55,.5); color: #fff; font-size: 1.1rem; background: rgba(255,255,255,.04); transition: box-shadow .2s, background-color .2s; }
+  .rgm__round:hover { box-shadow: 0 0 18px rgba(212,175,55,.5); background: rgba(212,175,55,.12); }
+  .rgm__round--lg { width: 58px; height: 58px; font-size: 1.3rem; }
+  .rgm__slide { padding: 16px; display: grid; gap: 12px; animation: rgmSlide .35s cubic-bezier(.22,1,.36,1); }
+  .rgm__slide[hidden] { display: none; }
+  .rgm__tag { justify-self: start; padding: 6px 14px; border-radius: 999px; background: linear-gradient(135deg, #fbe9a8, var(--c-gold, #d4af37) 50%, #a8822a); color: #111; font-weight: 800; font-size: .9rem; }
+  .rgm__scroll { max-height: 56vh; overflow-y: auto; display: grid; gap: 12px; border-radius: 14px; }
+  .rgm__img { width: 100%; height: auto; border-radius: 14px; display: block; background: #000; }
+  .rgm__stars { color: var(--c-gold, #d4af37); letter-spacing: 3px; font-size: 1.2rem; }
+  .rgm__text { color: #eee; font-size: 1.05rem; line-height: 1.6; }
+  .rgm__name { color: var(--c-gold, #d4af37); font-weight: 700; }
+  .rgm__nav { display: flex; align-items: center; justify-content: space-between; }
+  .rgm__hint { color: #8a8a8a; }
+  .rgm__more { text-align: center; color: #cfcfcf; font-size: .95rem; }
+  .rgm__more a { color: var(--c-gold, #d4af37); font-weight: 700; }
+  .rgm__legal { text-align: center; color: #777; font-size: .78rem; }
+  html.rgm-open { overflow: hidden; }
+  @keyframes rgmIn { from { opacity: 0; } }
+  @keyframes rgmSlide { from { opacity: 0; transform: translateX(var(--rg-dir, 24px)); } }
+
+  /* ==========================================================================
+     Neon gold look (applies site-wide with the black & gold style)
+     ========================================================================== */
+  body.theme-dark { background: radial-gradient(70% 40% at 50% 0%, rgba(212,175,55,.10), transparent 70%), radial-gradient(50% 30% at 100% 55%, rgba(212,175,55,.05), transparent 70%), #07070a; background-attachment: fixed; }
+  .neon-card { position: relative; border-radius: 26px; background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015)); border: 1px solid rgba(212,175,55,.45); box-shadow: 0 0 0 1px rgba(212,175,55,.08) inset, 0 0 34px rgba(212,175,55,.16), 0 20px 50px rgba(0,0,0,.5); color: #fff; }
+  .theme-dark .quiz__card { border-color: rgba(212,175,55,.45); box-shadow: 0 0 34px rgba(212,175,55,.14), 0 20px 50px rgba(0,0,0,.5); background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015)); }
+  .theme-dark .quiz__answer:hover { box-shadow: 0 0 18px rgba(212,175,55,.3); }
+  .theme-dark :is(.packs__title, .quiz__title, .deals__title)::after { content: ""; display: block; width: 64px; height: 3px; margin-top: 12px; border-radius: 3px; background: linear-gradient(90deg, transparent, var(--c-gold, #d4af37), transparent); box-shadow: 0 0 14px var(--c-gold, #d4af37); }
+  .theme-dark .quiz__title::after { margin-inline: auto; }
+  .theme-dark .hs { position: relative; isolation: isolate; }
+  .theme-dark .hs::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(55% 45% at 50% 30%, rgba(212,175,55,.18), transparent 70%); pointer-events: none; }
+  .theme-dark .hs__title em { filter: drop-shadow(0 0 22px rgba(212,175,55,.45)); }
+  .theme-dark .hs__eyebrow { text-shadow: 0 0 14px rgba(212,175,55,.7); }
+  .theme-dark .btn--gold { box-shadow: 0 0 0 1px rgba(255,236,170,.35) inset, 0 0 26px rgba(212,175,55,.5), 0 10px 30px rgba(212,175,55,.25); }
+  .theme-dark .hs__actions .btn--gold, .theme-dark .sticky-cta .btn { animation: neonPulse 2.6s ease-in-out infinite; }
+  @keyframes neonPulse { 50% { box-shadow: 0 0 0 1px rgba(255,236,170,.5) inset, 0 0 44px rgba(212,175,55,.75), 0 10px 34px rgba(212,175,55,.35); } }
+  .theme-dark .btn--ghost { border-color: rgba(212,175,55,.45); }
+  .theme-dark .btn--ghost:hover { box-shadow: 0 0 20px rgba(212,175,55,.3); }
+  .theme-dark :is(.pack__media, .arrival__media, .botf__media, .deal__media) { border: 1px solid rgba(212,175,55,.35); box-shadow: 0 0 22px rgba(212,175,55,.12); transition: box-shadow .3s, border-color .3s; }
+  .theme-dark :is(.pack, .arrival, .botf__item, .deal):hover :is(.pack__media, .arrival__media, .botf__media, .deal__media) { border-color: var(--c-gold, #d4af37); box-shadow: 0 0 34px rgba(212,175,55,.38); }
+  .theme-dark .pack { padding: 10px 10px 16px; border-radius: 22px; background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)); border: 1px solid rgba(212,175,55,.3); text-align: center; }
+  .theme-dark .pack__media { border-radius: 14px; }
+  .theme-dark .pack__price { font-family: var(--font-heading); font-weight: 800; font-size: 1.35rem; color: var(--c-gold, #d4af37); text-shadow: 0 0 16px rgba(212,175,55,.5); }
+  .theme-dark .pack__title { color: #fff; font-weight: 700; }
+  .theme-dark .cnav__btn { border-color: rgba(212,175,55,.45); }
+  .theme-dark .cnav__btn:hover { box-shadow: 0 0 18px rgba(212,175,55,.45); }
+  .theme-dark .sticky-cta { border-color: rgba(212,175,55,.45); box-shadow: 0 0 30px rgba(212,175,55,.25), 0 18px 40px rgba(0,0,0,.6); }
+  .theme-dark .header { border-bottom: 1px solid rgba(212,175,55,.18); }
+  .theme-dark .abar { box-shadow: 0 0 24px rgba(212,175,55,.45); }
+  @media (prefers-reduced-motion: reduce) { .theme-dark .hs__actions .btn--gold, .theme-dark .sticky-cta .btn { animation: none; } .rgm, .rgm__slide { animation: none; } }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    document.querySelectorAll('[data-rg]').forEach((root) => {
+      const modal = root.querySelector('[data-rg-modal]');
+      if (!modal) return;
+      const slides = Array.from(modal.querySelectorAll('[data-rg-slide]'));
+      const counter = modal.querySelector('[data-rg-index]');
+      let i = 0; let lastFocus = null;
+      const show = (n, dir) => {
+        i = (n + slides.length) % slides.length;
+        slides.forEach((s, k) => { s.hidden = k !== i; });
+        slides[i].style.setProperty('--rg-dir', dir < 0 ? '-24px' : '24px');
+        const sc = slides[i].querySelector('.rgm__scroll'); if (sc) sc.scrollTop = 0;
+        if (counter) counter.textContent = String(i + 1);
+      };
+      const open = (n) => { lastFocus = document.activeElement; modal.hidden = false; document.documentElement.classList.add('rgm-open'); show(n || 0, 1); modal.scrollTop = 0; const c = modal.querySelector('[data-rg-close]'); c && c.focus({ preventScroll: true }); window.themeTrack && window.themeTrack('reviews_open', {}); };
+      const close = () => { modal.hidden = true; document.documentElement.classList.remove('rgm-open'); lastFocus && lastFocus.focus && lastFocus.focus({ preventScroll: true }); };
+      root.querySelectorAll('[data-rg-open]').forEach((b) => b.addEventListener('click', () => open(Number(b.dataset.rgOpen) || 0)));
+      modal.querySelector('[data-rg-close]').addEventListener('click', close);
+      modal.querySelector('[data-rg-prev]').addEventListener('click', () => show(i - 1, -1));
+      modal.querySelector('[data-rg-next]').addEventListener('click', () => show(i + 1, 1));
+      const cta = modal.querySelector('[data-rg-cta]'); cta && cta.addEventListener('click', close);
+      document.addEventListener('keydown', (e) => {
+        if (modal.hidden) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') show(i - 1, -1);
+        if (e.key === 'ArrowRight') show(i + 1, 1);
+      });
+      let x0 = null, y0 = null;
+      const stage = modal.querySelector('[data-rg-stage]');
+      stage.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+      stage.addEventListener('touchend', (e) => {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) show(i + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+        x0 = null;
+      }, { passive: true });
+      document.addEventListener('shopify:block:select', (e) => { const k = slides.indexOf(e.target); if (k > -1) open(k); });
+      document.addEventListener('shopify:section:deselect', (e) => { if (e.target.contains(root)) close(); });
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Galerie d'avis",
+  "tag": "div",
+  "settings": [
+    { "type": "paragraph", "content": "Ajoute un bloc « Avis » par avis : capture du message et/ou texte. Mets uniquement de vrais avis, avec l'accord des membres (les faux avis sont interdits : art. L121-4 du Code de la consommation)." },
+    { "type": "text", "id": "anchor", "label": "Ancre (ID)", "default": "avis" },
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "💬 Avis clients" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Ils se sont lancés 🔥" },
+    { "type": "checkbox", "id": "show_stars", "label": "Afficher ★★★★★", "default": true },
+    { "type": "text", "id": "subtitle", "label": "Sous-titre", "default": "Les retours des membres", "info": "Ex. : « +200 personnes accompagnées », seulement si le chiffre est vrai." },
+    { "type": "text", "id": "thumbs_label", "label": "Texte sous les ronds", "default": "Avis des membres" },
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "Voir les avis →" },
+    { "type": "header", "content": "Visionneuse" },
+    { "type": "text", "id": "cta_label", "label": "Bouton d'action", "default": "🚀 Je me lance aussi →" },
+    { "type": "url", "id": "cta_link", "label": "Lien du bouton", "info": "Vide = section packs." },
+    { "type": "text", "id": "more_text", "label": "Texte « plus d'avis »", "default": "Envie de voir plus d'avis ? 👀" },
+    { "type": "text", "id": "more_label", "label": "Texte du lien", "default": "Mon Snap" },
+    { "type": "url", "id": "more_link", "label": "Lien (Snap, TikTok…)" },
+    { "type": "text", "id": "disclaimer", "label": "Mention", "default": "Résultats individuels, non garantis." }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Avis",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Capture de l'avis" },
+        { "type": "text", "id": "tag", "label": "Étiquette", "default": "⭐ Avis" },
+        { "type": "textarea", "id": "text", "label": "Texte de l'avis (copié tel quel)" },
+        { "type": "text", "id": "name", "label": "Prénom ou pseudo" },
+        { "type": "text", "id": "date", "label": "Date" },
+        { "type": "range", "id": "rating", "label": "Étoiles (0 = masquées)", "min": 0, "max": 5, "step": 1, "default": 0 }
+      ]
+    }
+  ],
+  "max_blocks": 50,
+  "presets": [ { "name": "Galerie d'avis" } ]
+}
+{% endschema %}
