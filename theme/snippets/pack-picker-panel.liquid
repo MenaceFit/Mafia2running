@@ -1,0 +1,27 @@
+{%- comment -%} Détail d'un pack dans la section « Packs (sélecteur) ». {%- endcomment -%}
+{%- liquid
+  assign lines = bullets | newline_to_br | split: '<br />'
+-%}
+<div class="pk__panel" role="tabpanel" id="PkPanel-{{ sid }}-{{ index }}" aria-labelledby="PkTab-{{ sid }}-{{ index }}" data-pk-panel{% unless index == start %} hidden{% endunless %}>
+  <div class="pk__panel-head">
+    <p class="pk__panel-title">{{ label }}</p>
+    {%- if product != blank -%}
+      <p class="pk__panel-price">
+        <strong>{{ product.price | money }}</strong>
+        {%- if product.compare_at_price > product.price -%}<s>{{ product.compare_at_price | money }}</s>{%- endif -%}
+      </p>
+    {%- endif -%}
+  </div>
+  {%- if bullets != blank -%}
+    <ul class="pk__list" role="list">
+      {%- for line in lines -%}
+        {%- assign t = line | strip -%}
+        {%- if t != blank -%}<li style="--i: {{ forloop.index0 }}"><span class="pk__check" aria-hidden="true">✓</span><span>{{ t }}</span></li>{%- endif -%}
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+  {%- if scarcity != blank -%}<p class="pk__scarcity">{{ scarcity }}</p>{%- endif -%}
+  {%- if product != blank -%}
+    <a href="{{ product.url }}" class="btn btn--lg btn--gold btn--block pk__cta" data-track="cta_click" data-track-label="pack_picker">{{ cta }}</a>
+  {%- endif -%}
+</div>

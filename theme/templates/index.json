@@ -61,14 +61,51 @@
       ]
     },
     "packs": {
-      "type": "packs",
+      "type": "pack-picker",
       "settings": {
-        "title": "Nos packs",
-        "limit": 3,
+        "eyebrow": "💎 LES PACKS",
+        "title": "Choisis ton accès",
+        "button_label": "Je prends ce pack →",
         "collection": "accessoires",
+        "limit": 3,
         "show_trust": true,
         "trust_text": "🔒 Paiement 100 % sécurisé • ⚡ Accès envoyé après paiement • ✅ Paiement unique"
-      }
+      },
+      "blocks": {
+        "p1": {
+          "type": "pack",
+          "settings": {
+            "product": "🎯💎-groupe-prive-mafiarunning",
+            "title": "👟 Groupe Privé",
+            "badge": "⭐ Le plus complet",
+            "selected": true,
+            "bullets": "👟 Contacts Nike Running & Under Armour\n💎 Semi-luxe : Stone Island, CP Company, Ralph Lauren\n🤖 Bot Vinted UK inclus\n📦 +15 agents de livraison\n💬 Groupe Telegram + conseils pour démarrer"
+          }
+        },
+        "p2": {
+          "type": "pack",
+          "settings": {
+            "product": "contacts-wechat-essentials-alo",
+            "title": "💬 Essentials & Alo",
+            "badge": "🆕 Nouveau",
+            "bullets": "🩶 Ensembles Essentials Fear of God à 50 €\n💙 Ensembles Alo à 90 €\n💬 2 contacts fournisseurs en direct sur WeChat\n📦 Arrivages réguliers"
+          }
+        },
+        "p3": {
+          "type": "pack",
+          "settings": {
+            "product": "🔵📦-groupe-prive-niches-vinted",
+            "title": "📘 Niches Vinted",
+            "badge": "📘 Ebook",
+            "bullets": "📘 Ebook +35 niches Vinted\n🛍️ Où acheter chaque niche pas cher\n🏷️ À quel prix revendre\n📸 Comment faire des annonces qui vendent"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ]
     },
     "deals": {
       "type": "deals",

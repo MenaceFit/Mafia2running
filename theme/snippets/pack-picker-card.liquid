@@ -1,0 +1,22 @@
+{%- comment -%} Carte d'un pack dans la section « Packs (sélecteur) ». {%- endcomment -%}
+{%- liquid
+  assign is_on = false
+  if index == start
+    assign is_on = true
+  endif
+-%}
+<button type="button" class="pk__card" role="tab" id="PkTab-{{ sid }}-{{ index }}" aria-controls="PkPanel-{{ sid }}-{{ index }}" aria-selected="{{ is_on }}" tabindex="{% if is_on %}0{% else %}-1{% endif %}" data-pk-card data-name="{{ label | escape }}" {{ attrs }}>
+  {%- if badge != blank -%}<span class="pk__badge">{{ badge }}</span>{%- endif -%}
+  <span class="pk__media">
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: 500 | image_tag: loading: 'lazy', widths: '200, 300, 400, 500', sizes: '(min-width: 750px) 260px, 31vw', alt: '' }}
+    {%- else -%}
+      {% render 'media', label: label, dark: true, art: 'rings' %}
+    {%- endif -%}
+  </span>
+  <span class="pk__name">{{ label }}</span>
+  <span class="pk__price">
+    {%- if product != blank -%}<strong>{{ product.price | money }}</strong>{%- endif -%}
+    {%- if product.compare_at_price > product.price -%}<s>{{ product.compare_at_price | money }}</s>{%- endif -%}
+  </span>
+</button>

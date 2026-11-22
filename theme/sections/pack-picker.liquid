@@ -1,0 +1,239 @@
+{%- liquid
+  assign source = section.settings.collection
+  assign use_blocks = false
+  if section.blocks.size > 0
+    assign use_blocks = true
+  endif
+  assign start = 0
+  for block in section.blocks
+    if block.settings.selected
+      assign start = forloop.index0
+      break
+    endif
+  endfor
+  if use_blocks
+    assign count = section.blocks.size
+  elsif source != blank
+    assign count = source.products.size | at_most: section.settings.limit
+  else
+    assign count = 0
+  endif
+-%}
+<section class="section section--tight pk" id="packs" aria-labelledby="PkTitle-{{ section.id }}" data-pk data-start="{{ start }}" style="--n: {{ count | at_most: 3 | at_least: 1 }}">
+  <div class="container">
+    <div class="pk__head">
+      {%- if section.settings.eyebrow != blank -%}<span class="pk__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 id="PkTitle-{{ section.id }}" class="pk__title">{{ section.settings.title }}</h2>
+      {%- if section.settings.text != blank -%}<p class="pk__text">{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+
+    {%- if count == 0 -%}
+      <p class="packs__empty">Ajoute un bloc « Pack » par produit (ou choisis une collection) dans cette section.</p>
+    {%- else -%}
+      <div class="pk__stage">
+        <div class="pk__cards{% if count > 3 %} pk__cards--scroll{% endif %}" role="tablist" aria-label="{{ section.settings.title | escape }}" data-pk-cards>
+          {%- if use_blocks -%}
+            {%- for block in section.blocks -%}
+              {%- assign product = block.settings.product -%}
+              {%- assign label = block.settings.title | default: product.title -%}
+              {% render 'pack-picker-card', product: product, label: label, badge: block.settings.badge, index: forloop.index0, start: start, sid: section.id, attrs: block.shopify_attributes %}
+            {%- endfor -%}
+          {%- else -%}
+            {%- for product in source.products limit: section.settings.limit -%}
+              {% render 'pack-picker-card', product: product, label: product.title, badge: '', index: forloop.index0, start: start, sid: section.id, attrs: '' %}
+            {%- endfor -%}
+          {%- endif -%}
+          <span class="pk__pointer" aria-hidden="true" data-pk-pointer></span>
+        </div>
+
+        <div class="pk__panels">
+          {%- if use_blocks -%}
+            {%- for block in section.blocks -%}
+              {%- assign product = block.settings.product -%}
+              {%- assign label = block.settings.title | default: product.title -%}
+              {%- assign cta = block.settings.button_label | default: section.settings.button_label -%}
+              {% render 'pack-picker-panel', product: product, label: label, bullets: block.settings.bullets, scarcity: block.settings.scarcity, cta: cta, index: forloop.index0, start: start, sid: section.id %}
+            {%- endfor -%}
+          {%- else -%}
+            {%- for product in source.products limit: section.settings.limit -%}
+              {%- assign bullets = product.metafields.custom.included.value | join: '
+' -%}
+              {% render 'pack-picker-panel', product: product, label: product.title, bullets: bullets, scarcity: '', cta: section.settings.button_label, index: forloop.index0, start: start, sid: section.id %}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_trust -%}
+      <div class="pk__trust">
+        <p>{{ section.settings.trust_text }}</p>
+        {%- if shop.enabled_payment_types.size > 0 -%}
+          <ul class="pk__pay" role="list">
+            {%- for type in shop.enabled_payment_types -%}<li>{{ type | payment_type_svg_tag: class: 'pk__pay-icon' }}</li>{%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .pk { --gold: var(--c-gold, #d4af37); --gold-grad: linear-gradient(135deg, #fbe9a8, var(--c-gold, #d4af37) 50%, #a8822a); --ease: cubic-bezier(.22, 1, .36, 1); }
+  .pk__head { display: grid; justify-items: center; gap: 14px; text-align: center; margin-bottom: 34px; }
+  .pk__eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 9px 20px; border-radius: 999px; border: 1px solid rgba(212,175,55,.55); background: rgba(212,175,55,.06); font-size: .8rem; font-weight: 800; letter-spacing: .24em; color: var(--gold); text-shadow: 0 0 12px rgba(212,175,55,.6); }
+  .pk__title { font-family: var(--font-heading); font-weight: 800; font-size: clamp(2rem, 7vw, 2.9rem); line-height: 1.05; letter-spacing: -.035em; color: #fff; }
+  .pk__title::after { content: ""; display: block; width: 72px; height: 3px; margin: 16px auto 0; border-radius: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); box-shadow: 0 0 14px var(--gold); }
+  .pk__text { color: #a9a9a9; max-width: 44ch; }
+
+  /* ---- Cards ---- */
+  .pk__cards { position: relative; display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 10px; padding-top: 16px; padding-bottom: 22px; }
+  .pk__cards--scroll { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 31%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .pk__cards--scroll::-webkit-scrollbar { display: none; }
+  @media (min-width: 750px) { .pk__cards { gap: 18px; max-width: 820px; margin-inline: auto; } .pk__cards--scroll { grid-auto-columns: calc((100% - 36px) / 3); } }
+  .pk__card { position: relative; display: grid; grid-template-rows: auto 1fr auto; align-content: start; gap: 8px; padding: 0 0 14px; border-radius: 22px; text-align: center; cursor: pointer; color: #fff; scroll-snap-align: start;
+    background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.015)); border: 1.5px solid rgba(212,175,55,.22);
+    transition: transform .45s var(--ease), border-color .35s, box-shadow .45s var(--ease), background-color .35s; -webkit-tap-highlight-color: transparent; }
+  .pk__card:hover { border-color: rgba(212,175,55,.5); }
+  .pk__card:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .pk__card[aria-selected="true"] { transform: translateY(-6px); border-color: var(--gold); background: linear-gradient(180deg, rgba(212,175,55,.12), rgba(212,175,55,.02));
+    box-shadow: 0 0 0 1px rgba(212,175,55,.35) inset, 0 0 30px rgba(212,175,55,.35), 0 18px 40px rgba(0,0,0,.55); }
+  .pk__media { position: relative; aspect-ratio: 1; border-radius: 20px 20px 14px 14px; overflow: hidden; background: #0d0d0d; }
+  .pk__media img, .pk__media .placeholder { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s var(--ease), filter .5s; filter: saturate(.85) brightness(.85); }
+  .pk__card[aria-selected="true"] .pk__media img { transform: scale(1.06); filter: none; }
+  .pk__badge { position: absolute; top: -14px; left: 50%; z-index: 2; transform: translateX(-50%); padding: 5px 10px; border-radius: 999px; white-space: nowrap; max-width: calc(100% + 8px); overflow: hidden; text-overflow: ellipsis; font-size: .68rem; font-weight: 800; color: #111; background: var(--gold-grad); box-shadow: 0 0 16px rgba(212,175,55,.55); }
+  .pk__name { padding: 0 8px; font-family: var(--font-heading); font-weight: 700; font-size: .95rem; line-height: 1.2; overflow-wrap: anywhere; }
+  .pk__price { display: grid; gap: 2px; justify-items: center; }
+  .pk__price strong { font-family: var(--font-heading); font-weight: 800; font-size: clamp(1.15rem, 4.6vw, 1.6rem); line-height: 1; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .pk__price s { font-size: .78rem; color: #7a7a7a; }
+  .pk__pointer { position: absolute; bottom: 4px; left: 0; width: 22px; height: 22px; margin-left: -11px; transform: translateX(var(--x, -100px)) rotate(45deg); opacity: 0;
+    border-right: 1.5px solid var(--gold); border-bottom: 1.5px solid var(--gold); background: #15130c; box-shadow: 6px 6px 14px rgba(212,175,55,.25); transition: transform .55s var(--ease), opacity .3s; pointer-events: none; }
+  .pk.is-ready .pk__pointer { opacity: 1; }
+
+  /* ---- Panel ---- */
+  .pk__panels { position: relative; max-width: 820px; margin-inline: auto; }
+  .pk__panel { position: relative; padding: 24px 20px 22px; border-radius: 26px; overflow: hidden; display: grid; gap: 18px;
+    background: radial-gradient(90% 60% at 100% 0%, rgba(212,175,55,.14), transparent 60%), linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.015));
+    border: 1.5px solid rgba(212,175,55,.45); box-shadow: 0 0 34px rgba(212,175,55,.16), 0 20px 50px rgba(0,0,0,.5); }
+  .pk__panel[hidden] { display: none; }
+  .pk__panel.is-in { animation: pkIn .55s var(--ease) both; }
+  .pk__panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+  .pk__panel-title { font-family: var(--font-heading); font-weight: 800; font-size: clamp(1.35rem, 5vw, 1.8rem); line-height: 1.1; color: #fff; }
+  .pk__panel-price { flex: none; text-align: right; display: grid; gap: 2px; }
+  .pk__panel-price strong { font-family: var(--font-heading); font-weight: 800; font-size: clamp(1.6rem, 6.5vw, 2.2rem); line-height: 1; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 14px rgba(212,175,55,.35)); }
+  .pk__panel-price s { color: #7a7a7a; font-size: .9rem; }
+  .pk__list { display: grid; gap: 12px; }
+  .pk__list li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; color: #e6e6e6; font-size: 1.02rem; line-height: 1.4; }
+  .pk__panel.is-in .pk__list li { animation: pkItem .5s var(--ease) both; animation-delay: calc(.12s + var(--i, 0) * .07s); }
+  .pk__check { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: rgba(212,175,55,.14); border: 1px solid rgba(212,175,55,.6); color: var(--gold); font-size: .8rem; font-weight: 900; box-shadow: 0 0 10px rgba(212,175,55,.3); }
+  .pk__scarcity { justify-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(212,175,55,.55); font-weight: 700; font-size: .92rem; color: #fff; }
+  .pk__scarcity::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 0 0 rgba(52,211,153,.6); animation: pkPulse 1.8s infinite; }
+  .pk__cta { position: relative; overflow: hidden; }
+  .pk__cta::after { content: ""; position: absolute; inset: 0; transform: translateX(-120%) skewX(-20deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent); animation: pkShine 3.2s 1s infinite; }
+  .pk__note { text-align: center; color: #8a8a8a; font-size: .82rem; margin-top: -6px; }
+
+  /* ---- Trust ---- */
+  .pk__trust { margin-top: 22px; display: grid; gap: 12px; justify-items: center; text-align: center; }
+  .pk__trust p { font-size: .88rem; color: var(--c-muted); }
+  .pk__pay { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+  .pk__pay-icon { width: 38px; height: 24px; }
+
+  @keyframes pkIn { from { opacity: 0; transform: translateX(var(--from, 24px)) scale(.985); filter: blur(4px); } }
+  @keyframes pkItem { from { opacity: 0; transform: translateY(8px); } }
+  @keyframes pkPulse { 70% { box-shadow: 0 0 0 8px rgba(52,211,153,0); } 100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); } }
+  @keyframes pkShine { 0% { transform: translateX(-120%) skewX(-20deg); } 35%, 100% { transform: translateX(220%) skewX(-20deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .pk__card, .pk__pointer, .pk__media img { transition: none; }
+    .pk__panel.is-in, .pk__panel.is-in .pk__list li, .pk__cta::after, .pk__scarcity::before { animation: none; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    const init = (root) => {
+      if (root.dataset.pkReady) return;
+      root.dataset.pkReady = '1';
+      const wrap = root.querySelector('[data-pk-cards]');
+      if (!wrap) return;
+      const cards = Array.from(root.querySelectorAll('[data-pk-card]'));
+      const panels = Array.from(root.querySelectorAll('[data-pk-panel]'));
+      const pointer = root.querySelector('[data-pk-pointer]');
+      let current = -1;
+      const place = () => {
+        const c = cards[current]; if (!c || !pointer) return;
+        pointer.style.setProperty('--x', (c.offsetLeft - wrap.scrollLeft + c.offsetWidth / 2) + 'px');
+      };
+      const select = (i, focus) => {
+        if (i === current || !cards[i]) return;
+        const dir = i > current ? 1 : -1;
+        cards.forEach((c, k) => { c.setAttribute('aria-selected', String(k === i)); c.tabIndex = k === i ? 0 : -1; });
+        panels.forEach((p, k) => {
+          const on = k === i;
+          p.hidden = !on;
+          p.classList.remove('is-in');
+          if (on && current !== -1) { p.style.setProperty('--from', (dir * 24) + 'px'); void p.offsetWidth; p.classList.add('is-in'); }
+        });
+        current = i;
+        place();
+        if (wrap.scrollWidth > wrap.clientWidth) cards[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        if (focus) cards[i].focus({ preventScroll: true });
+        if (window.themeTrack) window.themeTrack('pack_select', { item_name: cards[i].dataset.name || '' });
+      };
+      cards.forEach((c, i) => {
+        c.addEventListener('click', () => select(i));
+        c.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); select((i + 1) % cards.length, true); }
+          if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); select((i - 1 + cards.length) % cards.length, true); }
+        });
+      });
+      wrap.addEventListener('scroll', place, { passive: true });
+      window.addEventListener('resize', place);
+      select(Math.min(Number(root.dataset.start) || 0, cards.length - 1));
+      requestAnimationFrame(() => { place(); root.classList.add('is-ready'); });
+      document.addEventListener('shopify:block:select', (e) => {
+        const k = cards.indexOf(e.target);
+        if (k > -1) select(k);
+      });
+    };
+    const run = () => document.querySelectorAll('[data-pk]').forEach(init);
+    run();
+    document.addEventListener('shopify:section:load', run);
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Packs (sélecteur)",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Badge", "default": "💎 LES PACKS" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Choisis ton accès" },
+    { "type": "text", "id": "text", "label": "Texte" },
+    { "type": "text", "id": "button_label", "label": "Texte du bouton", "default": "Je prends ce pack →" },
+    { "type": "header", "content": "Sans blocs « Pack »" },
+    { "type": "paragraph", "content": "Si tu n'ajoutes aucun bloc, les produits de cette collection sont affichés." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "limit", "label": "Nombre de packs", "min": 2, "max": 6, "step": 1, "default": 3 },
+    { "type": "header", "content": "Réassurance" },
+    { "type": "checkbox", "id": "show_trust", "label": "Afficher la réassurance et les moyens de paiement", "default": true },
+    { "type": "text", "id": "trust_text", "label": "Texte de réassurance", "default": "🔒 Paiement 100 % sécurisé • ⚡ Accès envoyé après paiement • ✅ Paiement unique" }
+  ],
+  "blocks": [
+    {
+      "type": "pack",
+      "name": "Pack",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Produit" },
+        { "type": "text", "id": "title", "label": "Nom court affiché", "info": "Vide = titre du produit." },
+        { "type": "text", "id": "badge", "label": "Badge au-dessus de la carte", "info": "Ex. : ⭐ Le plus complet, 🆕 Nouveau." },
+        { "type": "checkbox", "id": "selected", "label": "Sélectionné par défaut", "default": false },
+        { "type": "textarea", "id": "bullets", "label": "Ce qui est inclus (une ligne = un point)" },
+        { "type": "text", "id": "scarcity", "label": "Texte de rareté (optionnel)", "info": "Ex. : Plus que 5 places. À n'utiliser que si c'est vrai." },
+        { "type": "text", "id": "button_label", "label": "Texte du bouton (optionnel)" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [ { "name": "Packs (sélecteur)" } ]
+}
+{% endschema %}
