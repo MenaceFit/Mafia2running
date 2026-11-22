@@ -406,43 +406,11 @@
         "review_fXLCA3",
         "review_F46pmQ"
       ]
-    },
-    "wechat": {
-      "type": "wechat-drop",
-      "settings": {
-        "product": "contacts-wechat-essentials-alo",
-        "arrival_caption": "Arrivage Alo réel 📦"
-      },
-      "blocks": {
-        "w1": {
-          "type": "item",
-          "settings": {
-            "tag": "Contact n°1",
-            "name": "Ensemble Essentials Fear of God",
-            "price": "50 €",
-            "note": "Sweat + jogging"
-          }
-        },
-        "w2": {
-          "type": "item",
-          "settings": {
-            "tag": "Contact n°2",
-            "name": "Ensemble Alo",
-            "price": "90 €",
-            "note": "Veste + pantalon"
-          }
-        }
-      },
-      "block_order": [
-        "w1",
-        "w2"
-      ]
     }
   },
   "order": [
     "hero",
     "avis",
-    "wechat",
     "quiz",
     "packs",
     "arrivages",
