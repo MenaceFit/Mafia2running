@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<style>
+  :root { --gold: #D4AF37; --gold-hi: #FBE9A8; --gold-lo: #A8822A; --bg: #07070A; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #222; font-family: "Inter Display", Inter, "Noto Color Emoji", sans-serif; }
+  .card { position: relative; width: 1080px; height: 1080px; overflow: hidden; color: #fff; margin-bottom: 40px;
+    background: radial-gradient(70% 45% at 50% 0%, rgba(212,175,55,.22), transparent 70%), radial-gradient(60% 40% at 50% 100%, rgba(212,175,55,.10), transparent 70%), var(--bg); }
+  .card::after { content: ""; position: absolute; inset: 22px; border-radius: 44px; border: 2px solid rgba(212,175,55,.55);
+    box-shadow: 0 0 40px rgba(212,175,55,.35), inset 0 0 40px rgba(212,175,55,.12); pointer-events: none; }
+  .eyebrow { letter-spacing: .32em; font-weight: 800; font-size: 26px; color: var(--gold); text-shadow: 0 0 18px rgba(212,175,55,.8); }
+  .title { font-weight: 800; letter-spacing: -.03em; line-height: .95; }
+  .gold { background: linear-gradient(135deg, var(--gold-hi), var(--gold) 50%, var(--gold-lo)); -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 22px rgba(212,175,55,.45)); }
+  .pill { display: inline-flex; align-items: center; gap: 10px; padding: 12px 26px; border-radius: 999px; font-weight: 800; font-size: 30px;
+    background: linear-gradient(135deg, var(--gold-hi), var(--gold) 50%, var(--gold-lo)); color: #111; box-shadow: 0 0 30px rgba(212,175,55,.6); }
+  .ghost { display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; border-radius: 999px; font-weight: 700; font-size: 26px;
+    border: 2px solid rgba(212,175,55,.6); color: #fff; background: rgba(255,255,255,.04); }
+
+  /* ---- 1. Couverture ---- */
+  .c1 { padding: 78px 70px; display: grid; grid-template-rows: auto 1fr auto; gap: 34px; }
+  .c1 .head { text-align: center; display: grid; gap: 18px; justify-items: center; }
+  .c1 .title { font-size: 104px; }
+  .c1 .sub { font-size: 34px; color: #cfcfcf; font-weight: 600; }
+  .c1 .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; min-height: 0; }
+  .tile { position: relative; border-radius: 30px; overflow: hidden; border: 2px solid rgba(212,175,55,.6); box-shadow: 0 0 34px rgba(212,175,55,.3); }
+  .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tile .lbl { position: absolute; left: 0; right: 0; bottom: 0; padding: 70px 22px 22px; background: linear-gradient(transparent, rgba(0,0,0,.92));
+    display: grid; gap: 10px; justify-items: start; }
+  .tile .name { font-weight: 800; font-size: 34px; line-height: 1.05; }
+  .tile .pill { font-size: 34px; }
+  .c1 .foot { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+  /* ---- 2. Les prix ---- */
+  .c2 { padding: 84px 74px; display: grid; gap: 30px; align-content: start; }
+  .c2 .head { text-align: center; display: grid; gap: 16px; justify-items: center; }
+  .c2 .title { font-size: 86px; }
+  .row { display: grid; grid-template-columns: 300px 1fr; gap: 30px; align-items: center; padding: 22px; border-radius: 32px;
+    border: 2px solid rgba(212,175,55,.5); background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.015)); box-shadow: 0 0 30px rgba(212,175,55,.18); }
+  .row img { width: 300px; height: 300px; object-fit: cover; border-radius: 22px; display: block; }
+  .row .info { display: grid; gap: 14px; justify-items: start; }
+  .row .tag { font-size: 24px; letter-spacing: .2em; font-weight: 800; color: var(--gold); }
+  .row .name { font-weight: 800; font-size: 46px; line-height: 1.05; }
+  .row .price { font-weight: 800; font-size: 96px; line-height: 1; }
+  .row .price small { font-size: 30px; color: #bbb; font-weight: 600; margin-left: 8px; letter-spacing: 0; }
+  .c2 .note { text-align: center; font-size: 26px; color: #9a9a9a; }
+
+  /* ---- 3. Arrivage ---- */
+  .c3 { display: grid; }
+  .c3 > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+  .c3 .shade { position: absolute; inset: 0; background: linear-gradient(rgba(7,7,10,.85), rgba(7,7,10,.1) 32%, rgba(7,7,10,.1) 62%, rgba(7,7,10,.92)); }
+  .c3 .top { position: absolute; top: 76px; left: 0; right: 0; text-align: center; display: grid; gap: 14px; justify-items: center; }
+  .c3 .title { font-size: 96px; }
+  .c3 .bottom { position: absolute; bottom: 80px; left: 0; right: 0; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; padding: 0 60px; }
+</style>
+</head>
+<body>
+
+<!-- 1. Couverture produit -->
+<section class="card c1" id="v1">
+  <div class="head">
+    <p class="eyebrow">NOUVEAU · CONTACTS WECHAT</p>
+    <h1 class="title">Essentials <span class="gold">&amp;</span> Alo<br><span class="gold">en direct</span></h1>
+    <p class="sub">2 contacts fournisseurs · ensembles neufs avec étiquettes</p>
+  </div>
+  <div class="tiles">
+    <div class="tile"><img src="essentials.jpg" alt="">
+      <div class="lbl"><span class="name">Ensemble Essentials<br>Fear of God</span><span class="pill">50 €</span></div></div>
+    <div class="tile"><img src="alo.jpg" alt="" style="object-position:center 30%">
+      <div class="lbl"><span class="name">Ensemble<br>Alo</span><span class="pill">90 €</span></div></div>
+  </div>
+  <div class="foot">
+    <span class="ghost">💬 Contacts WeChat</span>
+    <span class="ghost">⚡ Accès après paiement</span>
+    <span class="ghost">🔒 Paiement unique</span>
+  </div>
+</section>
+
+<!-- 2. Les prix -->
+<section class="card c2" id="v2">
+  <div class="head">
+    <p class="eyebrow">CE QUE TU PAIES CHEZ EUX</p>
+    <h1 class="title">Les prix <span class="gold">fournisseur</span></h1>
+  </div>
+  <div class="row">
+    <img src="essentials.jpg" alt="">
+    <div class="info">
+      <span class="tag">CONTACT N°1</span>
+      <span class="name">Ensemble Essentials Fear of God</span>
+      <span class="price gold">50 €<small style="-webkit-text-fill-color:#bbb">l'ensemble</small></span>
+    </div>
+  </div>
+  <div class="row">
+    <img src="alo.jpg" alt="" style="object-position:center 30%">
+    <div class="info">
+      <span class="tag">CONTACT N°2</span>
+      <span class="name">Ensemble Alo</span>
+      <span class="price gold">90 €<small style="-webkit-text-fill-color:#bbb">l'ensemble</small></span>
+    </div>
+  </div>
+  <p class="note">Prix indicatifs donnés par les vendeurs, hors livraison. Ils peuvent changer.</p>
+</section>
+
+<!-- 3. Arrivage -->
+<section class="card c3" id="v3">
+  <img src="arrivage-alo.jpg" alt="">
+  <div class="shade"></div>
+  <div class="top">
+    <p class="eyebrow">ARRIVAGE RÉEL 📦</p>
+    <h1 class="title">L'arrivage <span class="gold">Alo</span></h1>
+  </div>
+  <div class="bottom">
+    <span class="pill">Ensembles Alo · 90 €</span>
+    <span class="ghost">Via le contact WeChat</span>
+  </div>
+</section>
+
+</body>
+</html>

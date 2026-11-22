@@ -1,0 +1,125 @@
+{%- liquid
+  assign p = section.settings.product
+  assign link = section.settings.button_link
+  if link == blank and p != blank
+    assign link = p.url
+  endif
+  if link == blank
+    assign link = '#packs'
+  endif
+-%}
+<section class="section section--tight wd" id="{{ section.settings.anchor | handle }}" aria-labelledby="WdTitle-{{ section.id }}">
+  <div class="container">
+    <div class="wd__card">
+      <div class="wd__head">
+        {%- if section.settings.eyebrow != blank -%}<span class="wd__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 id="WdTitle-{{ section.id }}" class="wd__title">{{ section.settings.title }}</h2>
+        {%- if section.settings.text != blank -%}<p class="wd__text">{{ section.settings.text }}</p>{%- endif -%}
+      </div>
+
+      <ul class="wd__items" role="list">
+        {%- for block in section.blocks -%}
+          <li class="wd__item" {{ block.shopify_attributes }}>
+            <div class="wd__media">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350, 500, 700', sizes: '(min-width: 750px) 300px, 45vw', alt: block.settings.name }}
+              {%- else -%}
+                {% render 'media', label: block.settings.name, dark: true, art: 'rings' %}
+              {%- endif -%}
+              {%- if block.settings.price != blank -%}<span class="wd__price">{{ block.settings.price }}</span>{%- endif -%}
+            </div>
+            {%- if block.settings.tag != blank -%}<span class="wd__tag">{{ block.settings.tag }}</span>{%- endif -%}
+            <p class="wd__name">{{ block.settings.name }}</p>
+            {%- if block.settings.note != blank -%}<p class="wd__note">{{ block.settings.note }}</p>{%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if section.settings.arrival_image != blank -%}
+        <figure class="wd__arrival">
+          {{ section.settings.arrival_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '500, 800, 1200', sizes: '(min-width: 750px) 640px, 92vw', alt: section.settings.arrival_caption }}
+          {%- if section.settings.arrival_caption != blank -%}<figcaption><span class="sh__live" aria-hidden="true"></span>{{ section.settings.arrival_caption }}</figcaption>{%- endif -%}
+        </figure>
+      {%- endif -%}
+
+      <div class="wd__cta">
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ link }}" class="btn btn--lg btn--gold btn--block" data-track="cta_click" data-track-label="wechat_drop">
+            {{ section.settings.button_label }}
+            {%- if p != blank and section.settings.show_price %} · {{ p.price | money }}{% endif -%}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.points != blank -%}<p class="wd__points">{{ section.settings.points }}</p>{%- endif -%}
+        {%- if section.settings.disclaimer != blank -%}<p class="wd__legal">{{ section.settings.disclaimer }}</p>{%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .wd__card { position: relative; padding: 26px 18px 22px; display: grid; gap: 22px; overflow: hidden; border-radius: 26px; color: #fff; background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015)); border: 1px solid rgba(212,175,55,.45); box-shadow: 0 0 0 1px rgba(212,175,55,.08) inset, 0 0 34px rgba(212,175,55,.16), 0 20px 50px rgba(0,0,0,.5); }
+  .wd__card::before { content: ""; position: absolute; inset: -40% -20% auto; height: 70%; background: radial-gradient(50% 50% at 50% 50%, rgba(212,175,55,.22), transparent 70%); pointer-events: none; }
+  .wd__head { position: relative; display: grid; gap: 10px; justify-items: center; text-align: center; }
+  .wd__eyebrow { display: inline-flex; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(212,175,55,.6); font-size: .75rem; font-weight: 800; letter-spacing: .18em; color: var(--c-gold, #d4af37); text-shadow: 0 0 12px rgba(212,175,55,.7); }
+  .wd__title { font-family: var(--font-heading); font-weight: 800; font-size: clamp(1.7rem, 6vw, 2.5rem); line-height: 1.05; letter-spacing: -.03em; color: #fff; }
+  .wd__title::after { content: ""; display: block; width: 64px; height: 3px; margin: 12px auto 0; border-radius: 3px; background: linear-gradient(90deg, transparent, var(--c-gold, #d4af37), transparent); box-shadow: 0 0 14px var(--c-gold, #d4af37); }
+  .wd__text { color: #bdbdbd; max-width: 46ch; line-height: 1.5; }
+  .wd__items { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .wd__item { display: grid; gap: 6px; align-content: start; text-align: center; justify-items: center; }
+  .wd__media { position: relative; width: 100%; aspect-ratio: 4 / 5; border-radius: 18px; overflow: hidden; border: 1px solid rgba(212,175,55,.45); box-shadow: 0 0 24px rgba(212,175,55,.18); background: #111; transition: box-shadow .3s, border-color .3s; }
+  .wd__item:hover .wd__media { border-color: var(--c-gold, #d4af37); box-shadow: 0 0 34px rgba(212,175,55,.4); }
+  .wd__media img, .wd__media .placeholder { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .wd__price { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); padding: 7px 16px; border-radius: 999px; background: linear-gradient(135deg, #fbe9a8, var(--c-gold, #d4af37) 50%, #a8822a); color: #111; font-weight: 800; font-size: 1.1rem; white-space: nowrap; box-shadow: 0 0 18px rgba(212,175,55,.6); }
+  .wd__tag { margin-top: 4px; font-size: .68rem; font-weight: 800; letter-spacing: .16em; color: var(--c-gold, #d4af37); text-transform: uppercase; }
+  .wd__name { font-weight: 700; color: #fff; line-height: 1.2; }
+  .wd__note { font-size: .82rem; color: #9a9a9a; }
+  .wd__arrival { position: relative; margin: 0; border-radius: 20px; overflow: hidden; border: 1px solid rgba(212,175,55,.45); box-shadow: 0 0 28px rgba(212,175,55,.2); }
+  .wd__arrival img { width: 100%; height: auto; max-height: 520px; object-fit: cover; display: block; }
+  .wd__arrival figcaption { position: absolute; left: 12px; top: 12px; display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; background: rgba(7,7,10,.78); backdrop-filter: blur(6px); color: #fff; font-weight: 700; font-size: .85rem; border: 1px solid rgba(212,175,55,.5); }
+  .wd__cta { position: relative; display: grid; gap: 10px; text-align: center; }
+  .wd__points { color: #cfcfcf; font-size: .9rem; }
+  .wd__legal { color: #777; font-size: .75rem; line-height: 1.45; }
+  @media (min-width: 750px) {
+    .wd__card { padding: 40px; }
+    .wd__items { max-width: 640px; margin-inline: auto; width: 100%; gap: 20px; }
+    .wd__arrival, .wd__cta { max-width: 640px; margin-inline: auto; width: 100%; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Contacts WeChat",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancre (ID)", "default": "wechat" },
+    { "type": "text", "id": "eyebrow", "label": "Badge", "default": "🆕 NOUVEAU" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Contacts WeChat Essentials & Alo 💬" },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "2 contacts fournisseurs en direct sur WeChat, pièces neuves avec étiquettes." },
+    { "type": "product", "id": "product", "label": "Produit à vendre" },
+    { "type": "header", "content": "Photo d'arrivage" },
+    { "type": "image_picker", "id": "arrival_image", "label": "Photo" },
+    { "type": "text", "id": "arrival_caption", "label": "Légende", "default": "Arrivage réel 📦" },
+    { "type": "header", "content": "Bouton" },
+    { "type": "text", "id": "button_label", "label": "Texte du bouton", "default": "Récupérer les contacts 🔓" },
+    { "type": "checkbox", "id": "show_price", "label": "Afficher le prix du produit dans le bouton", "default": true },
+    { "type": "url", "id": "button_link", "label": "Lien du bouton", "info": "Vide = page du produit choisi." },
+    { "type": "text", "id": "points", "label": "Petits arguments", "default": "⚡ Contacts envoyés après paiement • 🔒 Paiement unique" },
+    { "type": "text", "id": "disclaimer", "label": "Mention", "default": "Prix indiqués par les vendeurs, hors livraison, susceptibles de changer. Les achats se font directement auprès des vendeurs : vérifie toujours avant de payer." }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Article",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "text", "id": "tag", "label": "Étiquette", "default": "Contact n°1" },
+        { "type": "text", "id": "name", "label": "Nom", "default": "Ensemble" },
+        { "type": "text", "id": "price", "label": "Prix", "default": "50 €" },
+        { "type": "text", "id": "note", "label": "Détail" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [ { "name": "Contacts WeChat" } ]
+}
+{% endschema %}

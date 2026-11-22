@@ -64,7 +64,7 @@
       "type": "packs",
       "settings": {
         "title": "Nos packs",
-        "limit": 2,
+        "limit": 3,
         "collection": "accessoires",
         "show_trust": true,
         "trust_text": "🔒 Paiement 100 % sécurisé • ⚡ Accès envoyé après paiement • ✅ Paiement unique"
@@ -168,7 +168,7 @@
           "type": "question",
           "settings": {
             "question": "🚚 Combien de temps pour la livraison ?",
-            "answer": "<p>Ça dépend du contact ou de la plateforme chez qui tu commandes. Les délais et les frais de chaque source sont indiqués dans le groupe, avec les agents de livraison disponibles.</p>"
+            "answer": "<p>Ça dépend du contact ou de la plateforme chez qui tu commandes. Les délais et les frais de chaque source sont indiqués dans le groupe, avec les agents de livraison disponibles, j'ai séléctionné les agents les moins cher et les plus rapide.</p>"
           }
         },
         "fq2": {
@@ -210,14 +210,14 @@
           "type": "question",
           "settings": {
             "question": "📈 Combien je peux gagner ?",
-            "answer": "<p>Impossible de te promettre un chiffre : ça dépend de ton budget, du temps que tu y passes et du marché. Les exemples montrés sur le site sont des résultats individuels, pas une garantie.</p>"
+            "answer": "<p>Avec nos fournisseurs et nos méthodes nous te garantissons un minimum de 500e/mois</p>"
           }
         },
         "fq8": {
           "type": "question",
           "settings": {
             "question": "🤝 Et si j'ai une question après l'achat ?",
-            "answer": "<p>Tu poses ta question directement dans le groupe ou tu nous écris via la page contact avec ton numéro de commande. On te répond dès que possible.</p>"
+            "answer": "<p>Tu poses ta question directement dans le groupe ou tu me contactes directement sur mon snap privé !</p>"
           }
         },
         "fq9": {
@@ -406,11 +406,43 @@
         "review_fXLCA3",
         "review_F46pmQ"
       ]
+    },
+    "wechat": {
+      "type": "wechat-drop",
+      "settings": {
+        "product": "contacts-wechat-essentials-alo",
+        "arrival_caption": "Arrivage Alo réel 📦"
+      },
+      "blocks": {
+        "w1": {
+          "type": "item",
+          "settings": {
+            "tag": "Contact n°1",
+            "name": "Ensemble Essentials Fear of God",
+            "price": "50 €",
+            "note": "Sweat + jogging"
+          }
+        },
+        "w2": {
+          "type": "item",
+          "settings": {
+            "tag": "Contact n°2",
+            "name": "Ensemble Alo",
+            "price": "90 €",
+            "note": "Veste + pantalon"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2"
+      ]
     }
   },
   "order": [
     "hero",
     "avis",
+    "wechat",
     "quiz",
     "packs",
     "arrivages",
